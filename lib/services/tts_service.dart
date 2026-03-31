@@ -74,7 +74,7 @@ class TtsService {
     if (!_ready) return;
     final fast = PaceCalculator.formatPaceKorean(fastSec);
     final slow = PaceCalculator.formatPaceKorean(slowSec);
-    await _say('러닝 시작합니다! 오늘 목표 페이스는 킬로미터당 $fast에서 $slow입니다. 화이팅!');
+    await _say('깃커밋변경테스트 오늘 목표 페이스는 킬로미터당 $fast에서 $slow입니다. 화이팅!');
   }
 
   Future<void> announceFinish({
