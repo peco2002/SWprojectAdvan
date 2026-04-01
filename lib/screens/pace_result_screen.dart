@@ -37,53 +37,63 @@ class PaceResultScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ── 헤더 ─────────────────────────────────────────
-              Row(children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.15),
-                    shape: BoxShape.circle,
+              // ── 스크롤 가능한 상단 콘텐츠 ────────────────────
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // ── 헤더 ───────────────────────────────────
+                      Row(children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withOpacity(0.15),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.check_circle, color: AppColors.primary),
+                        ),
+                        const SizedBox(width: 12),
+                        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          Text('${profile.name}님의 맞춤 페이스',
+                              style: AppTextStyles.subheading),
+                          Text('신체 데이터 분석 완료',
+                              style: AppTextStyles.caption),
+                        ]),
+                      ]),
+
+                      const SizedBox(height: 32),
+
+                      // ── 권장 페이스 메인 카드 ───────────────────
+                      _PaceRangeCard(
+                        fastSec: fastSec,
+                        slowSec: slowSec,
+                        tempoKm: distances['tempo']!,
+                        longKm:  distances['long']!,
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      // ── VO2max / 분석 근거 ──────────────────────
+                      _AnalysisCard(profile: profile, vo2max: vo2max),
+
+                      const SizedBox(height: 20),
+
+                      // ── 인바디 보정 뱃지 ────────────────────────
+                      if (profile.hasInbodyData) _InbodyBadge(profile: profile),
+
+                      const SizedBox(height: 20),
+
+                      // ── 코칭 안내 ───────────────────────────────
+                      const _CoachingNote(),
+                    ],
                   ),
-                  child: const Icon(Icons.check_circle, color: AppColors.primary),
                 ),
-                const SizedBox(width: 12),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text('${profile.name}님의 맞춤 페이스',
-                      style: AppTextStyles.subheading),
-                  Text('신체 데이터 분석 완료',
-                      style: AppTextStyles.caption),
-                ]),
-              ]),
-
-              const SizedBox(height: 32),
-
-              // ── 권장 페이스 메인 카드 ─────────────────────────
-              _PaceRangeCard(
-                fastSec: fastSec,
-                slowSec: slowSec,
-                tempoKm: distances['tempo']!,
-                longKm:  distances['long']!,
               ),
 
               const SizedBox(height: 20),
 
-              // ── VO2max / 분석 근거 ────────────────────────────
-              _AnalysisCard(profile: profile, vo2max: vo2max),
-
-              const SizedBox(height: 20),
-
-              // ── 인바디 보정 뱃지 ──────────────────────────────
-              if (profile.hasInbodyData) _InbodyBadge(profile: profile),
-
-              const Spacer(),
-
-              // ── 코칭 안내 ─────────────────────────────────────
-              const _CoachingNote(),
-
-              const SizedBox(height: 20),
-
-              // ── 러닝 시작 버튼 ────────────────────────────────
+              // ── 홈으로 이동 버튼 (항상 하단 고정) ────────────
               SizedBox(
                 width: double.infinity,
                 height: 56,
