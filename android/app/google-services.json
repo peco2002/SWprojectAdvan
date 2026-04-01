@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "221745858454",
+    "firebase_url": "https://runright-bde12-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "runright-bde12",
+    "storage_bucket": "runright-bde12.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221745858454:android:0f25675b78cca7697cbfb7",
+        "android_client_info": {
+          "package_name": "com.example.runright_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVc6IAQhcLNUyqDXhfIU6HM32oGjZgK_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

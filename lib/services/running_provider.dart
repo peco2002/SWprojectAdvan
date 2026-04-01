@@ -1,48 +1,55 @@
 // lib/services/running_provider.dart
-// Provider — GPS + TTS + 러닝 세션 상태 통합
+// ── bjw + minii + Firebase 통합 버전 ──────────────────
+// bjw 기여: announcePause / announceResume TTS
+// Firebase: setProfile → DB 저장, stopRun → DB 저장
 
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../core/pace_calculator.dart';
 import '../models/body_profile.dart';
 import '../models/running_session.dart';
 import 'gps_service.dart';
 import 'tts_service.dart';
+import 'database_service.dart';
 
 enum SessionState { idle, running, paused, finished }
 
 class RunningProvider extends ChangeNotifier {
   final _gps = GpsService();
   final _tts = TtsService();
+  final _db  = DatabaseService();
 
-  // ── 세션 상태 ────────────────────────────────────────────────
   SessionState state      = SessionState.idle;
   int    currentPaceSec  = 0;
   double distanceKm      = 0;
   int    elapsedSeconds  = 0;
   final  List<PaceRecord> history = [];
 
-  // ── 신체 프로필 / 목표 페이스 ────────────────────────────────
   BodyProfile? profile;
 
   int get fastLimit => profile?.fastLimitSec ?? 0;
   int get slowLimit => profile?.slowLimitSec ?? 0;
 
-  // ── 내부 ─────────────────────────────────────────────────────
   Timer? _timer;
   StreamSubscription<int>?        _paceSub;
   StreamSubscription<double>?     _distSub;
   StreamSubscription<PaceRecord>? _recSub;
   int _lastKm = 0;
 
-  // ── 프로필 설정 ──────────────────────────────────────────────
   Future<void> setProfile(BodyProfile p) async {
     profile = p;
     await _tts.init();
+
+    // Firebase DB에 신체 데이터 저장
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      await _db.saveProfile(uid, p);
+    }
+
     notifyListeners();
   }
 
-  // ── 러닝 시작 ────────────────────────────────────────────────
   Future<void> startRun() async {
     if (state == SessionState.running) return;
     state = SessionState.running;
@@ -56,7 +63,7 @@ class RunningProvider extends ChangeNotifier {
     await _gps.start();
     await _tts.announceStart(fastLimit, slowLimit);
 
-    _timer  = Timer.periodic(const Duration(seconds: 1), (_) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       elapsedSeconds++;
       notifyListeners();
     });
@@ -65,13 +72,13 @@ class RunningProvider extends ChangeNotifier {
     _recSub  = _gps.recordStream.listen((r) => history.add(r));
   }
 
-  // ── 일시정지 / 재개 ──────────────────────────────────────────
+  // bjw 기여: 일시정지/재개 시 음성 안내
   Future<void> pause() async {
     if (state != SessionState.running) return;
     state = SessionState.paused;
     _timer?.cancel();
     await _gps.stop();
-    await _tts.stop();
+    await _tts.announcePause();
     notifyListeners();
   }
 
@@ -79,6 +86,7 @@ class RunningProvider extends ChangeNotifier {
     if (state != SessionState.paused) return;
     state = SessionState.running;
     await _gps.start();
+    await _tts.announceResume();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       elapsedSeconds++;
       notifyListeners();
@@ -86,7 +94,6 @@ class RunningProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ── 러닝 종료 ────────────────────────────────────────────────
   Future<RunningSession> stopRun() async {
     state = SessionState.finished;
     _timer?.cancel();
@@ -115,6 +122,12 @@ class RunningProvider extends ChangeNotifier {
       paceHistory:     List.from(history),
     );
 
+    // Firebase DB에 러닝 기록 저장
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid != null) {
+      await _db.saveSession(uid, session);
+    }
+
     await _tts.announceFinish(
       distKm:     distanceKm,
       avgPaceSec: avgPace,
@@ -124,16 +137,14 @@ class RunningProvider extends ChangeNotifier {
     return session;
   }
 
-  // ── GPS 콜백 ─────────────────────────────────────────────────
   void _onPace(int pace) {
     currentPaceSec = pace;
     notifyListeners();
-
     if (fastLimit > 0) {
       final zone = PaceCalculator.judgeZone(
         currentPaceSec: pace,
-        fastLimit:       fastLimit,
-        slowLimit:       slowLimit,
+        fastLimit: fastLimit,
+        slowLimit: slowLimit,
       );
       _tts.onPaceZoneChanged(zone: zone, currentPaceSec: pace);
     }
@@ -149,27 +160,22 @@ class RunningProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ── UI 포맷 헬퍼 ─────────────────────────────────────────────
   String get displayPace => currentPaceSec == 0
       ? "--'--\""
       : PaceCalculator.formatPace(currentPaceSec);
-
   String get displayDistance => distanceKm.toStringAsFixed(2);
-
   String get displayElapsed {
     final m = elapsedSeconds ~/ 60;
     final s = (elapsedSeconds % 60).toString().padLeft(2, '0');
     return '${m.toString().padLeft(2, '0')}:$s';
   }
-
   String get displayTargetPace => fastLimit == 0
       ? '--'
       : '${PaceCalculator.formatPace(fastLimit)} ~ ${PaceCalculator.formatPace(slowLimit)}';
-
   PaceZone get currentZone => PaceCalculator.judgeZone(
         currentPaceSec: currentPaceSec,
-        fastLimit:       fastLimit,
-        slowLimit:       slowLimit,
+        fastLimit: fastLimit,
+        slowLimit: slowLimit,
       );
 
   @override

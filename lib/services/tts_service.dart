@@ -77,6 +77,16 @@ class TtsService {
     await _say('러닝 시작합니다! 오늘 목표 페이스는 킬로미터당 $fast에서 $slow입니다. 화이팅!');
   }
 
+  Future<void> announcePause() async {
+    if (!_ready) return;
+    await _say('러닝을 일시정지합니다.');
+  }
+
+  Future<void> announceResume() async {
+    if (!_ready) return;
+    await _say('러닝을 재개합니다.');
+  }
+
   Future<void> announceFinish({
     required double distKm,
     required int    avgPaceSec,

@@ -1,20 +1,24 @@
 // lib/main.dart
+// ── Firebase 연동 완료 버전 ──────────────────────────
+// 변경 사항:
+//   1. Firebase 초기화 추가
+//   2. 로그인 상태에 따라 LoginScreen / BodySetupScreen 분기
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'firebase_options.dart';           // flutterfire configure 로 자동 생성
 import 'core/constants.dart';
 import 'services/running_provider.dart';
+import 'screens/login_screen.dart';
 import 'screens/body_setup_screen.dart';
-
-// ── Firebase 초기화 (팀원3·4 연동 시 주석 해제) ──────────────────
-// import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const RunRightApp());
 }
 
@@ -36,26 +40,30 @@ class RunRightApp extends StatelessWidget {
             secondary: AppColors.primaryDark,
           ),
         ),
-        // ────────────────────────────────────────────────────────
-        // 현재: 신체 데이터 입력 화면 바로 시작 (로그인 없이 테스트)
-        //
-        // 팀원3 (Firebase Auth) 연동 후 아래처럼 교체:
-        //
-        // home: StreamBuilder<User?>(
-        //   stream: FirebaseAuth.instance.authStateChanges(),
-        //   builder: (ctx, snap) {
-        //     if (snap.connectionState == ConnectionState.waiting)
-        //       return const SplashScreen();
-        //     if (snap.data == null)
-        //       return const LoginScreen();          // 팀원3 구현
-        //     return BodySetupScreen(
-        //       uid:  snap.data!.uid,
-        //       name: snap.data!.displayName ?? '러너',
-        //     );
-        //   },
-        // ),
-        // ────────────────────────────────────────────────────────
-        home: const BodySetupScreen(uid: 'test_uid', name: '러너'),
+        // ── 로그인 상태에 따라 화면 분기 ──────────────────
+        home: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            // 로딩 중
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                backgroundColor: AppColors.background,
+                body: Center(
+                  child: CircularProgressIndicator(color: AppColors.primary),
+                ),
+              );
+            }
+            // 로그인 안 된 상태 → 로그인 화면
+            if (snapshot.data == null) {
+              return const LoginScreen();
+            }
+            // 로그인 된 상태 → 신체 데이터 입력 화면
+            return BodySetupScreen(
+              uid:  snapshot.data!.uid,
+              name: snapshot.data!.displayName ?? '러너',
+            );
+          },
+        ),
       ),
     );
   }
