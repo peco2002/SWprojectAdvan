@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'firebase_options.dart';           // 환경 변수 기반으로 자동 구성
+import 'firebase_options.dart';           // flutterfire configure 로 자동 생성
 import 'core/constants.dart';
 import 'services/running_provider.dart';
 import 'screens/login_screen.dart';
