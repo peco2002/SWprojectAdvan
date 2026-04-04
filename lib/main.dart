@@ -75,8 +75,8 @@ class _ProfileLoader extends StatefulWidget {
 }
 
 class _ProfileLoaderState extends State<_ProfileLoader> {
-  bool _loading = true;
-  bool _hasProfile = false;
+  bool   _initialized = false;
+  String _userName    = '러너';
 
   @override
   void initState() {
@@ -85,30 +85,32 @@ class _ProfileLoaderState extends State<_ProfileLoader> {
   }
 
   Future<void> _load() async {
+    final uid      = widget.user.uid;
     final provider = Provider.of<RunningProvider>(context, listen: false);
-    final hasProfile = await provider.loadProfile(widget.user.uid);
-    if (mounted) {
-      setState(() {
-        _loading = false;
-        _hasProfile = hasProfile;
-      });
+    if (provider.profile == null) {
+      await provider.loadProfile(uid);
     }
+    // 이름 우선순위: 저장된 프로필 > DB userName > Firebase Auth displayName
+    _userName = provider.profile?.name
+        ?? provider.pendingName
+        ?? FirebaseAuth.instance.currentUser?.displayName
+        ?? '러너';
+    if (mounted) setState(() => _initialized = true);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_loading) {
+    if (!_initialized) {
       return const Scaffold(
         backgroundColor: AppColors.background,
         body: Center(child: CircularProgressIndicator(color: AppColors.primary)),
       );
     }
-    if (_hasProfile) {
-      return const HomeScreen();
-    }
+    final profile = context.watch<RunningProvider>().profile;
+    if (profile != null) return const HomeScreen();
     return BodySetupScreen(
       uid:  widget.user.uid,
-      name: widget.user.displayName ?? '러너',
+      name: _userName,
     );
   }
 }

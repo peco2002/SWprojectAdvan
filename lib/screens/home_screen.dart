@@ -50,8 +50,9 @@ class HomeScreen extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.logout, color: AppColors.textHint),
                     onPressed: () async {
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                      Provider.of<RunningProvider>(context, listen: false).clearProfile();
                       await AuthService().signOut();
-                      // StreamBuilder가 자동으로 LoginScreen으로 전환
                     },
                   ),
                 ],

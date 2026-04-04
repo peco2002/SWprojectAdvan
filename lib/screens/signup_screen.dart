@@ -4,8 +4,10 @@
 // ══════════════════════════════════════════════════
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../core/constants.dart';
 import '../services/auth_service.dart';
+import '../services/running_provider.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -134,6 +136,10 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() { _loading = true; _error = null; });
 
     try {
+      // authStateChanges보다 먼저 이름 저장 (signUp 내부에서 이벤트 발생)
+      Provider.of<RunningProvider>(context, listen: false)
+          .setPendingName(_nameCtrl.text.trim());
+
       await _auth.signUp(
         email:    _emailCtrl.text.trim(),
         password: _pwCtrl.text,

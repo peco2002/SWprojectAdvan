@@ -41,6 +41,20 @@ class RunningProvider extends ChangeNotifier {
   StreamSubscription<PaceRecord>? _recSub;
   int _lastKm = 0;
 
+  // ── 회원가입 시 이름 임시 저장 ───────────────────────────────
+  String? pendingName;
+
+  void setPendingName(String name) {
+    pendingName = name;
+  }
+
+  // ── 프로필 초기화 (로그아웃 시) ─────────────────────────────
+  void clearProfile() {
+    profile     = null;
+    pendingName = null;
+    notifyListeners();
+  }
+
   // ── 프로필 DB에서 로드 (앱 재실행 / 로그인 시) ──────────────
   Future<bool> loadProfile(String uid) async {
     final p = await _db.getProfile(uid);

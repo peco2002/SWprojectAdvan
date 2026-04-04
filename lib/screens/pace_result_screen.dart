@@ -98,9 +98,8 @@ class PaceResultScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: () => Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const HomeScreen()),
+                  onPressed: () => Navigator.of(context).popUntil(
+                    (route) => route.isFirst,
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,

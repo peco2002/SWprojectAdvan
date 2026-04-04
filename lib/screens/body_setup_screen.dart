@@ -276,7 +276,7 @@ class _BodySetupScreenState extends State<BodySetupScreen> {
     await context.read<RunningProvider>().setProfile(profile);
 
     if (mounted) {
-      Navigator.pushReplacement(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (_) => const PaceResultScreen()),
       );

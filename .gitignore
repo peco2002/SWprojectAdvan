@@ -50,3 +50,7 @@ app.*.map.json
 # Google Services 설정 파일 (Firebase 콘솔에서 다운로드)
 google-services.json
 GoogleService-Info.plist
+
+
+#.md 파일 업로드 안함
+*.md
