@@ -41,6 +41,16 @@ class RunningProvider extends ChangeNotifier {
   StreamSubscription<PaceRecord>? _recSub;
   int _lastKm = 0;
 
+  // ── 프로필 DB에서 로드 (앱 재실행 / 로그인 시) ──────────────
+  Future<bool> loadProfile(String uid) async {
+    final p = await _db.getProfile(uid);
+    if (p == null) return false;
+    profile = p;
+    await _tts.init();
+    notifyListeners();
+    return true;
+  }
+
   // ── 프로필 설정 ──────────────────────────────────────────────
   Future<void> setProfile(BodyProfile p) async {
     profile = p;

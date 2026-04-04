@@ -8,11 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'firebase_options.dart';           // 환경 변수 기반으로 자동 구성
+import 'firebase_options.dart';
 import 'core/constants.dart';
 import 'services/running_provider.dart';
 import 'screens/login_screen.dart';
 import 'screens/body_setup_screen.dart';
+import 'screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +45,6 @@ class RunRightApp extends StatelessWidget {
         home: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
-            // 로딩 중
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Scaffold(
                 backgroundColor: AppColors.background,
@@ -53,18 +53,62 @@ class RunRightApp extends StatelessWidget {
                 ),
               );
             }
-            // 로그인 안 된 상태 → 로그인 화면
             if (snapshot.data == null) {
               return const LoginScreen();
             }
-            // 로그인 된 상태 → 신체 데이터 입력 화면
-            return BodySetupScreen(
-              uid:  snapshot.data!.uid,
-              name: snapshot.data!.displayName ?? '러너',
-            );
+            // 로그인 된 상태 → DB 프로필 조회 후 분기
+            return _ProfileLoader(user: snapshot.data!);
           },
         ),
       ),
+    );
+  }
+}
+
+// ── 로그인 후 프로필 유무에 따라 화면 분기 ──────────────────────
+class _ProfileLoader extends StatefulWidget {
+  final User user;
+  const _ProfileLoader({required this.user});
+
+  @override
+  State<_ProfileLoader> createState() => _ProfileLoaderState();
+}
+
+class _ProfileLoaderState extends State<_ProfileLoader> {
+  bool _loading = true;
+  bool _hasProfile = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final provider = Provider.of<RunningProvider>(context, listen: false);
+    final hasProfile = await provider.loadProfile(widget.user.uid);
+    if (mounted) {
+      setState(() {
+        _loading = false;
+        _hasProfile = hasProfile;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_loading) {
+      return const Scaffold(
+        backgroundColor: AppColors.background,
+        body: Center(child: CircularProgressIndicator(color: AppColors.primary)),
+      );
+    }
+    if (_hasProfile) {
+      return const HomeScreen();
+    }
+    return BodySetupScreen(
+      uid:  widget.user.uid,
+      name: widget.user.displayName ?? '러너',
     );
   }
 }
