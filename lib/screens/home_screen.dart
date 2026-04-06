@@ -47,14 +47,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ]),
                   // 로그아웃 버튼
-                  IconButton(
-                    icon: const Icon(Icons.logout, color: AppColors.textHint),
-                    onPressed: () async {
-                      Navigator.of(context).popUntil((route) => route.isFirst);
-                      Provider.of<RunningProvider>(context, listen: false).clearProfile();
-                      await AuthService().signOut();
-                    },
-                  ),
+                  const _LogoutButton(),
                 ],
               ),
 
@@ -96,6 +89,46 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+// ── 로그아웃 버튼 ─────────────────────────────────────
+
+class _LogoutButton extends StatefulWidget {
+  const _LogoutButton();
+
+  @override
+  State<_LogoutButton> createState() => _LogoutButtonState();
+}
+
+class _LogoutButtonState extends State<_LogoutButton> {
+  bool _loading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: _loading
+          ? const SizedBox(
+              width: 20, height: 20,
+              child: CircularProgressIndicator(
+                  strokeWidth: 2, color: AppColors.textHint),
+            )
+          : const Icon(Icons.logout, color: AppColors.textHint),
+      onPressed: _loading ? null : _logout,
+    );
+  }
+
+  Future<void> _logout() async {
+    setState(() => _loading = true);
+    try {
+      final navigator = Navigator.of(context);
+      final provider  = Provider.of<RunningProvider>(context, listen: false);
+      navigator.popUntil((route) => route.isFirst);
+      await AuthService().signOut();
+      provider.clearProfile();
+    } catch (_) {
+      if (mounted) setState(() => _loading = false);
+    }
   }
 }
 

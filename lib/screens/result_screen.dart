@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import '../core/constants.dart';
 import '../models/running_session.dart';
-import 'home_screen.dart';
-
 class ResultScreen extends StatelessWidget {
   final RunningSession session;
   const ResultScreen({super.key, required this.session});
@@ -58,11 +56,7 @@ class ResultScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity, height: 52,
                 child: ElevatedButton(
-                  onPressed: () => Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (_) => const HomeScreen()),
-                    (_) => false,
-                  ),
+                  onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.black,
