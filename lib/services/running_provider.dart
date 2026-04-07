@@ -48,6 +48,18 @@ class RunningProvider extends ChangeNotifier {
     pendingName = name;
   }
 
+  // ── 러닝 상태 초기화 (러닝 화면 진입 시) ───────────────────
+  void resetRun() {
+    _timer?.cancel();
+    state          = SessionState.idle;
+    elapsedSeconds = 0;
+    distanceKm     = 0;
+    currentPaceSec = 0;
+    _lastKm        = 0;
+    history.clear();
+    notifyListeners();
+  }
+
   // ── 프로필 초기화 (로그아웃 시) ─────────────────────────────
   void clearProfile() {
     profile     = null;

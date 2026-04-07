@@ -26,6 +26,11 @@ class _RunningScreenState extends State<RunningScreen>
     _pulse = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 850))
       ..repeat(reverse: true);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        Provider.of<RunningProvider>(context, listen: false).resetRun();
+      }
+    });
   }
 
   @override
@@ -106,6 +111,11 @@ class _RunningScreenState extends State<RunningScreen>
   }
 
   void _askStop(BuildContext ctx, RunningProvider p) {
+    // 시작 전에 나가면 그냥 팝 (저장 없음)
+    if (!_started || p.state == SessionState.idle) {
+      Navigator.pop(ctx);
+      return;
+    }
     showDialog(
       context: ctx,
       builder: (_) => AlertDialog(

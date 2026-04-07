@@ -61,12 +61,14 @@ class RunningSession {
         startTime:       DateTime.parse(m['startTime'] as String),
         endTime:         DateTime.parse(m['endTime']   as String),
         totalDistanceKm: (m['totalDistanceKm'] as num).toDouble(),
-        durationSeconds: m['durationSeconds']  as int,
-        averagePaceSec:  m['averagePaceSec']   as int,
+        durationSeconds: (m['durationSeconds'] as num).toInt(),
+        averagePaceSec:  (m['averagePaceSec']  as num).toInt(),
         caloriesBurned:  (m['caloriesBurned']  as num).toDouble(),
-        paceHistory:     (m['paceHistory'] as List<dynamic>)
-            .map((e) => PaceRecord.fromMap(e as Map<String, dynamic>))
-            .toList(),
+        paceHistory:     m['paceHistory'] == null
+            ? []
+            : (m['paceHistory'] as List<dynamic>)
+                .map((e) => PaceRecord.fromMap(e as Map<String, dynamic>))
+                .toList(),
       );
 }
 

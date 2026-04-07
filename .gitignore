@@ -52,5 +52,6 @@ google-services.json
 GoogleService-Info.plist
 
 
-#.md 파일 업로드 안함
+#.md 파일 업로드 안함 (README.md 제외)
 *.md
+!README.md

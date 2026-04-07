@@ -14,6 +14,7 @@ import '../services/running_provider.dart';
 import '../services/database_service.dart';
 import '../services/auth_service.dart';
 import 'running_screen.dart';
+import 'session_detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -156,7 +157,7 @@ class _SessionList extends StatelessWidget {
         return ListView.separated(
           itemCount: sessions.length,
           separatorBuilder: (_, __) => const SizedBox(height: 10),
-          itemBuilder: (_, i) => _SessionCard(session: sessions[i]),
+          itemBuilder: (_, i) => _SessionCard(session: sessions[i], uid: uid),
         );
       },
     );
@@ -167,46 +168,119 @@ class _SessionList extends StatelessWidget {
 
 class _SessionCard extends StatelessWidget {
   final RunningSession session;
-  const _SessionCard({required this.session});
+  final String uid;
+  const _SessionCard({required this.session, required this.uid});
+
+  Future<void> _confirmDelete(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        backgroundColor: AppColors.surface,
+        title: const Text('기록 삭제',
+            style: TextStyle(color: AppColors.textPrimary)),
+        content: const Text('이 러닝 기록을 삭제할까요?',
+            style: TextStyle(color: AppColors.textSecondary)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('취소',
+                style: TextStyle(color: AppColors.textHint)),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.tooFast,
+                foregroundColor: Colors.white),
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('삭제'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await DatabaseService().deleteSession(uid, session.id);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.card,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.divider),
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => SessionDetailScreen(session: session),
+        ),
       ),
-      child: Row(children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: AppColors.primary.withOpacity(0.12),
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(Icons.directions_run,
-              color: AppColors.primary, size: 20),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(14, 12, 8, 12),
+        decoration: BoxDecoration(
+          color: AppColors.card,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: AppColors.divider),
         ),
-        const SizedBox(width: 14),
-        Expanded(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(session.formattedDate, style: AppTextStyles.caption),
-            const SizedBox(height: 4),
-            Text(
-              '${session.totalDistanceKm.toStringAsFixed(2)}km  ·  ${session.formattedDuration}  ·  ${session.formattedPace}/km',
-              style: const TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // ── 러닝 정보 ──────────────────────────────
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(session.formattedDate, style: AppTextStyles.caption),
+                  const SizedBox(height: 6),
+                  Text(
+                    '${session.totalDistanceKm.toStringAsFixed(2)} km'
+                    '  ·  ${session.formattedDuration}'
+                    '  ·  ${session.formattedPace}/km',
+                    style: const TextStyle(
+                        color: AppColors.textPrimary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '${session.caloriesBurned.toStringAsFixed(0)} kcal',
+                    style: const TextStyle(
+                        color: AppColors.textSecondary, fontSize: 12),
+                  ),
+                ],
+              ),
             ),
-          ]),
+
+            const SizedBox(width: 10),
+
+            // ── 지도 플레이스홀더 (정사각형) ────────────
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: AppColors.divider),
+              ),
+              child: const Center(
+                child: Text(
+                  '지도\n위치',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: AppColors.textHint,
+                      fontSize: 10,
+                      height: 1.4),
+                ),
+              ),
+            ),
+
+            // ── 삭제 버튼 ──────────────────────────────
+            IconButton(
+              icon: const Icon(Icons.delete_outline,
+                  color: AppColors.textHint, size: 18),
+              onPressed: () => _confirmDelete(context),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              splashRadius: 20,
+            ),
+          ],
         ),
-        Text(
-          '${session.caloriesBurned.toStringAsFixed(0)}kcal',
-          style: const TextStyle(color: AppColors.textHint, fontSize: 12),
-        ),
-      ]),
+      ),
     );
   }
 }
