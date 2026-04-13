@@ -170,10 +170,9 @@ class PaceCalculator {
 
   static double estimateCalories({
     required double weightKg,
-    required int durationSeconds,
-    double met = 8.0,
+    required double distanceKm,
   }) =>
-      met * weightKg * (durationSeconds / 3600);
+      weightKg * distanceKm * 1.036;
 
   // ──────────────────────────────────────────────
   // 내부: ACSM 역산 (VO₂ → sec/km)

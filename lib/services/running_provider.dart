@@ -150,8 +150,8 @@ class RunningProvider extends ChangeNotifier {
         : history.map((r) => r.paceSec).reduce((a, b) => a + b) ~/ history.length;
 
     final calories = PaceCalculator.estimateCalories(
-      weightKg:        profile?.weightKg ?? 65,
-      durationSeconds: elapsedSeconds,
+      weightKg:    profile?.weightKg ?? 65,
+      distanceKm:  distanceKm,
     );
 
     final session = RunningSession(
