@@ -1,14 +1,62 @@
 // lib/screens/session_detail_screen.dart
-// 러닝 세션 세부 화면 — 지도 플레이스홀더 + 구간별 페이스
+// 러닝 세션 세부 화면 — 경로 지도 + 구간별 페이스
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../core/constants.dart';
 import '../core/pace_calculator.dart';
 import '../models/running_session.dart';
 
-class SessionDetailScreen extends StatelessWidget {
+class SessionDetailScreen extends StatefulWidget {
   final RunningSession session;
   const SessionDetailScreen({super.key, required this.session});
+
+  @override
+  State<SessionDetailScreen> createState() => _SessionDetailScreenState();
+}
+
+class _SessionDetailScreenState extends State<SessionDetailScreen> {
+  GoogleMapController? _mapController;
+
+  // PaceRecord 목록에서 유효한 GPS 좌표만 추출
+  List<LatLng> get _routePoints => widget.session.paceHistory
+      .where((r) => r.latitude != 0.0 && r.longitude != 0.0)
+      .map((r) => LatLng(r.latitude, r.longitude))
+      .toList();
+
+  // 경로 전체가 보이도록 카메라 바운드 계산
+  CameraPosition get _initialCamera {
+    final points = _routePoints;
+    if (points.isEmpty) {
+      return const CameraPosition(target: LatLng(37.5665, 126.9780), zoom: 14);
+    }
+    if (points.length == 1) {
+      return CameraPosition(target: points.first, zoom: 16);
+    }
+    final lats = points.map((p) => p.latitude);
+    final lngs = points.map((p) => p.longitude);
+    final centerLat = (lats.reduce((a, b) => a + b)) / points.length;
+    final centerLng = (lngs.reduce((a, b) => a + b)) / points.length;
+    return CameraPosition(target: LatLng(centerLat, centerLng), zoom: 15);
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    _mapController = controller;
+    final points = _routePoints;
+    if (points.length < 2) return;
+
+    final lats = points.map((p) => p.latitude);
+    final lngs = points.map((p) => p.longitude);
+    final bounds = LatLngBounds(
+      southwest: LatLng(lats.reduce((a, b) => a < b ? a : b),
+          lngs.reduce((a, b) => a < b ? a : b)),
+      northeast: LatLng(lats.reduce((a, b) => a > b ? a : b),
+          lngs.reduce((a, b) => a > b ? a : b)),
+    );
+    Future.delayed(const Duration(milliseconds: 300), () {
+      _mapController?.animateCamera(CameraUpdate.newLatLngBounds(bounds, 48));
+    });
+  }
 
   // PaceRecord 목록에서 km별 평균 페이스 계산
   Map<int, int> _buildKmPaces(List<PaceRecord> history) {
@@ -29,8 +77,15 @@ class SessionDetailScreen extends StatelessWidget {
   }
 
   @override
+  void dispose() {
+    _mapController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final kmPaces = _buildKmPaces(session.paceHistory);
+    final kmPaces = _buildKmPaces(widget.session.paceHistory);
+    final points = _routePoints;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -39,7 +94,7 @@ class SessionDetailScreen extends StatelessWidget {
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         title: Text(
-          session.formattedDate,
+          widget.session.formattedDate,
           style: const TextStyle(
               color: AppColors.textPrimary, fontWeight: FontWeight.w600),
         ),
@@ -48,20 +103,55 @@ class SessionDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── 지도 플레이스홀더 (상단 고정) ──────────────────
-            Container(
+            // ── 경로 지도 ────────────────────────────────────
+            SizedBox(
               width: double.infinity,
               height: 220,
-              color: AppColors.surface,
-              child: const Center(
-                child: Text(
-                  '지도 위치',
-                  style: TextStyle(
-                      color: AppColors.textHint,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
+              child: points.isEmpty
+                  ? Container(
+                      color: AppColors.surface,
+                      child: const Center(
+                        child: Text(
+                          'GPS 데이터 없음',
+                          style: TextStyle(
+                              color: AppColors.textHint, fontSize: 14),
+                        ),
+                      ),
+                    )
+                  : GoogleMap(
+                      initialCameraPosition: _initialCamera,
+                      onMapCreated: _onMapCreated,
+                      myLocationButtonEnabled: false,
+                      zoomControlsEnabled: false,
+                      scrollGesturesEnabled: false,
+                      zoomGesturesEnabled: false,
+                      rotateGesturesEnabled: false,
+                      tiltGesturesEnabled: false,
+                      polylines: {
+                        Polyline(
+                          polylineId: const PolylineId('route'),
+                          points: points,
+                          color: AppColors.primary,
+                          width: 4,
+                        ),
+                      },
+                      markers: {
+                        Marker(
+                          markerId: const MarkerId('start'),
+                          position: points.first,
+                          icon: BitmapDescriptor.defaultMarkerWithHue(
+                              BitmapDescriptor.hueGreen),
+                          infoWindow: const InfoWindow(title: '출발'),
+                        ),
+                        Marker(
+                          markerId: const MarkerId('end'),
+                          position: points.last,
+                          icon: BitmapDescriptor.defaultMarkerWithHue(
+                              BitmapDescriptor.hueRed),
+                          infoWindow: const InfoWindow(title: '도착'),
+                        ),
+                      },
+                    ),
             ),
 
             Padding(
@@ -72,19 +162,19 @@ class SessionDetailScreen extends StatelessWidget {
                   // ── 통계 그리드 ──────────────────────────────
                   Row(children: [
                     _StatCard('거리',
-                        session.totalDistanceKm.toStringAsFixed(2),
+                        widget.session.totalDistanceKm.toStringAsFixed(2),
                         'km', AppColors.primary),
                     const SizedBox(width: 12),
-                    _StatCard('시간', session.formattedDuration,
+                    _StatCard('시간', widget.session.formattedDuration,
                         '', Colors.blueAccent),
                   ]),
                   const SizedBox(height: 12),
                   Row(children: [
-                    _StatCard('평균 페이스', session.formattedPace,
+                    _StatCard('평균 페이스', widget.session.formattedPace,
                         '/km', Colors.orangeAccent),
                     const SizedBox(width: 12),
                     _StatCard('칼로리',
-                        session.caloriesBurned.toStringAsFixed(0),
+                        widget.session.caloriesBurned.toStringAsFixed(0),
                         'kcal', Colors.pinkAccent),
                   ]),
 

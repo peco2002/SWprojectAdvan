@@ -1,10 +1,14 @@
 // lib/screens/running_screen.dart
 // 실시간 러닝 화면 — GPS 페이스 모니터링 + TTS 코칭
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import '../core/constants.dart';
 import '../core/pace_calculator.dart';
+import '../models/running_session.dart';
 import '../services/running_provider.dart';
 import 'result_screen.dart';
 
@@ -19,6 +23,13 @@ class _RunningScreenState extends State<RunningScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _pulse;
   bool _started = false;
+  GoogleMapController? _mapController;
+  StreamSubscription<Position>? _locationSub;
+
+  static const _defaultPos = CameraPosition(
+    target: LatLng(37.5665, 126.9780),
+    zoom: 16,
+  );
 
   @override
   void initState() {
@@ -28,15 +39,67 @@ class _RunningScreenState extends State<RunningScreen>
       ..repeat(reverse: true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        Provider.of<RunningProvider>(context, listen: false).resetRun();
+        final p = Provider.of<RunningProvider>(context, listen: false);
+        p.resetRun();
+        p.addListener(_onGpsUpdate);
+        _startLocationStream();
       }
     });
   }
 
   @override
   void dispose() {
+    _locationSub?.cancel();
+    Provider.of<RunningProvider>(context, listen: false)
+        .removeListener(_onGpsUpdate);
+    _mapController?.dispose();
     _pulse.dispose();
     super.dispose();
+  }
+
+  // 러닝 시작 전: 실시간 위치 스트림으로 카메라 갱신
+  void _startLocationStream() {
+    _locationSub = Geolocator.getPositionStream(
+      locationSettings: const LocationSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 3, // 3m 이상 이동 시 갱신
+      ),
+    ).listen((pos) {
+      if (!mounted || _mapController == null) return;
+      final p = Provider.of<RunningProvider>(context, listen: false);
+      // 러닝 중이 아닐 때만 카메라 자동 이동 (러닝 중엔 _onGpsUpdate가 담당)
+      if (p.state != SessionState.running) {
+        _mapController!.animateCamera(
+          CameraUpdate.newLatLng(LatLng(pos.latitude, pos.longitude)),
+        );
+      }
+    });
+  }
+
+  // 러닝 중: Provider history 기반 카메라 이동
+  void _onGpsUpdate() {
+    if (!mounted || _mapController == null) return;
+    final history =
+        Provider.of<RunningProvider>(context, listen: false).history;
+    if (history.isEmpty) return;
+    final last = history.last;
+    if (last.latitude == 0.0 && last.longitude == 0.0) return;
+    _mapController!.animateCamera(
+      CameraUpdate.newLatLng(LatLng(last.latitude, last.longitude)),
+    );
+  }
+
+  // GPS 버튼: 현재 위치로 즉시 이동
+  Future<void> _moveToCurrentLocation() async {
+    if (_mapController == null) return;
+    try {
+      final pos = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      _mapController!.animateCamera(
+        CameraUpdate.newLatLngZoom(LatLng(pos.latitude, pos.longitude), 16),
+      );
+    } catch (_) {}
   }
 
   @override
@@ -74,7 +137,46 @@ class _RunningScreenState extends State<RunningScreen>
             ),
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 8),
+
+          // ── 실시간 지도 + GPS 버튼 ─────────────────────────
+          Stack(
+            children: [
+              _LiveMap(
+                history:      p.history,
+                onMapCreated: (c) {
+                  _mapController = c;
+                  _moveToCurrentLocation(); // 지도 생성 시 현재 위치로 이동
+                },
+                defaultPos:   _defaultPos,
+              ),
+              Positioned(
+                right: 10,
+                bottom: 10,
+                child: GestureDetector(
+                  onTap: _moveToCurrentLocation,
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.85),
+                      shape: BoxShape.circle,
+                      boxShadow: const [
+                        BoxShadow(color: Colors.black26, blurRadius: 6),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.my_location,
+                      color: AppColors.primary,
+                      size: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 10),
 
           // ── 상태 배너 ──────────────────────────────────────
           Padding(
@@ -82,12 +184,12 @@ class _RunningScreenState extends State<RunningScreen>
             child: _ZoneBanner(zone: zone, color: zoneColor, pulse: _pulse),
           ),
 
-          const SizedBox(height: 28),
+          const SizedBox(height: 16),
 
           // ── 현재 페이스 (메인 숫자) ──────────────────────────
           _PaceHero(pace: p.displayPace, color: zoneColor),
 
-          const SizedBox(height: 32),
+          const SizedBox(height: 16),
 
           // ── 거리 / 시간 ────────────────────────────────────
           _StatsRow(distance: p.displayDistance, elapsed: p.displayElapsed),
@@ -104,7 +206,7 @@ class _RunningScreenState extends State<RunningScreen>
             onStop:   () => _askStop(context, p),
           ),
 
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
         ]),
       ),
     );
@@ -148,6 +250,73 @@ class _RunningScreenState extends State<RunningScreen>
 }
 
 // ── 컴포넌트 ─────────────────────────────────────────────────────
+
+// ── 실시간 경로 지도 ──────────────────────────────────────────
+class _LiveMap extends StatelessWidget {
+  final List<PaceRecord> history;
+  final void Function(GoogleMapController) onMapCreated;
+  final CameraPosition defaultPos;
+
+  const _LiveMap({
+    required this.history,
+    required this.onMapCreated,
+    required this.defaultPos,
+  });
+
+  List<LatLng> get _points => history
+      .where((r) => !(r.latitude == 0.0 && r.longitude == 0.0))
+      .map((r) => LatLng(r.latitude, r.longitude))
+      .toList();
+
+  @override
+  Widget build(BuildContext context) {
+    final pts = _points;
+
+    return SizedBox(
+      height: 190,
+      child: GoogleMap(
+        initialCameraPosition: defaultPos,
+        onMapCreated: onMapCreated,
+        myLocationEnabled: true,
+        zoomControlsEnabled: false,
+        myLocationButtonEnabled: false,
+        scrollGesturesEnabled: false,
+        zoomGesturesEnabled: false,
+        rotateGesturesEnabled: false,
+        tiltGesturesEnabled: false,
+        polylines: pts.length >= 2
+            ? {
+                Polyline(
+                  polylineId: const PolylineId('live'),
+                  points: pts,
+                  color: AppColors.primary,
+                  width: 4,
+                ),
+              }
+            : {},
+        markers: pts.isNotEmpty
+            ? {
+                // 현재 위치 마커
+                Marker(
+                  markerId: const MarkerId('current'),
+                  position: pts.last,
+                  icon: BitmapDescriptor.defaultMarkerWithHue(
+                      BitmapDescriptor.hueAzure),
+                ),
+                // 출발 마커 (2개 이상일 때만)
+                if (pts.length >= 2)
+                  Marker(
+                    markerId: const MarkerId('start'),
+                    position: pts.first,
+                    icon: BitmapDescriptor.defaultMarkerWithHue(
+                        BitmapDescriptor.hueGreen),
+                  ),
+              }
+            : {},
+      ),
+    );
+  }
+}
 
 class _TopBar extends StatelessWidget {
   final VoidCallback onClose;

@@ -4,6 +4,7 @@
 //   _EmptyHistory → _SessionList (DB에서 기록 불러와서 표시)
 //   로그아웃 버튼 추가
 
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -248,26 +249,8 @@ class _SessionCard extends StatelessWidget {
 
             const SizedBox(width: 10),
 
-            // ── 지도 플레이스홀더 (정사각형) ────────────
-            Container(
-              width: 56,
-              height: 56,
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.divider),
-              ),
-              child: const Center(
-                child: Text(
-                  '지도\n위치',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: AppColors.textHint,
-                      fontSize: 10,
-                      height: 1.4),
-                ),
-              ),
-            ),
+            // ── 경로 썸네일 ──────────────────────────
+            _RouteThumbnail(history: session.paceHistory),
 
             // ── 삭제 버튼 ──────────────────────────────
             IconButton(
@@ -354,6 +337,104 @@ class _MyPaceCard extends StatelessWidget {
               style: AppTextStyles.caption),
         ]),
       );
+}
+
+// ── 경로 썸네일 (CustomPaint) ─────────────────────────
+class _RouteThumbnail extends StatelessWidget {
+  final List<PaceRecord> history;
+  const _RouteThumbnail({required this.history});
+
+  @override
+  Widget build(BuildContext context) {
+    final points = history
+        .where((r) => r.latitude != 0.0 || r.longitude != 0.0)
+        .toList();
+
+    return Container(
+      width: 56,
+      height: 56,
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppColors.divider),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: points.length < 2
+            ? const Center(
+                child: Icon(Icons.route, color: AppColors.textHint, size: 22),
+              )
+            : CustomPaint(
+                painter: _RoutePainter(points),
+                size: const Size(56, 56),
+              ),
+      ),
+    );
+  }
+}
+
+class _RoutePainter extends CustomPainter {
+  final List<PaceRecord> points;
+  const _RoutePainter(this.points);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (points.length < 2) return;
+
+    final lats = points.map((p) => p.latitude).toList();
+    final lngs = points.map((p) => p.longitude).toList();
+
+    final minLat = lats.reduce(min);
+    final maxLat = lats.reduce(max);
+    final minLng = lngs.reduce(min);
+    final maxLng = lngs.reduce(max);
+
+    // 범위가 0이면 epsilon 처리 (직선 경로 등)
+    final latRange = max(maxLat - minLat, 0.00001);
+    final lngRange = max(maxLng - minLng, 0.00001);
+
+    const padding = 6.0;
+    final w = size.width - padding * 2;
+    final h = size.height - padding * 2;
+
+    Offset toOffset(PaceRecord r) => Offset(
+          padding + (r.longitude - minLng) / lngRange * w,
+          padding + (1 - (r.latitude - minLat) / latRange) * h,
+        );
+
+    // 경로 선
+    final paint = Paint()
+      ..color = AppColors.primary
+      ..strokeWidth = 1.8
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    final path = Path();
+    final first = toOffset(points.first);
+    path.moveTo(first.dx, first.dy);
+    for (int i = 1; i < points.length; i++) {
+      final o = toOffset(points[i]);
+      path.lineTo(o.dx, o.dy);
+    }
+    canvas.drawPath(path, paint);
+
+    // 출발점 (초록)
+    canvas.drawCircle(
+      toOffset(points.first),
+      2.5,
+      Paint()..color = Colors.green,
+    );
+    // 도착점 (빨강)
+    canvas.drawCircle(
+      toOffset(points.last),
+      2.5,
+      Paint()..color = Colors.red,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_RoutePainter old) => old.points.length != points.length;
 }
 
 class _StartButton extends StatelessWidget {

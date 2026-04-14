@@ -30,6 +30,9 @@ dependencies:
 
   cupertino_icons: ^1.0.6
 
+  # ── 지도
+  google_maps_flutter: ^2.9.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
