@@ -13,7 +13,7 @@ import '../models/running_session.dart';
 class GpsService {
   // ── 설정값 (계획서 사양) ─────────────────────────────────────
   static const _windowSec    = 7;    // 이동 평균 윈도우 (5~10초)
-  static const _maxAccuracyM = 20.0; // 정확도 불량 임계값 (m)
+  static const _maxAccuracyM = 50.0; // 정확도 불량 임계값 (m)
   static const _minSpeedMs   = 0.5;  // 정지 판정 최소 속도 (m/s)
   static const _maxJumpKm    = 0.10; // GPS 튐 무시 임계값 (1.5초 내 100m)
 
@@ -45,6 +45,10 @@ class GpsService {
     if (perm == LocationPermission.denied) {
       perm = await Geolocator.requestPermission();
     }
+    // deniedForever면 권한 설정 불가
+    if (perm == LocationPermission.deniedForever) return false;
+    // Android 12+ 대략적 위치(reduced)는 GPS 정확도 불량 → 정확한 위치 안내
+    if (perm == LocationPermission.unableToDetermine) return false;
     return perm == LocationPermission.whileInUse ||
            perm == LocationPermission.always;
   }

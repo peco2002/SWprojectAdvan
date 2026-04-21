@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 import 'core/constants.dart';
 import 'services/running_provider.dart';
+import 'services/vo2max_model.dart';
 import 'screens/login_screen.dart';
 import 'screens/body_setup_screen.dart';
 import 'screens/home_screen.dart';
@@ -24,6 +25,7 @@ void main() async {
   } on FirebaseException catch (e) {
     if (e.code != 'duplicate-app') rethrow;
   }
+  await VO2maxModel.instance.initialize();
   runApp(const RunRightApp());
 }
 

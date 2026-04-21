@@ -33,6 +33,9 @@ dependencies:
   # ── 지도
   google_maps_flutter: ^2.9.0
 
+  # ── ML 추론
+  tflite_flutter: ^0.12.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -40,3 +43,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/norm_params.json
+    - assets/vo2max_model.tflite

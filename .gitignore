@@ -55,3 +55,9 @@ GoogleService-Info.plist
 #.md 파일 업로드 안함 (README.md 제외)
 *.md
 !README.md
+
+# ML 학습 데이터 및 스크립트 (앱 구동 불필요)
+dataset/
+
+# Claude Code 개인 설정
+.claude/

@@ -40,6 +40,7 @@ class BodyProfile {
         bodyFatPercent:  bodyFatPercent,
         muscleMassKg:    muscleMassKg,
         weightKg:        weightKg,
+        heightCm:        heightCm,
       );
 
   /// 권장 페이스 범위 [빠른 한계(sec/km), 느린 한계(sec/km)]

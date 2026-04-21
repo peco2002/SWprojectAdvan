@@ -16,6 +16,7 @@ import '../services/database_service.dart';
 import '../services/auth_service.dart';
 import 'running_screen.dart';
 import 'session_detail_screen.dart';
+import 'pace_result_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -57,11 +58,17 @@ class HomeScreen extends StatelessWidget {
 
               // ── 맞춤 페이스 카드 ─────────────────────
               if (profile != null)
-                _MyPaceCard(
-                  fast:      PaceCalculator.formatPace(profile.fastLimitSec),
-                  slow:      PaceCalculator.formatPace(profile.slowLimitSec),
-                  vo2max:    profile.vo2max,
-                  hasInbody: profile.hasInbodyData,
+                GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const PaceResultScreen()),
+                  ),
+                  child: _MyPaceCard(
+                    fast:      PaceCalculator.formatPace(profile.fastLimitSec),
+                    slow:      PaceCalculator.formatPace(profile.slowLimitSec),
+                    vo2max:    profile.vo2max,
+                    hasInbody: profile.hasInbodyData,
+                  ),
                 ),
 
               const SizedBox(height: 16),
@@ -136,16 +143,33 @@ class _LogoutButtonState extends State<_LogoutButton> {
 
 // ── 기록 목록 (Firebase DB 연동) ──────────────────────
 
-class _SessionList extends StatelessWidget {
+class _SessionList extends StatefulWidget {
   final String uid;
   const _SessionList({required this.uid});
 
   @override
+  State<_SessionList> createState() => _SessionListState();
+}
+
+class _SessionListState extends State<_SessionList> {
+  late final Stream<List<RunningSession>> _stream;
+
+  @override
+  void initState() {
+    super.initState();
+    // 스트림을 한 번만 생성 — rebuild마다 재생성하면 구독이 끊겼다 재연결되어
+    // 최신 세션이 잠시 안 보이는 문제 발생
+    _stream = widget.uid.isEmpty
+        ? const Stream.empty()
+        : DatabaseService().sessionStream(widget.uid);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (uid.isEmpty) return const _EmptyHistory();
+    if (widget.uid.isEmpty) return const _EmptyHistory();
 
     return StreamBuilder<List<RunningSession>>(
-      stream: DatabaseService().sessionStream(uid),
+      stream: _stream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -158,7 +182,8 @@ class _SessionList extends StatelessWidget {
         return ListView.separated(
           itemCount: sessions.length,
           separatorBuilder: (_, __) => const SizedBox(height: 10),
-          itemBuilder: (_, i) => _SessionCard(session: sessions[i], uid: uid),
+          itemBuilder: (_, i) =>
+              _SessionCard(session: sessions[i], uid: widget.uid),
         );
       },
     );

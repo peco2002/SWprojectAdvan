@@ -200,7 +200,23 @@ class _RunningScreenState extends State<RunningScreen>
           _Controls(
             state:   p.state,
             started: _started,
-            onStart:  () async { setState(() => _started = true); await p.startRun(); },
+            onStart:  () async {
+              final perm = await Geolocator.checkPermission();
+              if (perm != LocationPermission.whileInUse &&
+                  perm != LocationPermission.always) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('정확한 위치 권한이 필요합니다. 설정 > 앱 > RunRight > 위치에서 "정확한 위치"를 허용해주세요.'),
+                      duration: Duration(seconds: 4),
+                    ),
+                  );
+                }
+                return;
+              }
+              setState(() => _started = true);
+              await p.startRun();
+            },
             onPause:  p.pause,
             onResume: p.resume,
             onStop:   () => _askStop(context, p),

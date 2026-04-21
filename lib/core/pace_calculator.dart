@@ -1,23 +1,5 @@
 // lib/core/pace_calculator.dart
-//
-// ══════════════════════════════════════════════════
-//  [메인 기능] 신체 데이터 기반 맞춤 페이스 산출기
-// ══════════════════════════════════════════════════
-//
-// 파이프라인:
-//   신체 데이터 (키·몸무게·나이·성별·운동경험·인바디)
-//     ↓
-//   VO2max 추정
-//     · 19–35세 + 체지방률 있음 → 2005 국내 비운동 회귀식
-//       (R²≈0.70, SEE≈3.74)
-//     · 그 외 → 나이·성별 기반 ACSM 간이식 + 인바디 보정
-//     ↓
-//   ACSM 러닝 방정식 역산 (VO₂ → 속도 → 페이스)
-//     · grade = 0.01 (실외 러닝 근사, Jones 2002)
-//     · v = (VO₂ − 3.5) / (0.2 + 0.9·grade)
-//     ↓
-//   권장 페이스 범위  템포(0.85·VO₂max) ~ 롱런(0.75·VO₂max)
-//   권장 운동 거리    세션 시간 ÷ 페이스 (BMI·PBF·운동경험 기반)
+import '../services/vo2max_model.dart';
 
 class PaceCalculator {
   PaceCalculator._();
@@ -28,6 +10,7 @@ class PaceCalculator {
 
   // ──────────────────────────────────────────────
   // 1. VO2max 추정 (ml/kg/min)
+  //    ML 모델 로드 시 ML 우선, 미로드 시 수식 폴백
   // ──────────────────────────────────────────────
   static double estimateVO2max({
     required int    age,
@@ -36,8 +19,21 @@ class PaceCalculator {
     double? bodyFatPercent,
     double? muscleMassKg,
     double? weightKg,
+    double? heightCm,
   }) {
-    // 운동경험 → 신체활동평정(PAR) 변환
+    // ML 모델 추론 시도
+    if (VO2maxModel.instance.isReady && weightKg != null && heightCm != null) {
+      final ml = VO2maxModel.instance.predict(
+        age:            age.toDouble(),
+        genderEncoded:  gender == 'female' ? 1.0 : 0.0,
+        heightCm:       heightCm,
+        weightKg:       weightKg,
+        bodyFatPercent: bodyFatPercent,
+      );
+      if (ml != null) return ml;
+    }
+
+    // 수식 폴백
     final par = switch (fitnessLevel) {
       'occasional' => 5.0,
       'regular'    => 8.0,
@@ -46,37 +42,26 @@ class PaceCalculator {
     final sexFemale = gender == 'female' ? 1.0 : 0.0;
 
     double vo2;
-
     if (bodyFatPercent != null && age >= 19 && age <= 35) {
-      // ─ 2005 국내 비운동 회귀식 ─────────────────────
-      // VO₂max = 48.47 − 0.41·PBF + 0.45·PAR − 5.12·sex_female
       vo2 = 48.47 - 0.41 * bodyFatPercent + 0.45 * par - 5.12 * sexFemale;
     } else {
-      // ─ 나이·성별 기반 기본 추정값 ─────────────────
       vo2 = gender == 'male'
           ? 56.363 - 0.381 * age
           : 44.022 - 0.353 * age;
-
-      // InBody 보정: 체지방률
       if (bodyFatPercent != null) {
         final avgFat = gender == 'male' ? 20.0 : 28.0;
-        final delta  = (bodyFatPercent - avgFat) * 0.18;
-        vo2 -= delta.clamp(-6.0, 8.0);
+        vo2 -= ((bodyFatPercent - avgFat) * 0.18).clamp(-6.0, 8.0);
       }
-      // InBody 보정: 골격근량
       if (muscleMassKg != null && weightKg != null && weightKg > 0) {
         final musclePct = muscleMassKg / weightKg * 100;
         final avgMuscle = gender == 'male' ? 47.0 : 40.0;
-        final delta     = (musclePct - avgMuscle) * 0.12;
-        vo2 += delta.clamp(-4.0, 6.0);
+        vo2 += ((musclePct - avgMuscle) * 0.12).clamp(-4.0, 6.0);
       }
-      // 운동 경험 보정
       switch (fitnessLevel) {
         case 'occasional': vo2 += 3; break;
         case 'regular':    vo2 += 7; break;
       }
     }
-
     return vo2.clamp(15.0, 70.0);
   }
 
