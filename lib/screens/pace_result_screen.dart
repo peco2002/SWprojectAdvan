@@ -29,6 +29,44 @@ class PaceResultScreen extends StatelessWidget {
     final vo2max    = profile.vo2max;
     final distances = profile.recommendedDistances;
 
+    if (fastSec == null || slowSec == null || vo2max == null || distances == null) {
+      return Scaffold(
+        backgroundColor: AppColors.background,
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.error_outline, color: Colors.redAccent, size: 52),
+                  const SizedBox(height: 20),
+                  const Text('VO₂max 예측 모델 로드에 실패했습니다.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: AppColors.textPrimary,
+                          fontSize: 16, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 10),
+                  const Text('앱을 재시작해 주세요.',
+                      style: TextStyle(color: AppColors.textHint, fontSize: 14)),
+                  const SizedBox(height: 32),
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).popUntil((r) => r.isFirst),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14)),
+                    ),
+                    child: const Text('홈으로 이동'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -66,16 +104,16 @@ class PaceResultScreen extends StatelessWidget {
 
                       // ── 권장 페이스 메인 카드 ───────────────────
                       _PaceRangeCard(
-                        fastSec: fastSec,
-                        slowSec: slowSec,
-                        tempoKm: distances['tempo']!,
-                        longKm:  distances['long']!,
+                        fastSec: fastSec!,
+                        slowSec: slowSec!,
+                        tempoKm: distances!['tempo']!,
+                        longKm:  distances!['long']!,
                       ),
 
                       const SizedBox(height: 20),
 
                       // ── VO2max / 분석 근거 ──────────────────────
-                      _AnalysisCard(profile: profile, vo2max: vo2max),
+                      _AnalysisCard(profile: profile, vo2max: vo2max!),
 
                       const SizedBox(height: 20),
 
@@ -246,46 +284,61 @@ class _PaceBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 전체 범위: 4'00" (240) ~ 12'00" (720)
-    const totalMin = 240, totalMax = 720;
-    final totalRange = (totalMax - totalMin).toDouble();
+    // 전체 범위: 왼쪽=빠름(0'00"/0sec) ~ 오른쪽=느림(13'00"/780sec)
+    const totalMax = 780;
+    final clampedFast = fastSec.clamp(0, totalMax).toDouble();
+    final clampedSlow = slowSec.clamp(0, totalMax).toDouble();
 
-    final leftPct  = (fastSec - totalMin) / totalRange;
-    final widthPct = (slowSec - fastSec)  / totalRange;
+    const labelStyle = TextStyle(color: AppColors.textHint, fontSize: 10);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(4),
-          child: Stack(
-            children: [
-              Container(height: 10, color: AppColors.divider),
-              FractionallySizedBox(
-                widthFactor: 1,
-                child: Row(
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final totalWidth = constraints.maxWidth;
+            final leftPx  = clampedFast / totalMax * totalWidth;
+            final greenPx = ((clampedSlow - clampedFast) / totalMax * totalWidth)
+                .clamp(2.0, totalWidth - leftPx);
+
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: SizedBox(
+                height: 10,
+                width: totalWidth,
+                child: Stack(
                   children: [
-                    Flexible(flex: (leftPct * 100).round(), child: const SizedBox()),
-                    Flexible(
-                      flex: (widthPct * 100).clamp(5, 100).round(),
-                      child: Container(height: 10, color: AppColors.primary),
-                    ),
-                    Flexible(
-                      flex: ((1 - leftPct - widthPct) * 100).clamp(0, 100).round(),
-                      child: const SizedBox(),
+                    Container(height: 10, width: totalWidth, color: AppColors.divider),
+                    Positioned(
+                      left: leftPx,
+                      top: 0,
+                      child: Container(
+                        height: 10,
+                        width: greenPx,
+                        color: AppColors.primary,
+                      ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
+            );
+          },
         ),
-        const SizedBox(height: 6),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: const [
-          Text("4'00\"", style: TextStyle(color: AppColors.textHint, fontSize: 10)),
-          Text('느림 ← 빠름', style: TextStyle(color: AppColors.textHint, fontSize: 10)),
-          Text("12'00\"", style: TextStyle(color: AppColors.textHint, fontSize: 10)),
-        ]),
+        const SizedBox(height: 4),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
+              Text("0'00\"", style: labelStyle),
+              Text('빠름', style: labelStyle),
+            ]),
+            const Text("6'30\"", style: labelStyle),
+            Column(crossAxisAlignment: CrossAxisAlignment.end, children: const [
+              Text("13'00\"", style: labelStyle),
+              Text('느림', style: labelStyle),
+            ]),
+          ],
+        ),
       ],
     );
   }

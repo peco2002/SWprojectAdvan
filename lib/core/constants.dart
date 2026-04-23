@@ -3,6 +3,11 @@
 
 import 'package:flutter/material.dart';
 
+class AppConstants {
+  AppConstants._();
+  static const mapsApiKey = 'AIzaSyDWw8eHAawOXyI5UxRnkMxJJENh4JcNpjc';
+}
+
 class AppColors {
   AppColors._();
 

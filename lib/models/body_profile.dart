@@ -32,34 +32,38 @@ class BodyProfile {
 
   // ── 계산 결과 (게터) ─────────────────────────────────────────
 
-  /// VO2max 추정값 (ml/kg/min)
-  double get vo2max => PaceCalculator.estimateVO2max(
-        age:             age,
-        gender:          gender,
-        fitnessLevel:    fitnessLevel,
-        bodyFatPercent:  bodyFatPercent,
-        muscleMassKg:    muscleMassKg,
-        weightKg:        weightKg,
-        heightCm:        heightCm,
+  /// VO2max 추정값 (ml/kg/min) — ML 모델 미로드 시 null
+  double? get vo2max => PaceCalculator.estimateVO2max(
+        age:            age,
+        gender:         gender,
+        weightKg:       weightKg,
+        heightCm:       heightCm,
+        bodyFatPercent: bodyFatPercent,
       );
 
   /// 권장 페이스 범위 [빠른 한계(sec/km), 느린 한계(sec/km)]
-  List<int> get paceRange =>
-      PaceCalculator.recommendedPaceRange(vo2max: vo2max);
+  List<int>? get paceRange {
+    final v = vo2max;
+    if (v == null) return null;
+    return PaceCalculator.recommendedPaceRange(vo2max: v);
+  }
 
-  int get fastLimitSec => paceRange[0];
-  int get slowLimitSec => paceRange[1];
+  int? get fastLimitSec => paceRange?[0];
+  int? get slowLimitSec => paceRange?[1];
 
   /// 권장 운동 거리 {'tempo': X.X, 'long': X.X} (km)
-  Map<String, double> get recommendedDistances =>
-      PaceCalculator.recommendedDistances(
-        vo2max:        vo2max,
-        fitnessLevel:  fitnessLevel,
-        weightKg:      weightKg,
-        heightCm:      heightCm,
-        gender:        gender,
-        bodyFatPercent: bodyFatPercent,
-      );
+  Map<String, double>? get recommendedDistances {
+    final v = vo2max;
+    if (v == null) return null;
+    return PaceCalculator.recommendedDistances(
+      vo2max:         v,
+      fitnessLevel:   fitnessLevel,
+      weightKg:       weightKg,
+      heightCm:       heightCm,
+      gender:         gender,
+      bodyFatPercent: bodyFatPercent,
+    );
+  }
 
   /// 인바디 데이터 입력 여부
   bool get hasInbodyData =>

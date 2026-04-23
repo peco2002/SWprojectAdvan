@@ -4,7 +4,6 @@
 //   _EmptyHistory → _SessionList (DB에서 기록 불러와서 표시)
 //   로그아웃 버튼 추가
 
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -57,18 +56,34 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 28),
 
               // ── 맞춤 페이스 카드 ─────────────────────
-              if (profile != null)
+              if (profile != null && profile.fastLimitSec != null)
                 GestureDetector(
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const PaceResultScreen()),
                   ),
                   child: _MyPaceCard(
-                    fast:      PaceCalculator.formatPace(profile.fastLimitSec),
-                    slow:      PaceCalculator.formatPace(profile.slowLimitSec),
-                    vo2max:    profile.vo2max,
+                    fast:      PaceCalculator.formatPace(profile.fastLimitSec!),
+                    slow:      PaceCalculator.formatPace(profile.slowLimitSec!),
+                    vo2max:    profile.vo2max!,
                     hasInbody: profile.hasInbodyData,
                   ),
+                )
+              else if (profile != null)
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent.withOpacity(0.1),
+                    border: Border.all(color: Colors.redAccent.withOpacity(0.4)),
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: const Row(children: [
+                    Icon(Icons.error_outline, color: Colors.redAccent, size: 20),
+                    SizedBox(width: 10),
+                    Text('VO₂max 모델 로드 실패 — 앱을 재시작해 주세요.',
+                        style: TextStyle(color: Colors.redAccent, fontSize: 13)),
+                  ]),
                 ),
 
               const SizedBox(height: 16),
@@ -364,20 +379,53 @@ class _MyPaceCard extends StatelessWidget {
       );
 }
 
-// ── 경로 썸네일 (CustomPaint) ─────────────────────────
+// ── 경로 썸네일 (Static Maps API) ────────────────────
 class _RouteThumbnail extends StatelessWidget {
   final List<PaceRecord> history;
   const _RouteThumbnail({required this.history});
 
+  String? _buildStaticMapUrl() {
+    final points = history
+        .where((r) => !(r.latitude == 0.0 && r.longitude == 0.0))
+        .toList();
+    if (points.length < 2) return null;
+
+    // 최대 50개 균등 샘플링
+    final List<PaceRecord> sampled;
+    if (points.length <= 50) {
+      sampled = points;
+    } else {
+      sampled = [];
+      final step = (points.length - 1) / 49;
+      for (int i = 0; i < 50; i++) {
+        sampled.add(points[(i * step).round()]);
+      }
+    }
+
+    final path  = sampled.map((p) => '${p.latitude},${p.longitude}').join('|');
+    final first = points.first;
+    final last  = points.last;
+
+    return 'https://maps.googleapis.com/maps/api/staticmap'
+        '?size=144x144'
+        '&scale=1'
+        '&maptype=roadmap'
+        '&style=feature:all|element:labels|visibility:off'
+        '&style=feature:poi|visibility:off'
+        '&style=feature:transit|visibility:off'
+        '&path=color:0x2ECC71FF|weight:5|$path'
+        '&markers=size:tiny|color:green|${first.latitude},${first.longitude}'
+        '&markers=size:tiny|color:red|${last.latitude},${last.longitude}'
+        '&key=${AppConstants.mapsApiKey}';
+  }
+
   @override
   Widget build(BuildContext context) {
-    final points = history
-        .where((r) => r.latitude != 0.0 || r.longitude != 0.0)
-        .toList();
+    final url = _buildStaticMapUrl();
 
     return Container(
-      width: 56,
-      height: 56,
+      width: 72,
+      height: 72,
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(8),
@@ -385,81 +433,32 @@ class _RouteThumbnail extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: points.length < 2
+        child: url == null
             ? const Center(
                 child: Icon(Icons.route, color: AppColors.textHint, size: 22),
               )
-            : CustomPaint(
-                painter: _RoutePainter(points),
-                size: const Size(56, 56),
+            : Image.network(
+                url,
+                fit: BoxFit.cover,
+                loadingBuilder: (_, child, progress) => progress == null
+                    ? child
+                    : const Center(
+                        child: SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 1.5,
+                            color: AppColors.textHint,
+                          ),
+                        ),
+                      ),
+                errorBuilder: (_, __, ___) => const Center(
+                  child: Icon(Icons.route, color: AppColors.textHint, size: 22),
+                ),
               ),
       ),
     );
   }
-}
-
-class _RoutePainter extends CustomPainter {
-  final List<PaceRecord> points;
-  const _RoutePainter(this.points);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (points.length < 2) return;
-
-    final lats = points.map((p) => p.latitude).toList();
-    final lngs = points.map((p) => p.longitude).toList();
-
-    final minLat = lats.reduce(min);
-    final maxLat = lats.reduce(max);
-    final minLng = lngs.reduce(min);
-    final maxLng = lngs.reduce(max);
-
-    // 범위가 0이면 epsilon 처리 (직선 경로 등)
-    final latRange = max(maxLat - minLat, 0.00001);
-    final lngRange = max(maxLng - minLng, 0.00001);
-
-    const padding = 6.0;
-    final w = size.width - padding * 2;
-    final h = size.height - padding * 2;
-
-    Offset toOffset(PaceRecord r) => Offset(
-          padding + (r.longitude - minLng) / lngRange * w,
-          padding + (1 - (r.latitude - minLat) / latRange) * h,
-        );
-
-    // 경로 선
-    final paint = Paint()
-      ..color = AppColors.primary
-      ..strokeWidth = 1.8
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-
-    final path = Path();
-    final first = toOffset(points.first);
-    path.moveTo(first.dx, first.dy);
-    for (int i = 1; i < points.length; i++) {
-      final o = toOffset(points[i]);
-      path.lineTo(o.dx, o.dy);
-    }
-    canvas.drawPath(path, paint);
-
-    // 출발점 (초록)
-    canvas.drawCircle(
-      toOffset(points.first),
-      2.5,
-      Paint()..color = Colors.green,
-    );
-    // 도착점 (빨강)
-    canvas.drawCircle(
-      toOffset(points.last),
-      2.5,
-      Paint()..color = Colors.red,
-    );
-  }
-
-  @override
-  bool shouldRepaint(_RoutePainter old) => old.points.length != points.length;
 }
 
 class _StartButton extends StatelessWidget {

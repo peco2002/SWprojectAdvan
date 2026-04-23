@@ -9,60 +9,23 @@ class PaceCalculator {
   static const double _k     = 0.209; // 0.2 + 0.9 * 0.01
 
   // ──────────────────────────────────────────────
-  // 1. VO2max 추정 (ml/kg/min)
-  //    ML 모델 로드 시 ML 우선, 미로드 시 수식 폴백
+  // 1. VO2max 추정 (ml/kg/min) — ML 모델 전용
   // ──────────────────────────────────────────────
-  static double estimateVO2max({
+  static double? estimateVO2max({
     required int    age,
     required String gender,
-    required String fitnessLevel,
+    required double weightKg,
+    required double heightCm,
     double? bodyFatPercent,
-    double? muscleMassKg,
-    double? weightKg,
-    double? heightCm,
   }) {
-    // ML 모델 추론 시도
-    if (VO2maxModel.instance.isReady && weightKg != null && heightCm != null) {
-      final ml = VO2maxModel.instance.predict(
-        age:            age.toDouble(),
-        genderEncoded:  gender == 'female' ? 1.0 : 0.0,
-        heightCm:       heightCm,
-        weightKg:       weightKg,
-        bodyFatPercent: bodyFatPercent,
-      );
-      if (ml != null) return ml;
-    }
-
-    // 수식 폴백
-    final par = switch (fitnessLevel) {
-      'occasional' => 5.0,
-      'regular'    => 8.0,
-      _            => 2.0,
-    };
-    final sexFemale = gender == 'female' ? 1.0 : 0.0;
-
-    double vo2;
-    if (bodyFatPercent != null && age >= 19 && age <= 35) {
-      vo2 = 48.47 - 0.41 * bodyFatPercent + 0.45 * par - 5.12 * sexFemale;
-    } else {
-      vo2 = gender == 'male'
-          ? 56.363 - 0.381 * age
-          : 44.022 - 0.353 * age;
-      if (bodyFatPercent != null) {
-        final avgFat = gender == 'male' ? 20.0 : 28.0;
-        vo2 -= ((bodyFatPercent - avgFat) * 0.18).clamp(-6.0, 8.0);
-      }
-      if (muscleMassKg != null && weightKg != null && weightKg > 0) {
-        final musclePct = muscleMassKg / weightKg * 100;
-        final avgMuscle = gender == 'male' ? 47.0 : 40.0;
-        vo2 += ((musclePct - avgMuscle) * 0.12).clamp(-4.0, 6.0);
-      }
-      switch (fitnessLevel) {
-        case 'occasional': vo2 += 3; break;
-        case 'regular':    vo2 += 7; break;
-      }
-    }
-    return vo2.clamp(15.0, 70.0);
+    if (!VO2maxModel.instance.isReady) return null;
+    return VO2maxModel.instance.predict(
+      age:            age.toDouble(),
+      genderEncoded:  gender == 'female' ? 1.0 : 0.0,
+      heightCm:       heightCm,
+      weightKg:       weightKg,
+      bodyFatPercent: bodyFatPercent,
+    );
   }
 
   // ──────────────────────────────────────────────

@@ -67,7 +67,8 @@ class RunningSession {
         paceHistory:     m['paceHistory'] == null
             ? []
             : (m['paceHistory'] as List<dynamic>)
-                .map((e) => PaceRecord.fromMap(e as Map<String, dynamic>))
+                .map((e) => PaceRecord.fromMap(
+                      Map<String, dynamic>.from(e as Map)))
                 .toList(),
       );
 }
@@ -100,7 +101,7 @@ class PaceRecord {
   factory PaceRecord.fromMap(Map<String, dynamic> m) => PaceRecord(
         timestamp:  DateTime.parse(m['ts'] as String),
         distanceKm: (m['km']  as num).toDouble(),
-        paceSec:    m['pac']  as int,
+        paceSec:    (m['pac'] as num).toInt(),
         latitude:   (m['lat'] as num).toDouble(),
         longitude:  (m['lng'] as num).toDouble(),
       );

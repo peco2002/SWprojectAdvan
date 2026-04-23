@@ -44,9 +44,12 @@ class VO2maxModel {
   }) {
     if (!_ready || _interpreter == null) return null;
 
-    final hasBodyFat = _featureNames.contains('체지방율') && bodyFatPercent != null;
-    final raw = hasBodyFat
-        ? [age, genderEncoded, heightCm, weightKg, bodyFatPercent!]
+    final bodyFatIdx = _featureNames.indexOf('체지방율');
+    final hasBodyFatFeature = bodyFatIdx != -1;
+    final effectiveBodyFat = bodyFatPercent ?? (hasBodyFatFeature ? _mean[bodyFatIdx] : null);
+
+    final raw = hasBodyFatFeature
+        ? [age, genderEncoded, heightCm, weightKg, effectiveBodyFat!]
         : [age, genderEncoded, heightCm, weightKg];
 
     if (raw.length != _mean.length) return null;
