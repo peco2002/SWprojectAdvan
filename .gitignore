@@ -44,8 +44,11 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Firebase 환경 변수 파일 (팀원 각자 .env.json.example 복사 후 생성)
+# 환경 변수 파일 (팀원 각자 .env.json.example 복사 후 생성)
 .env.json
+
+# Android 로컬 설정 (SDK 경로·API 키 포함, 커밋 금지)
+android/local.properties
 
 # Google Services 설정 파일 (Firebase 콘솔에서 다운로드)
 google-services.json

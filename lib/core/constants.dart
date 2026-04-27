@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class AppConstants {
   AppConstants._();
-  static const mapsApiKey = 'AIzaSyDWw8eHAawOXyI5UxRnkMxJJENh4JcNpjc';
+  static const mapsApiKey = String.fromEnvironment('MAPS_API_KEY');
 }
 
 class AppColors {
