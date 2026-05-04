@@ -14,7 +14,7 @@ import 'services/running_provider.dart';
 import 'services/vo2max_model.dart';
 import 'screens/login_screen.dart';
 import 'screens/body_setup_screen.dart';
-import 'screens/home_screen.dart';
+import 'screens/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -113,7 +113,7 @@ class _ProfileLoaderState extends State<_ProfileLoader> {
       );
     }
     final profile = context.watch<RunningProvider>().profile;
-    if (profile != null) return const HomeScreen();
+    if (profile != null) return const MainScreen();
     return BodySetupScreen(
       uid:  widget.user.uid,
       name: _userName,

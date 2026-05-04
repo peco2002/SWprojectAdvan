@@ -78,6 +78,13 @@ class DatabaseService {
     );
   }
 
+  // ── 최근 N개 세션 불러오기 (적응형 알고리즘용) ────
+  Future<List<RunningSession>> getRecentSessions(String uid,
+      {int limit = 5}) async {
+    final all = await getSessions(uid); // 이미 최신 순 정렬
+    return all.take(limit).toList();
+  }
+
   // ── 러닝 세션 삭제 ────────────────────────────────
   Future<void> deleteSession(String uid, String sessionId) async {
     await _db.ref('users/$uid/sessions/$sessionId').remove();

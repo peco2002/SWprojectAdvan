@@ -13,6 +13,7 @@ import '../models/running_session.dart';
 import 'gps_service.dart';
 import 'tts_service.dart';
 import 'database_service.dart';
+import 'heart_rate_service.dart';
 
 enum SessionState { idle, running, paused, finished }
 
@@ -103,6 +104,7 @@ class RunningProvider extends ChangeNotifier {
     notifyListeners();
 
     await _gps.start();
+    await HeartRateService.requestPermission();
     await _tts.announceStart(fastLimit, slowLimit);
 
     _timer  = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -154,21 +156,27 @@ class RunningProvider extends ChangeNotifier {
       distanceKm:  distanceKm,
     );
 
+    final endTime   = DateTime.now();
+    final startTime = endTime.subtract(Duration(seconds: elapsedSeconds));
+    final avgHr     = await HeartRateService.getAverageHeartRate(startTime, endTime);
+
     final session = RunningSession(
-      id:              DateTime.now().millisecondsSinceEpoch.toString(),
-      startTime:       DateTime.now().subtract(Duration(seconds: elapsedSeconds)),
-      endTime:         DateTime.now(),
-      totalDistanceKm: distanceKm,
-      durationSeconds: elapsedSeconds,
-      averagePaceSec:  avgPace,
-      caloriesBurned:  calories,
-      paceHistory:     List.from(history),
+      id:               endTime.millisecondsSinceEpoch.toString(),
+      startTime:        startTime,
+      endTime:          endTime,
+      totalDistanceKm:  distanceKm,
+      durationSeconds:  elapsedSeconds,
+      averagePaceSec:   avgPace,
+      caloriesBurned:   calories,
+      averageHeartRate: avgHr,
+      paceHistory:      List.from(history),
     );
 
-    // ── Firebase DB에 저장 ───────────────────────────
+    // ── Firebase DB에 저장 + 적응형 보정 ────────────
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid != null) {
       await _db.saveSession(uid, session);
+      await _adaptProfile(uid, session);
     }
 
     await _tts.announceFinish(
@@ -178,6 +186,121 @@ class RunningProvider extends ChangeNotifier {
     );
     notifyListeners();
     return session;
+  }
+
+  // ── 적응형 보정 ──────────────────────────────────────────────
+  Future<void> _adaptProfile(String uid, RunningSession latest) async {
+    if (profile == null) return;
+    // 10분 미만 세션은 제외 (워밍업 등)
+    if (latest.durationSeconds < 600) return;
+
+    final newCount = profile!.sessionCount + 1;
+
+    // 3회 미만이면 카운트만 증가
+    if (newCount < 3) {
+      final updated = profile!.copyWith(sessionCount: newCount);
+      profile = updated;
+      await _db.saveProfile(uid, updated);
+      notifyListeners();
+      return;
+    }
+
+    // 최근 유효 세션 최대 5개 조회
+    final recent = await _db.getRecentSessions(uid, limit: 6);
+    final valid  = recent
+        .where((s) => s.durationSeconds >= 600)
+        .take(5)
+        .toList();
+    if (valid.length < 3) return;
+
+    // 보정 기준: ML 계산 원본 거리
+    final v = profile!.vo2max;
+    if (v == null) return;
+    final baseDists = PaceCalculator.recommendedDistances(
+      vo2max:         v,
+      fitnessLevel:   profile!.fitnessLevel,
+      weightKg:       profile!.weightKg,
+      heightCm:       profile!.heightCm,
+      gender:         profile!.gender,
+      bodyFatPercent: profile!.bodyFatPercent,
+    );
+
+    final result = PaceCalculator.adaptFromSessions(
+      sessions:            valid,
+      currentFastLimitSec: profile!.fastLimitSec!,
+      currentSlowLimitSec: profile!.slowLimitSec!,
+      currentPaceAdjustSec: profile!.paceAdjustSec,
+      currentTempoDistKm:  profile!.adaptedTempoDistKm ?? baseDists['tempo']!,
+      currentLongDistKm:   profile!.adaptedLongDistKm  ?? baseDists['long']!,
+      baseTempoDistKm:     baseDists['tempo']!,
+      baseLongDistKm:      baseDists['long']!,
+    );
+
+    final updated = profile!.copyWith(
+      paceAdjustSec:      result.paceAdjustSec,
+      adaptedTempoDistKm: result.tempoDistKm,
+      adaptedLongDistKm:  result.longDistKm,
+      sessionCount:       newCount,
+    );
+
+    profile = updated;
+    await _db.saveProfile(uid, updated);
+    notifyListeners();
+  }
+
+  // ── 디버그: 가짜 세션 주입 (테스트 전용) ─────────────────────
+  Future<String> debugSimulateRun({
+    required int    avgPaceSec,
+    required double distanceKm,
+    required int    durationSeconds,
+  }) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) return '로그인 필요';
+    if (profile == null) return '프로필 없음';
+
+    final endTime   = DateTime.now();
+    final startTime = endTime.subtract(Duration(seconds: durationSeconds));
+
+    final session = RunningSession(
+      id:              endTime.millisecondsSinceEpoch.toString(),
+      startTime:       startTime,
+      endTime:         endTime,
+      totalDistanceKm: distanceKm,
+      durationSeconds: durationSeconds,
+      averagePaceSec:  avgPaceSec,
+      caloriesBurned:  PaceCalculator.estimateCalories(
+        weightKg:   profile!.weightKg,
+        distanceKm: distanceKm,
+      ),
+      paceHistory: [],
+    );
+
+    final beforeCount = profile!.sessionCount;
+    final beforeFast  = profile!.fastLimitSec;
+    final beforeSlow  = profile!.slowLimitSec;
+    final beforeTempo = profile!.adaptedTempoDistKm
+        ?? profile!.recommendedDistances?['tempo'];
+    final beforeLong  = profile!.adaptedLongDistKm
+        ?? profile!.recommendedDistances?['long'];
+
+    await _db.saveSession(uid, session);
+    await _adaptProfile(uid, session);
+
+    final afterFast  = profile!.fastLimitSec;
+    final afterSlow  = profile!.slowLimitSec;
+    final afterTempo = profile!.recommendedDistances?['tempo'];
+    final afterLong  = profile!.recommendedDistances?['long'];
+    final newCount   = profile!.sessionCount;
+
+    String fmt(int? s) => s == null ? '-' : PaceCalculator.formatPace(s);
+
+    return '세션 추가 완료 ($beforeCount → $newCount회)\n'
+        '페이스: ${fmt(beforeFast)}~${fmt(beforeSlow)}'
+        ' → ${fmt(afterFast)}~${fmt(afterSlow)}\n'
+        '템포 거리: ${beforeTempo?.toStringAsFixed(1) ?? '-'}'
+        ' → ${afterTempo?.toStringAsFixed(1) ?? '-'} km\n'
+        '롱런 거리: ${beforeLong?.toStringAsFixed(1) ?? '-'}'
+        ' → ${afterLong?.toStringAsFixed(1) ?? '-'} km';
   }
 
   // ── GPS 콜백 ─────────────────────────────────────────────────

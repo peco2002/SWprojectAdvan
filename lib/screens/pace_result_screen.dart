@@ -160,7 +160,7 @@ class PaceResultScreen extends StatelessWidget {
 
 // ── 권장 페이스 범위 카드 ──────────────────────────────────────────
 
-class _PaceRangeCard extends StatelessWidget {
+class _PaceRangeCard extends StatefulWidget {
   final int fastSec, slowSec;
   final double tempoKm, longKm;
   const _PaceRangeCard({
@@ -171,7 +171,18 @@ class _PaceRangeCard extends StatelessWidget {
   });
 
   @override
+  State<_PaceRangeCard> createState() => _PaceRangeCardState();
+}
+
+class _PaceRangeCardState extends State<_PaceRangeCard> {
+  bool _isTempo = true;
+
+  @override
   Widget build(BuildContext context) {
+    final paceSec   = _isTempo ? widget.fastSec : widget.slowSec;
+    final distKm    = _isTempo ? widget.tempoKm : widget.longKm;
+    final distLabel = _isTempo ? '템포 런' : '롱 런';
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(24),
@@ -190,33 +201,21 @@ class _PaceRangeCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ── 페이스 범위 ──────────────────────────────
-          const Text('권장 페이스 범위',
-              style: TextStyle(color: AppColors.textSecondary, fontSize: 13)),
-          const SizedBox(height: 12),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(PaceCalculator.formatPace(fastSec),
-                    style: AppTextStyles.paceHero),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10, left: 8, right: 8),
-                  child: Text('~', style: TextStyle(
-                      color: AppColors.primary.withOpacity(0.6),
-                      fontSize: 28, fontWeight: FontWeight.w300)),
-                ),
-                Text(PaceCalculator.formatPace(slowSec),
-                    style: AppTextStyles.paceHero),
-              ],
-            ),
+          // ── 페이스 + 토글 ─────────────────────────────
+          Row(
+            children: [
+              const Text('권장 페이스 범위',
+                  style: TextStyle(color: AppColors.textSecondary, fontSize: 13)),
+              const SizedBox(width: 8),
+              _buildToggle(),
+            ],
           ),
+          const SizedBox(height: 12),
+          Center(child: Text(PaceCalculator.formatPace(paceSec), style: AppTextStyles.paceHero)),
           const SizedBox(height: 6),
-          const Text('/km', style: TextStyle(color: AppColors.textHint, fontSize: 14)),
+          const Center(child: Text('/km', style: TextStyle(color: AppColors.textHint, fontSize: 14))),
           const SizedBox(height: 16),
-          _PaceBar(fastSec: fastSec, slowSec: slowSec),
+          _PaceBar(fastSec: widget.fastSec, slowSec: widget.slowSec),
 
           // ── 권장 운동 거리 ────────────────────────────
           const SizedBox(height: 16),
@@ -225,58 +224,50 @@ class _PaceRangeCard extends StatelessWidget {
           const Text('권장 운동 거리',
               style: TextStyle(color: AppColors.textSecondary, fontSize: 13)),
           const SizedBox(height: 10),
-          Row(children: [
-            Expanded(child: _DistanceTile(
-              label:    '템포 런',
-              distKm:   tempoKm,
-              paceSec:  fastSec,
-            )),
-            const SizedBox(width: 10),
-            Expanded(child: _DistanceTile(
-              label:    '롱 런',
-              distKm:   longKm,
-              paceSec:  slowSec,
-            )),
-          ]),
+          Center(
+            child: Text(
+              '${distKm.toStringAsFixed(1)} km',
+              style: AppTextStyles.paceHero,
+            ),
+          ),
         ],
       ),
     );
   }
-}
 
-class _DistanceTile extends StatelessWidget {
-  final String label;
-  final double distKm;
-  final int    paceSec;
-  const _DistanceTile({required this.label, required this.distKm, required this.paceSec});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.08),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.primary.withOpacity(0.2)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildToggle() => Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(label,
-              style: const TextStyle(color: AppColors.textHint, fontSize: 11)),
-          const SizedBox(height: 4),
-          Text('${distKm.toStringAsFixed(1)} km',
-              style: const TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 20, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 2),
-          Text('${PaceCalculator.formatPace(paceSec)} /km',
-              style: const TextStyle(color: AppColors.textHint, fontSize: 11)),
+          _chip('템포런', _isTempo, () => setState(() => _isTempo = true)),
+          const SizedBox(width: 4),
+          _chip('롱런', !_isTempo, () => setState(() => _isTempo = false)),
         ],
-      ),
-    );
-  }
+      );
+
+  Widget _chip(String label, bool selected, VoidCallback onTap) =>
+      GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+          decoration: BoxDecoration(
+            color: selected ? AppColors.primary : Colors.transparent,
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(
+              color: selected ? AppColors.primary : AppColors.divider,
+            ),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: selected ? Colors.black : AppColors.textHint,
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      );
 }
+
 
 class _PaceBar extends StatelessWidget {
   final int fastSec, slowSec;

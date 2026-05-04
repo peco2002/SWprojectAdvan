@@ -10,6 +10,17 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- 화면 켜짐 유지 (러닝 중) -->
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <!-- Health Connect -->
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE"/>
+    <uses-permission android:name="android.permission.health.WRITE_HEART_RATE"/>
+
+    <!-- Health Connect 앱 패키지 가시성 (Android 11+) -->
+    <queries>
+        <package android:name="com.google.android.apps.healthdata"/>
+        <intent>
+            <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE"/>
+        </intent>
+    </queries>
 
     <application
         android:label="RunRight"
@@ -29,6 +40,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <!-- Health Connect 권한 안내 화면 -->
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE"/>
             </intent-filter>
         </activity>
         <meta-data android:name="flutterEmbedding" android:value="2"/>

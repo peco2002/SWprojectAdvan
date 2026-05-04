@@ -1,4 +1,5 @@
 // lib/core/pace_calculator.dart
+import '../models/running_session.dart';
 import '../services/vo2max_model.dart';
 
 class PaceCalculator {
@@ -121,6 +122,64 @@ class PaceCalculator {
     required double distanceKm,
   }) =>
       weightKg * distanceKm * 1.036;
+
+  // ──────────────────────────────────────────────
+  // 6. 적응형 보정 — 실제 러닝 결과로 권장값 조정
+  // ──────────────────────────────────────────────
+  /// 최근 세션들을 분석해 페이스 보정값과 거리 보정값을 반환한다.
+  /// 호출 전제: valid 세션이 3개 이상, 각 세션 10분 이상
+  ///
+  /// 반환: (paceAdjustSec, tempoDistKm, longDistKm)
+  static ({int paceAdjustSec, double tempoDistKm, double longDistKm})
+      adaptFromSessions({
+    required List<RunningSession> sessions,
+    required int  currentFastLimitSec,
+    required int  currentSlowLimitSec,
+    required int  currentPaceAdjustSec,
+    required double currentTempoDistKm,
+    required double currentLongDistKm,
+    required double baseTempoDistKm,
+    required double baseLongDistKm,
+  }) {
+    // ── 페이스 보정 ─────────────────────────────
+    final midTarget = (currentFastLimitSec + currentSlowLimitSec) / 2;
+    final recentAvg = sessions
+            .map((s) => s.averagePaceSec)
+            .reduce((a, b) => a + b) /
+        sessions.length;
+    final delta = recentAvg - midTarget;
+
+    final maxAdjust = (midTarget * 0.2).round();
+    final newPaceAdjust =
+        (currentPaceAdjustSec + (delta * 0.3).round()).clamp(
+            -maxAdjust, maxAdjust);
+
+    // ── 거리 보정 (최근 세션 기준) ───────────────
+    // 권장 거리 중간값 기준으로 템포/롱런 판별
+    // 고정 35분 기준은 초보자처럼 권장 롱런이 짧을 때 오분류됨
+    final latest    = sessions.first;
+    final midDistKm = (currentTempoDistKm + currentLongDistKm) / 2;
+    final isLongRun = latest.totalDistanceKm >= midDistKm;
+
+    double newTempoDistKm = currentTempoDistKm;
+    double newLongDistKm  = currentLongDistKm;
+
+    if (isLongRun) {
+      final ratio   = latest.totalDistanceKm / currentLongDistKm;
+      newLongDistKm = (currentLongDistKm * (1 + 0.25 * (ratio - 1)))
+          .clamp(baseLongDistKm * 0.5, baseLongDistKm * 2.0);
+    } else {
+      final ratio    = latest.totalDistanceKm / currentTempoDistKm;
+      newTempoDistKm = (currentTempoDistKm * (1 + 0.25 * (ratio - 1)))
+          .clamp(baseTempoDistKm * 0.5, baseTempoDistKm * 2.0);
+    }
+
+    return (
+      paceAdjustSec: newPaceAdjust,
+      tempoDistKm:   newTempoDistKm,
+      longDistKm:    newLongDistKm,
+    );
+  }
 
   // ──────────────────────────────────────────────
   // 내부: ACSM 역산 (VO₂ → sec/km)

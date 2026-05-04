@@ -9,6 +9,7 @@ class RunningSession {
   final int      durationSeconds;
   final int      averagePaceSec;     // sec/km
   final double   caloriesBurned;
+  final int?     averageHeartRate;   // BPM, null이면 미측정
   final List<PaceRecord> paceHistory;
 
   const RunningSession({
@@ -19,6 +20,7 @@ class RunningSession {
     required this.durationSeconds,
     required this.averagePaceSec,
     required this.caloriesBurned,
+    this.averageHeartRate,
     required this.paceHistory,
   });
 
@@ -53,6 +55,7 @@ class RunningSession {
         'durationSeconds': durationSeconds,
         'averagePaceSec':  averagePaceSec,
         'caloriesBurned':  caloriesBurned,
+        if (averageHeartRate != null) 'averageHeartRate': averageHeartRate,
         'paceHistory':     paceHistory.map((p) => p.toMap()).toList(),
       };
 
@@ -64,6 +67,9 @@ class RunningSession {
         durationSeconds: (m['durationSeconds'] as num).toInt(),
         averagePaceSec:  (m['averagePaceSec']  as num).toInt(),
         caloriesBurned:  (m['caloriesBurned']  as num).toDouble(),
+        averageHeartRate: m['averageHeartRate'] != null
+            ? (m['averageHeartRate'] as num).toInt()
+            : null,
         paceHistory:     m['paceHistory'] == null
             ? []
             : (m['paceHistory'] as List<dynamic>)

@@ -4,11 +4,13 @@
 //   _EmptyHistory → _SessionList (DB에서 기록 불러와서 표시)
 //   로그아웃 버튼 추가
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../core/constants.dart';
 import '../core/pace_calculator.dart';
+import '../models/body_profile.dart';
 import '../models/running_session.dart';
 import '../services/running_provider.dart';
 import '../services/database_service.dart';
@@ -63,10 +65,12 @@ class HomeScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (_) => const PaceResultScreen()),
                   ),
                   child: _MyPaceCard(
-                    fast:      PaceCalculator.formatPace(profile.fastLimitSec!),
-                    slow:      PaceCalculator.formatPace(profile.slowLimitSec!),
-                    vo2max:    profile.vo2max!,
+                    fast:     PaceCalculator.formatPace(profile.fastLimitSec!),
+                    slow:     PaceCalculator.formatPace(profile.slowLimitSec!),
+                    vo2max:   profile.vo2max!,
                     hasInbody: profile.hasInbodyData,
+                    tempoKm:  profile.recommendedDistances?['tempo'] ?? 0.0,
+                    longKm:   profile.recommendedDistances?['long']  ?? 0.0,
                   ),
                 )
               else if (profile != null)
@@ -93,6 +97,13 @@ class HomeScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (_) => const RunningScreen()),
               )),
+
+              // ── 디버그: 가짜 세션 주입 (debug 빌드에서만 표시) ──
+              if (kDebugMode && profile != null && profile.fastLimitSec != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: _DebugSimulateButton(profile: profile),
+                ),
 
               const SizedBox(height: 24),
               const Divider(color: AppColors.divider),
@@ -331,51 +342,123 @@ class _EmptyHistory extends StatelessWidget {
 
 // ── 페이스 카드 / 시작 버튼 (기존과 동일) ─────────────
 
-class _MyPaceCard extends StatelessWidget {
+class _MyPaceCard extends StatefulWidget {
   final String fast, slow;
   final double vo2max;
   final bool hasInbody;
-  const _MyPaceCard({required this.fast, required this.slow,
-      required this.vo2max, required this.hasInbody});
+  final double tempoKm, longKm;
+  const _MyPaceCard({
+    required this.fast,
+    required this.slow,
+    required this.vo2max,
+    required this.hasInbody,
+    required this.tempoKm,
+    required this.longKm,
+  });
 
   @override
-  Widget build(BuildContext context) => Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            AppColors.primary.withOpacity(0.18),
-            AppColors.primaryDark.withOpacity(0.06),
-          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-          border: Border.all(color: AppColors.primary.withOpacity(0.4)),
-          borderRadius: BorderRadius.circular(18),
-        ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(children: [
-            const Text('내 맞춤 페이스',
-                style: TextStyle(color: AppColors.textHint, fontSize: 12)),
-            const SizedBox(width: 6),
-            if (hasInbody)
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Colors.teal.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: const Text('인바디 반영',
-                    style: TextStyle(color: Colors.teal, fontSize: 9)),
+  State<_MyPaceCard> createState() => _MyPaceCardState();
+}
+
+class _MyPaceCardState extends State<_MyPaceCard> {
+  bool _isTempo = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final pace   = _isTempo ? widget.fast : widget.slow;
+    final distKm = _isTempo ? widget.tempoKm : widget.longKm;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: [
+          AppColors.primary.withOpacity(0.18),
+          AppColors.primaryDark.withOpacity(0.06),
+        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        border: Border.all(color: AppColors.primary.withOpacity(0.4)),
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(children: [
+          const Text('내 맞춤 페이스',
+              style: TextStyle(color: AppColors.textHint, fontSize: 12)),
+          const SizedBox(width: 6),
+          _buildToggle(),
+          const Spacer(),
+          if (widget.hasInbody)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: Colors.teal.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(4),
               ),
-          ]),
-          const SizedBox(height: 8),
-          Text('$fast  ~  $slow',
-              style: const TextStyle(
-                  color: AppColors.primary,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold)),
-          const SizedBox(height: 4),
-          Text('/km  ·  VO₂max ${vo2max.toStringAsFixed(0)} ml/kg/min',
-              style: AppTextStyles.caption),
+              child: const Text('인바디 반영',
+                  style: TextStyle(color: Colors.teal, fontSize: 9)),
+            ),
         ]),
+        const SizedBox(height: 8),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(pace,
+                style: const TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold)),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 5, left: 10, right: 10),
+              child: Text('·',
+                  style: TextStyle(
+                      color: AppColors.primary.withOpacity(0.4),
+                      fontSize: 22, fontWeight: FontWeight.w300)),
+            ),
+            Text('${distKm.toStringAsFixed(1)} km',
+                style: const TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold)),
+          ],
+        ),
+        const SizedBox(height: 4),
+        Text(
+          '/km  ·  VO₂max ${widget.vo2max.toStringAsFixed(0)} ml/kg/min',
+          style: AppTextStyles.caption,
+        ),
+      ]),
+    );
+  }
+
+  Widget _buildToggle() => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _chip('템포런', _isTempo, () => setState(() => _isTempo = true)),
+          const SizedBox(width: 4),
+          _chip('롱런', !_isTempo, () => setState(() => _isTempo = false)),
+        ],
+      );
+
+  Widget _chip(String label, bool selected, VoidCallback onTap) =>
+      GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+          decoration: BoxDecoration(
+            color: selected ? AppColors.primary : Colors.transparent,
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(
+              color: selected ? AppColors.primary : AppColors.divider,
+            ),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: selected ? Colors.black : AppColors.textHint,
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
       );
 }
 
@@ -486,4 +569,133 @@ class _StartButton extends StatelessWidget {
           ]),
         ),
       );
+}
+
+// ── 디버그: 가짜 세션 주입 버튼 ──────────────────────────
+class _DebugSimulateButton extends StatefulWidget {
+  final BodyProfile profile;
+  const _DebugSimulateButton({required this.profile});
+
+  @override
+  State<_DebugSimulateButton> createState() => _DebugSimulateButtonState();
+}
+
+class _DebugSimulateButtonState extends State<_DebugSimulateButton> {
+  bool _loading = false;
+
+  Future<void> _showDialog() async {
+    final profile   = widget.profile;
+    final fastSec   = profile.fastLimitSec!;
+    final slowSec   = profile.slowLimitSec!;
+    final midSec    = ((fastSec + slowSec) / 2).round();
+    final tempoDist = profile.recommendedDistances?['tempo'] ?? 3.0;
+    final longDist  = profile.recommendedDistances?['long']  ?? 7.0;
+
+    String fd(double d) => d.toStringAsFixed(1);
+
+    // [label, avgPaceSec, distKm] — 시간은 거리×페이스로 자동 계산
+    final presets = <(String, int, double)>[
+      ('빠른 템포런  ${fd(tempoDist * 1.2)} km / 페이스 -30초', fastSec - 30, tempoDist * 1.2),
+      ('적절한 템포런  ${fd(tempoDist)} km / 페이스 중간',        midSec,       tempoDist),
+      ('느린 템포런  ${fd(tempoDist * 0.8)} km / 페이스 +30초',  slowSec + 30, tempoDist * 0.8),
+      ('빠른 롱런  ${fd(longDist * 1.2)} km / 페이스 -20초',     fastSec - 20, longDist * 1.2),
+      ('적절한 롱런  ${fd(longDist)} km / 페이스 중간',           midSec,       longDist),
+    ];
+
+    final selected = await showDialog<(String, int, double)>(
+      context: context,
+      builder: (_) => AlertDialog(
+        backgroundColor: AppColors.surface,
+        title: const Text('[TEST] 가짜 세션 추가',
+            style: TextStyle(color: AppColors.textPrimary, fontSize: 15)),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '페이스 목표: ${PaceCalculator.formatPace(fastSec)} ~ ${PaceCalculator.formatPace(slowSec)}\n'
+                '권장 거리: 템포 ${fd(tempoDist)} km / 롱런 ${fd(longDist)} km\n'
+                '누적 유효 세션: ${profile.sessionCount}회 (3회부터 보정 시작)',
+                style: const TextStyle(color: AppColors.textHint, fontSize: 12),
+              ),
+              const SizedBox(height: 14),
+              ...presets.map((p) => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.primary,
+                      side: BorderSide(color: AppColors.primary.withOpacity(0.5)),
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    ),
+                    onPressed: () => Navigator.pop(context, p),
+                    child: Text(p.$1,
+                        style: const TextStyle(fontSize: 12, height: 1.5)),
+                  ),
+                ),
+              )),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('취소',
+                style: TextStyle(color: AppColors.textHint)),
+          ),
+        ],
+      ),
+    );
+
+    if (selected == null || !mounted) return;
+    final (_, avgPace, distKm) = selected;
+    // 시간 = 거리 × 페이스, 최소 10분 보장
+    final durSec = (distKm * avgPace).round().clamp(601, 7200);
+
+    setState(() => _loading = true);
+    final provider    = Provider.of<RunningProvider>(context, listen: false);
+    final messenger   = ScaffoldMessenger.of(context);
+    final result      = await provider.debugSimulateRun(
+      avgPaceSec:      avgPace,
+      distanceKm:      distKm,
+      durationSeconds: durSec,
+    );
+    if (!mounted) return;
+    setState(() => _loading = false);
+
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(result,
+            style: const TextStyle(fontSize: 12, height: 1.5)),
+        backgroundColor: AppColors.card,
+        duration: const Duration(seconds: 6),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: OutlinedButton.icon(
+        icon: _loading
+            ? const SizedBox(
+                width: 14, height: 14,
+                child: CircularProgressIndicator(strokeWidth: 2,
+                    color: AppColors.textHint))
+            : const Icon(Icons.science_outlined,
+                size: 16, color: AppColors.textHint),
+        label: const Text('[TEST] 가짜 세션 추가',
+            style: TextStyle(color: AppColors.textHint, fontSize: 12)),
+        style: OutlinedButton.styleFrom(
+          side: BorderSide(color: AppColors.divider),
+          padding: const EdgeInsets.symmetric(vertical: 8),
+        ),
+        onPressed: _loading ? null : _showDialog,
+      ),
+    );
+  }
 }
