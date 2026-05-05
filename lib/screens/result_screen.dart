@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import '../core/constants.dart';
 import '../models/running_session.dart';
+
 class ResultScreen extends StatelessWidget {
   final RunningSession session;
   const ResultScreen({super.key, required this.session});
@@ -25,8 +26,8 @@ class ResultScreen extends StatelessWidget {
 
               // ── 핵심 지표 2×2 그리드 ─────────────────────────
               Row(children: [
-                _Card('거리', session.totalDistanceKm.toStringAsFixed(2), 'km',
-                    AppColors.primary),
+                _Card('거리', session.totalDistanceKm.toStringAsFixed(2),
+                    'km', AppColors.primary),
                 const SizedBox(width: 14),
                 _Card('시간', session.formattedDuration, '',
                     Colors.blueAccent),
@@ -36,27 +37,44 @@ class ResultScreen extends StatelessWidget {
                 _Card('평균 페이스', session.formattedPace, '/km',
                     Colors.orangeAccent),
                 const SizedBox(width: 14),
-                _Card('칼로리', session.caloriesBurned.toStringAsFixed(0), 'kcal',
+                _Card('칼로리',
+                    session.caloriesBurned.toStringAsFixed(0), 'kcal',
                     Colors.pinkAccent),
               ]),
+              const SizedBox(height: 14),
+
+              // ── 평균 심박수 ───────────────────────────────────
+              _Card(
+                '평균 심박수',
+                session.averageHeartRate != null
+                    ? '${session.averageHeartRate}'
+                    : '--',
+                'BPM',
+                Colors.redAccent,
+                fullWidth: true,
+              ),
 
               const SizedBox(height: 28),
 
               // ── 페이스 변화 그래프 ────────────────────────────
               if (session.paceHistory.length >= 2) ...[
                 const Text('페이스 변화',
-                    style: TextStyle(color: AppColors.textSecondary,
-                        fontSize: 14, fontWeight: FontWeight.w600)),
+                    style: TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600)),
                 const SizedBox(height: 10),
                 _PaceChart(records: session.paceHistory),
               ],
 
               const Spacer(),
 
+              // ── 홈으로 ────────────────────────────────────────
               SizedBox(
                 width: double.infinity, height: 52,
                 child: ElevatedButton(
-                  onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                  onPressed: () =>
+                      Navigator.of(context).popUntil((route) => route.isFirst),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.black,
@@ -65,7 +83,8 @@ class ResultScreen extends StatelessWidget {
                     elevation: 0,
                   ),
                   child: const Text('홈으로',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold)),
                 ),
               ),
             ],
@@ -79,27 +98,35 @@ class ResultScreen extends StatelessWidget {
 class _Card extends StatelessWidget {
   final String label, value, unit;
   final Color color;
-  const _Card(this.label, this.value, this.unit, this.color);
+  final bool fullWidth;
+  const _Card(this.label, this.value, this.unit, this.color,
+      {this.fullWidth = false});
 
   @override
-  Widget build(BuildContext context) => Expanded(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.09),
-            border: Border.all(color: color.withOpacity(0.35)),
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(label, style: AppTextStyles.caption),
-            const SizedBox(height: 6),
-            Text(value, style: TextStyle(color: color, fontSize: 22,
-                fontWeight: FontWeight.bold)),
-            if (unit.isNotEmpty)
-              Text(unit, style: TextStyle(color: color.withOpacity(0.6), fontSize: 11)),
-          ]),
-        ),
-      );
+  Widget build(BuildContext context) {
+    final child = Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.09),
+        border: Border.all(color: color.withOpacity(0.35)),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(label, style: AppTextStyles.caption),
+        const SizedBox(height: 6),
+        Text(value,
+            style: TextStyle(
+                color: color, fontSize: 22, fontWeight: FontWeight.bold)),
+        if (unit.isNotEmpty)
+          Text(unit,
+              style: TextStyle(
+                  color: color.withOpacity(0.6), fontSize: 11)),
+      ]),
+    );
+    return fullWidth
+        ? SizedBox(width: double.infinity, child: child)
+        : Expanded(child: child);
+  }
 }
 
 class _PaceChart extends StatelessWidget {
@@ -148,7 +175,9 @@ class _ChartPainter extends CustomPainter {
       ],
     ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
-    final fillPaint = Paint()..shader = fillShader..style = PaintingStyle.fill;
+    final fillPaint = Paint()
+      ..shader = fillShader
+      ..style  = PaintingStyle.fill;
 
     final path = Path(), fill = Path();
     for (int i = 0; i < paces.length; i++) {

@@ -13,7 +13,6 @@ import '../models/running_session.dart';
 import 'gps_service.dart';
 import 'tts_service.dart';
 import 'database_service.dart';
-import 'heart_rate_service.dart';
 
 enum SessionState { idle, running, paused, finished }
 
@@ -104,7 +103,6 @@ class RunningProvider extends ChangeNotifier {
     notifyListeners();
 
     await _gps.start();
-    await HeartRateService.requestPermission();
     await _tts.announceStart(fastLimit, slowLimit);
 
     _timer  = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -158,8 +156,6 @@ class RunningProvider extends ChangeNotifier {
 
     final endTime   = DateTime.now();
     final startTime = endTime.subtract(Duration(seconds: elapsedSeconds));
-    final avgHr     = await HeartRateService.getAverageHeartRate(startTime, endTime);
-
     final session = RunningSession(
       id:               endTime.millisecondsSinceEpoch.toString(),
       startTime:        startTime,
@@ -168,7 +164,7 @@ class RunningProvider extends ChangeNotifier {
       durationSeconds:  elapsedSeconds,
       averagePaceSec:   avgPace,
       caloriesBurned:   calories,
-      averageHeartRate: avgHr,
+      averageHeartRate: null,
       paceHistory:      List.from(history),
     );
 

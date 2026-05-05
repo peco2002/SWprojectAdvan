@@ -89,4 +89,12 @@ class DatabaseService {
   Future<void> deleteSession(String uid, String sessionId) async {
     await _db.ref('users/$uid/sessions/$sessionId').remove();
   }
+
+  // ── 평균 심박수 업데이트 (TCX 가져오기용) ─────────
+  Future<void> updateSessionHeartRate(
+      String uid, String sessionId, int bpm) async {
+    await _db
+        .ref('users/$uid/sessions/$sessionId/averageHeartRate')
+        .set(bpm);
+  }
 }

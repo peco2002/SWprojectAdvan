@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../core/constants.dart';
 import '../core/pace_calculator.dart';
 import '../models/running_session.dart';
-import '../services/heart_rate_service.dart';
 
 class SessionDetailScreen extends StatefulWidget {
   final RunningSession session;
@@ -17,117 +16,6 @@ class SessionDetailScreen extends StatefulWidget {
 
 class _SessionDetailScreenState extends State<SessionDetailScreen> {
   GoogleMapController? _mapController;
-
-  // 그래프 토글 (0: 페이스 변화, 1: 심박수 변화)
-  int _chartIndex = 0;
-  List<({DateTime timestamp, int bpm})> _hrPoints = [];
-  bool _hrLoaded = false;
-
-  static const _chartTitles = ['페이스 변화', '심박수 변화'];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadHrPoints();
-  }
-
-  Future<void> _loadHrPoints() async {
-    final points = await HeartRateService.getHeartRatePoints(
-      widget.session.startTime,
-      widget.session.endTime,
-    );
-    if (mounted) {
-      setState(() {
-        _hrPoints = points;
-        _hrLoaded = true;
-      });
-    }
-  }
-
-  // ── 임시 디버그: HC 심박수 조회 결과 다이얼로그 ──────────────
-  Future<void> _debugHr() async {
-    final s = widget.session;
-    String fmt(DateTime dt) =>
-        '${dt.hour.toString().padLeft(2, '0')}:'
-        '${dt.minute.toString().padLeft(2, '0')}:'
-        '${dt.second.toString().padLeft(2, '0')}';
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => const AlertDialog(
-        backgroundColor: AppColors.surface,
-        content: Row(mainAxisSize: MainAxisSize.min, children: [
-          CircularProgressIndicator(color: AppColors.primary, strokeWidth: 2),
-          SizedBox(width: 16),
-          Text('조회 중...', style: TextStyle(color: AppColors.textPrimary)),
-        ]),
-      ),
-    );
-
-    final buf = StringBuffer();
-    buf.writeln('조회 범위');
-    buf.writeln('${fmt(s.startTime)} ~ ${fmt(s.endTime)}');
-    buf.writeln('(${s.startTime.timeZoneName})');
-    buf.writeln('');
-
-    try {
-      // requestAuthorization 결과
-      final granted = await HeartRateService.requestPermission();
-      buf.writeln('requestAuthorization: ${granted ? '허용' : '거부'}');
-
-      // hasPermissions 실제 권한 확인
-      final hasPerm = await HeartRateService.hasPermission();
-      buf.writeln('hasPermissions: $hasPerm');
-      buf.writeln('');
-
-      // 예외 노출 버전으로 조회
-      final (points, diagLog) = await HeartRateService.getHeartRatePointsDebug(
-          s.startTime, s.endTime);
-
-      buf.writeln('── 진단 로그 ──');
-      buf.write(diagLog);
-      buf.writeln('');
-
-      buf.writeln('포인트 수: ${points.length}개');
-      if (points.isNotEmpty) {
-        final avg = points.map((p) => p.bpm).reduce((a, b) => a + b) ~/
-            points.length;
-        buf.writeln('평균: $avg BPM');
-        buf.writeln('');
-        buf.writeln('--- 처음 5개 ---');
-        for (final p in points.take(5)) {
-          buf.writeln('${fmt(p.timestamp)}  ${p.bpm} BPM');
-        }
-      }
-    } catch (e) {
-      buf.writeln('외부 에러: $e');
-    }
-
-    if (!mounted) return;
-    Navigator.pop(context);
-
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: AppColors.surface,
-        title: const Text('HC 심박수 디버그',
-            style: TextStyle(color: AppColors.textPrimary, fontSize: 15)),
-        content: SingleChildScrollView(
-          child: Text(buf.toString(),
-              style: const TextStyle(
-                  color: AppColors.textSecondary, fontSize: 13, height: 1.6)),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('닫기',
-                style: TextStyle(color: AppColors.primary)),
-          ),
-        ],
-      ),
-    );
-  }
 
   List<LatLng> get _routePoints => widget.session.paceHistory
       .where((r) => r.latitude != 0.0 && r.longitude != 0.0)
@@ -206,14 +94,6 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> {
           style: const TextStyle(
               color: AppColors.textPrimary, fontWeight: FontWeight.w600),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.bug_report_outlined,
-                color: AppColors.textHint, size: 20),
-            onPressed: _debugHr,
-            tooltip: 'HC 심박수 디버그',
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -274,53 +154,23 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // ── 통합 통계 카드 ────────────────────────
-                  _SummaryCard(session: widget.session),
+                  _SummaryCard(
+                    session: widget.session,
+                    heartRate: widget.session.averageHeartRate,
+                  ),
 
-                  // ── 그래프 (페이스 / 심박수 토글) ───────────
+                  // ── 페이스 변화 그래프 ───────────────────
                   if (hasPaceChart) ...[
                     const SizedBox(height: 20),
-                    // 헤더: 화살표 + 타이틀
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.chevron_left,
-                              color: AppColors.textSecondary),
-                          onPressed: () => setState(() =>
-                              _chartIndex =
-                                  (_chartIndex - 1 + _chartTitles.length) %
-                                      _chartTitles.length),
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          _chartTitles[_chartIndex],
-                          style: const TextStyle(
-                              color: AppColors.textSecondary,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(width: 6),
-                        IconButton(
-                          icon: const Icon(Icons.chevron_right,
-                              color: AppColors.textSecondary),
-                          onPressed: () => setState(() =>
-                              _chartIndex =
-                                  (_chartIndex + 1) % _chartTitles.length),
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
-                        ),
-                      ],
+                    const Text(
+                      '페이스 변화',
+                      style: TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 10),
-                    // 그래프 본체
-                    if (_chartIndex == 0)
-                      _PaceChartEnhanced(records: widget.session.paceHistory)
-                    else
-                      _HrChartEnhanced(
-                        points: _hrPoints,
-                        loaded: _hrLoaded,
-                      ),
+                    _PaceChartEnhanced(records: widget.session.paceHistory),
                   ],
 
                   // ── 구간별 페이스 ─────────────────────────
@@ -353,7 +203,8 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> {
 
 class _SummaryCard extends StatelessWidget {
   final RunningSession session;
-  const _SummaryCard({required this.session});
+  final int? heartRate;
+  const _SummaryCard({required this.session, this.heartRate});
 
   String get _dateTime {
     final d   = session.startTime;
@@ -406,8 +257,7 @@ class _SummaryCard extends StatelessWidget {
                 const Spacer(),
                 _StatItem(
                     label: '칼로리',
-                    value:
-                        '${session.caloriesBurned.toStringAsFixed(0)} kcal',
+                    value: '${session.caloriesBurned.toStringAsFixed(0)} kcal',
                     align: CrossAxisAlignment.end),
               ],
             ),
@@ -422,9 +272,7 @@ class _SummaryCard extends StatelessWidget {
                 const Spacer(),
                 _StatItem(
                     label: '평균 심박수',
-                    value: session.averageHeartRate != null
-                        ? '${session.averageHeartRate} BPM'
-                        : '-- BPM',
+                    value: heartRate != null ? '$heartRate BPM' : '-- BPM',
                     align: CrossAxisAlignment.end),
               ],
             ),
@@ -508,77 +356,6 @@ class _PaceChartPainter extends CustomPainter {
       old.all != all || old.valid != valid;
 }
 
-// ── 심박수 변화 그래프 ────────────────────────────────────────
-
-class _HrChartEnhanced extends StatelessWidget {
-  final List<({DateTime timestamp, int bpm})> points;
-  final bool loaded;
-  const _HrChartEnhanced({required this.points, required this.loaded});
-
-  @override
-  Widget build(BuildContext context) {
-    if (!loaded) {
-      return Container(
-        height: 160,
-        decoration: BoxDecoration(
-          color: AppColors.card,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: const Center(
-          child: CircularProgressIndicator(
-              strokeWidth: 2, color: AppColors.primary),
-        ),
-      );
-    }
-    if (points.length < 2) {
-      return Container(
-        height: 160,
-        decoration: BoxDecoration(
-          color: AppColors.card,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: const Center(
-          child: Text('심박수 데이터 없음',
-              style: TextStyle(color: AppColors.textHint, fontSize: 13)),
-        ),
-      );
-    }
-    return Container(
-      height: 160,
-      decoration: BoxDecoration(
-        color: AppColors.card,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: CustomPaint(
-        painter: _HrChartPainter(points: points),
-        child: const SizedBox.expand(),
-      ),
-    );
-  }
-}
-
-class _HrChartPainter extends CustomPainter {
-  final List<({DateTime timestamp, int bpm})> points;
-  const _HrChartPainter({required this.points});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    _paintChart(
-      canvas: canvas,
-      size: size,
-      values: points.map((p) => p.bpm.toDouble()).toList(),
-      timestamps: points.map((p) => p.timestamp).toList(),
-      t0: points.first.timestamp.millisecondsSinceEpoch.toDouble(),
-      t1: points.last.timestamp.millisecondsSinceEpoch.toDouble(),
-      lineColor: Colors.redAccent,
-      labelFmt: (v) => v.toInt().toString(),
-    );
-  }
-
-  @override
-  bool shouldRepaint(_HrChartPainter old) => old.points != points;
-}
-
 // ── 공통 차트 페인터 로직 ─────────────────────────────────────
 
 void _paintChart({
@@ -608,7 +385,6 @@ void _paintChart({
   double tx(DateTime ts) =>
       cL + cW * (ts.millisecondsSinceEpoch - t0) / tR;
 
-  // Fill
   final fillPaint = Paint()
     ..shader = LinearGradient(
       begin: Alignment.topCenter,
@@ -664,8 +440,7 @@ void _paintChart({
     final dt   = DateTime.fromMillisecondsSinceEpoch(ms.toInt());
     final hh   = dt.hour.toString().padLeft(2, '0');
     final mm   = dt.minute.toString().padLeft(2, '0');
-    _label(canvas, '$hh:$mm', Offset(x, cB + 12),
-        align: TextAlign.center);
+    _label(canvas, '$hh:$mm', Offset(x, cB + 12), align: TextAlign.center);
   }
 }
 
@@ -692,7 +467,8 @@ void _label(Canvas canvas, String text, Offset center,
     Color color = AppColors.textHint,
     TextAlign align = TextAlign.left}) {
   final tp = TextPainter(
-    text: TextSpan(text: text, style: TextStyle(color: color, fontSize: fontSize)),
+    text: TextSpan(
+        text: text, style: TextStyle(color: color, fontSize: fontSize)),
     textDirection: TextDirection.ltr,
     textAlign: align,
   )..layout();
