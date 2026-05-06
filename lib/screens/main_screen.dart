@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../core/constants.dart';
+import 'package:provider/provider.dart';
 import '../services/database_service.dart';
+import '../services/running_provider.dart';
 import '../services/tcx_share_service.dart';
 import '../models/running_session.dart';
 import 'home_screen.dart';
@@ -120,6 +122,14 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
     if (confirmed != true || !mounted) return;
     await DatabaseService().updateSessionHeartRate(uid, target.id, bpm);
+
+    // 웨어러블 사용자: HR 적용 후 적응형 보정 실행
+    if (mounted) {
+      final provider = Provider.of<RunningProvider>(context, listen: false);
+      if (provider.profile?.hasWearable == true) {
+        await provider.adaptAfterHeartRateUpdate(uid);
+      }
+    }
 
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(

@@ -23,6 +23,7 @@ class BodyProfile {
   final double? adaptedTempoDistKm; // 보정된 템포런 권장 거리 (null = 계산값 사용)
   final double? adaptedLongDistKm;  // 보정된 롱런 권장 거리
   final int    sessionCount;       // 유효 러닝 누적 횟수 (3회 이상부터 보정 시작)
+  final bool?  hasWearable;        // 웨어러블 보유 여부 (null = 미결정, 기존 계정 마이그레이션 대상)
 
   const BodyProfile({
     required this.uid,
@@ -38,6 +39,7 @@ class BodyProfile {
     this.adaptedTempoDistKm,
     this.adaptedLongDistKm,
     this.sessionCount       = 0,
+    this.hasWearable,
   });
 
   // ── 계산 결과 (게터) ─────────────────────────────────────────
@@ -109,6 +111,7 @@ class BodyProfile {
         if (adaptedTempoDistKm != null) 'adaptedTempoDistKm': adaptedTempoDistKm,
         if (adaptedLongDistKm  != null) 'adaptedLongDistKm':  adaptedLongDistKm,
         'sessionCount':      sessionCount,
+        if (hasWearable != null) 'hasWearable': hasWearable,
       };
 
   factory BodyProfile.fromMap(Map<String, dynamic> m) => BodyProfile(
@@ -125,6 +128,7 @@ class BodyProfile {
         adaptedTempoDistKm: (m['adaptedTempoDistKm'] as num?)?.toDouble(),
         adaptedLongDistKm:  (m['adaptedLongDistKm']  as num?)?.toDouble(),
         sessionCount:       (m['sessionCount']   as num?)?.toInt() ?? 0,
+        hasWearable:        m['hasWearable'] as bool?,
       );
 
   BodyProfile copyWith({
@@ -135,6 +139,7 @@ class BodyProfile {
     double? adaptedTempoDistKm,
     double? adaptedLongDistKm,
     int?    sessionCount,
+    bool?   hasWearable,
   }) =>
       BodyProfile(
         uid:               uid,
@@ -150,5 +155,6 @@ class BodyProfile {
         adaptedTempoDistKm: adaptedTempoDistKm ?? this.adaptedTempoDistKm,
         adaptedLongDistKm:  adaptedLongDistKm  ?? this.adaptedLongDistKm,
         sessionCount:      sessionCount      ?? this.sessionCount,
+        hasWearable:       hasWearable       ?? this.hasWearable,
       );
 }

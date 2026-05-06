@@ -4,6 +4,7 @@
 //   _EmptyHistory → _SessionList (DB에서 기록 불러와서 표시)
 //   로그아웃 버튼 추가
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -277,7 +278,19 @@ class _SessionCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(session.formattedDate, style: AppTextStyles.caption),
+                  Row(children: [
+                    Text(session.formattedDate, style: AppTextStyles.caption),
+                    const Spacer(),
+                    Icon(
+                      session.averageHeartRate != null
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      size: 14,
+                      color: session.averageHeartRate != null
+                          ? AppColors.primary
+                          : AppColors.textHint,
+                    ),
+                  ]),
                   const SizedBox(height: 6),
                   Text(
                     '${session.totalDistanceKm.toStringAsFixed(2)} km'
@@ -571,7 +584,7 @@ class _StartButton extends StatelessWidget {
       );
 }
 
-// ── 디버그: 가짜 세션 주입 버튼 ──────────────────────────
+// ── 디버그: 세션 시뮬레이션 버튼 ─────────────────────────
 class _DebugSimulateButton extends StatefulWidget {
   final BodyProfile profile;
   const _DebugSimulateButton({required this.profile});
@@ -584,96 +597,43 @@ class _DebugSimulateButtonState extends State<_DebugSimulateButton> {
   bool _loading = false;
 
   Future<void> _showDialog() async {
-    final profile   = widget.profile;
-    final fastSec   = profile.fastLimitSec!;
-    final slowSec   = profile.slowLimitSec!;
-    final midSec    = ((fastSec + slowSec) / 2).round();
-    final tempoDist = profile.recommendedDistances?['tempo'] ?? 3.0;
-    final longDist  = profile.recommendedDistances?['long']  ?? 7.0;
+    if (widget.profile.fastLimitSec == null) return;
 
-    String fd(double d) => d.toStringAsFixed(1);
-
-    // [label, avgPaceSec, distKm] — 시간은 거리×페이스로 자동 계산
-    final presets = <(String, int, double)>[
-      ('빠른 템포런  ${fd(tempoDist * 1.2)} km / 페이스 -30초', fastSec - 30, tempoDist * 1.2),
-      ('적절한 템포런  ${fd(tempoDist)} km / 페이스 중간',        midSec,       tempoDist),
-      ('느린 템포런  ${fd(tempoDist * 0.8)} km / 페이스 +30초',  slowSec + 30, tempoDist * 0.8),
-      ('빠른 롱런  ${fd(longDist * 1.2)} km / 페이스 -20초',     fastSec - 20, longDist * 1.2),
-      ('적절한 롱런  ${fd(longDist)} km / 페이스 중간',           midSec,       longDist),
-    ];
-
-    final selected = await showDialog<(String, int, double)>(
+    final result = await showDialog<({
+      String runType,
+      int    paceSec,
+      double distKm,
+      int    durSec,
+      int?   bpm,
+    })>(
       context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: AppColors.surface,
-        title: const Text('[TEST] 가짜 세션 추가',
-            style: TextStyle(color: AppColors.textPrimary, fontSize: 15)),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '페이스 목표: ${PaceCalculator.formatPace(fastSec)} ~ ${PaceCalculator.formatPace(slowSec)}\n'
-                '권장 거리: 템포 ${fd(tempoDist)} km / 롱런 ${fd(longDist)} km\n'
-                '누적 유효 세션: ${profile.sessionCount}회 (3회부터 보정 시작)',
-                style: const TextStyle(color: AppColors.textHint, fontSize: 12),
-              ),
-              const SizedBox(height: 14),
-              ...presets.map((p) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.primary,
-                      side: BorderSide(color: AppColors.primary.withOpacity(0.5)),
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                    ),
-                    onPressed: () => Navigator.pop(context, p),
-                    child: Text(p.$1,
-                        style: const TextStyle(fontSize: 12, height: 1.5)),
-                  ),
-                ),
-              )),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('취소',
-                style: TextStyle(color: AppColors.textHint)),
-          ),
-        ],
-      ),
+      builder: (_) => _DebugSimulateDialog(profile: widget.profile),
     );
 
-    if (selected == null || !mounted) return;
-    final (_, avgPace, distKm) = selected;
-    // 시간 = 거리 × 페이스, 최소 10분 보장
-    final durSec = (distKm * avgPace).round().clamp(601, 7200);
+    if (result == null || !mounted) return;
 
     setState(() => _loading = true);
-    final provider    = Provider.of<RunningProvider>(context, listen: false);
-    final messenger   = ScaffoldMessenger.of(context);
-    final result      = await provider.debugSimulateRun(
-      avgPaceSec:      avgPace,
-      distanceKm:      distKm,
-      durationSeconds: durSec,
+    final provider  = Provider.of<RunningProvider>(context, listen: false);
+    final messenger = ScaffoldMessenger.of(context);
+
+    final output = await provider.debugSimulateRun(
+      runType:         result.runType,
+      avgPaceSec:      result.paceSec,
+      distanceKm:      result.distKm,
+      durationSeconds: result.durSec,
+      averageHeartRate: result.bpm,
     );
+
     if (!mounted) return;
     setState(() => _loading = false);
 
-    messenger.showSnackBar(
-      SnackBar(
-        content: Text(result,
-            style: const TextStyle(fontSize: 12, height: 1.5)),
-        backgroundColor: AppColors.card,
-        duration: const Duration(seconds: 6),
-      ),
-    );
+    messenger.showSnackBar(SnackBar(
+      content: Text(output,
+          style: const TextStyle(
+              fontSize: 12, height: 1.5, color: AppColors.primary)),
+      backgroundColor: AppColors.card,
+      duration: const Duration(seconds: 6),
+    ));
   }
 
   @override
@@ -684,18 +644,250 @@ class _DebugSimulateButtonState extends State<_DebugSimulateButton> {
         icon: _loading
             ? const SizedBox(
                 width: 14, height: 14,
-                child: CircularProgressIndicator(strokeWidth: 2,
-                    color: AppColors.textHint))
+                child: CircularProgressIndicator(
+                    strokeWidth: 2, color: AppColors.textHint))
             : const Icon(Icons.science_outlined,
                 size: 16, color: AppColors.textHint),
-        label: const Text('[TEST] 가짜 세션 추가',
+        label: const Text('[TEST] 세션 시뮬레이션',
             style: TextStyle(color: AppColors.textHint, fontSize: 12)),
         style: OutlinedButton.styleFrom(
-          side: BorderSide(color: AppColors.divider),
+          side: const BorderSide(color: AppColors.divider),
           padding: const EdgeInsets.symmetric(vertical: 8),
         ),
         onPressed: _loading ? null : _showDialog,
       ),
     );
   }
+}
+
+// ── 디버그: 시뮬레이션 다이얼로그 ────────────────────────
+class _DebugSimulateDialog extends StatefulWidget {
+  final BodyProfile profile;
+  const _DebugSimulateDialog({required this.profile});
+
+  @override
+  State<_DebugSimulateDialog> createState() => _DebugSimulateDialogState();
+}
+
+class _DebugSimulateDialogState extends State<_DebugSimulateDialog> {
+  String _runType = 'tempo';
+
+  static final _paceMinList = List.generate(14, (i) => i + 2);  // 2..15
+  static final _paceSecList = List.generate(60, (i) => i);       // 0..59
+  static final _distList    = List.generate(43, (i) => i + 1);   // 1..43 km
+
+  late int _paceMin;
+  late int _paceSec;
+  int _selectedDistKm = 5;
+  String _bpmText = '';
+
+  late final FixedExtentScrollController _paceMinCtrl;
+  late final FixedExtentScrollController _paceSecCtrl;
+  late final FixedExtentScrollController _distCtrl;
+
+  @override
+  void initState() {
+    super.initState();
+    final mid = ((widget.profile.fastLimitSec! + widget.profile.slowLimitSec!) / 2).round();
+    _paceMin = (mid ~/ 60).clamp(2, 15);
+    _paceSec = (mid % 60).clamp(0, 59);
+
+    _paceMinCtrl = FixedExtentScrollController(
+        initialItem: (_paceMin - 2).clamp(0, _paceMinList.length - 1));
+    _paceSecCtrl = FixedExtentScrollController(
+        initialItem: _paceSec.clamp(0, 59));
+    _distCtrl    = FixedExtentScrollController(
+        initialItem: (_selectedDistKm - 1).clamp(0, _distList.length - 1));
+  }
+
+  @override
+  void dispose() {
+    _paceMinCtrl.dispose();
+    _paceSecCtrl.dispose();
+    _distCtrl.dispose();
+    super.dispose();
+  }
+
+  int    get _avgPaceSec => _paceMin * 60 + _paceSec;
+  double get _distKm     => _selectedDistKm.toDouble();
+  int    get _durSec     => (_selectedDistKm * _avgPaceSec);
+
+  String get _durStr {
+    final h = _durSec ~/ 3600;
+    final m = (_durSec % 3600) ~/ 60;
+    final s = _durSec % 60;
+    if (h > 0) return '${h}시간 ${m}분 ${s}초';
+    return '${m}분 ${s}초';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = widget.profile;
+    return AlertDialog(
+      backgroundColor: AppColors.surface,
+      title: const Text('[TEST] 세션 시뮬레이션',
+          style: TextStyle(color: AppColors.textPrimary, fontSize: 15,
+              fontWeight: FontWeight.bold)),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ── 현재 설정 요약 ────────────────────────
+            Text(
+              '목표: ${PaceCalculator.formatPace(p.fastLimitSec!)} ~ ${PaceCalculator.formatPace(p.slowLimitSec!)}  ·  세션 ${p.sessionCount}회',
+              style: const TextStyle(color: AppColors.textHint, fontSize: 11),
+            ),
+            const SizedBox(height: 16),
+
+            // ── 런 타입 ───────────────────────────────
+            _label('런 타입'),
+            const SizedBox(height: 8),
+            Row(children: [
+              _typeChip('템포런', 'tempo'),
+              const SizedBox(width: 8),
+              _typeChip('롱런', 'long'),
+            ]),
+            const SizedBox(height: 20),
+
+            // ── 페이스 다이얼 ─────────────────────────
+            _label('페이스 (분\' 초" /km)'),
+            const SizedBox(height: 8),
+            Row(children: [
+              Expanded(child: _picker(
+                controller: _paceMinCtrl,
+                items: _paceMinList.map((m) => '$m분').toList(),
+                onChanged: (i) => setState(() => _paceMin = _paceMinList[i]),
+              )),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 4),
+                child: Text("'", style: TextStyle(
+                    color: AppColors.textSecondary, fontSize: 22)),
+              ),
+              Expanded(child: _picker(
+                controller: _paceSecCtrl,
+                items: _paceSecList
+                    .map((s) => s.toString().padLeft(2, '0'))
+                    .toList(),
+                onChanged: (i) => setState(() => _paceSec = i),
+              )),
+            ]),
+            Center(child: Text(
+              '→ ${PaceCalculator.formatPace(_avgPaceSec)} /km',
+              style: const TextStyle(
+                  color: AppColors.primary, fontWeight: FontWeight.w600, fontSize: 13),
+            )),
+            const SizedBox(height: 20),
+
+            // ── 운동 거리 다이얼 ──────────────────────
+            _label('운동 거리'),
+            const SizedBox(height: 8),
+            _picker(
+              controller: _distCtrl,
+              items: _distList.map((d) => '$d km').toList(),
+              onChanged: (i) => setState(() => _selectedDistKm = _distList[i]),
+            ),
+            Center(child: Text(
+              '→ $_durStr',
+              style: const TextStyle(
+                  color: AppColors.primary, fontWeight: FontWeight.w600, fontSize: 13),
+            )),
+            const SizedBox(height: 20),
+
+            // ── BPM 입력 ──────────────────────────────
+            _label('평균 심박수 (선택)'),
+            const SizedBox(height: 8),
+            TextField(
+              keyboardType: TextInputType.number,
+              style: const TextStyle(color: AppColors.textPrimary),
+              decoration: InputDecoration(
+                hintText: '미입력 시 심박수 없음',
+                hintStyle: const TextStyle(color: AppColors.textHint, fontSize: 13),
+                suffixText: 'BPM',
+                suffixStyle: const TextStyle(color: AppColors.textHint),
+                filled: true,
+                fillColor: AppColors.card,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.divider),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.primary),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onChanged: (v) => _bpmText = v,
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('취소', style: TextStyle(color: AppColors.textHint)),
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary, foregroundColor: Colors.black),
+          onPressed: () => Navigator.pop(context, (
+            runType: _runType,
+            paceSec: _avgPaceSec,
+            distKm:  _distKm,
+            durSec:  _durSec,
+            bpm:     int.tryParse(_bpmText),
+          )),
+          child: const Text('시뮬레이션', style: TextStyle(fontWeight: FontWeight.bold)),
+        ),
+      ],
+    );
+  }
+
+  Widget _label(String text) => Text(text,
+      style: const TextStyle(color: AppColors.textSecondary,
+          fontSize: 12, fontWeight: FontWeight.w600));
+
+  Widget _typeChip(String label, String value) {
+    final sel = _runType == value;
+    return GestureDetector(
+      onTap: () => setState(() => _runType = value),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        decoration: BoxDecoration(
+          color: sel ? AppColors.primary : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: sel ? AppColors.primary : AppColors.divider),
+        ),
+        child: Text(label, style: TextStyle(
+          color: sel ? Colors.black : AppColors.textHint,
+          fontWeight: FontWeight.w600, fontSize: 13,
+        )),
+      ),
+    );
+  }
+
+  Widget _picker({
+    required FixedExtentScrollController controller,
+    required List<String> items,
+    required ValueChanged<int> onChanged,
+  }) =>
+      SizedBox(
+        height: 110,
+        child: CupertinoPicker(
+          scrollController: controller,
+          itemExtent: 34,
+          backgroundColor: AppColors.card,
+          selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
+            background: Color(0x22B3FF5C),
+          ),
+          onSelectedItemChanged: onChanged,
+          children: items
+              .map((t) => Center(
+                    child: Text(t,
+                        style: const TextStyle(
+                            color: AppColors.textPrimary, fontSize: 16)),
+                  ))
+              .toList(),
+        ),
+      );
 }

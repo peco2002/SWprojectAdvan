@@ -137,16 +137,20 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   }
 
   // ── 요약 통계 ─────────────────────────────────────────────────────
-  ({int runs, int totalSec, double km, double cal, int avgPace})
+  ({int runs, int totalSec, double km, double cal, int avgPace, int? avgHr})
       _calcSummary(List<RunningSession> sessions) {
     if (sessions.isEmpty) {
-      return (runs: 0, totalSec: 0, km: 0.0, cal: 0.0, avgPace: 0);
+      return (runs: 0, totalSec: 0, km: 0.0, cal: 0.0, avgPace: 0, avgHr: null);
     }
     final sec  = sessions.fold(0,   (s, e) => s + e.durationSeconds);
     final km   = sessions.fold(0.0, (s, e) => s + e.totalDistanceKm);
     final cal  = sessions.fold(0.0, (s, e) => s + e.caloriesBurned);
     final pace = km > 0 ? (sec / km).round() : 0;
-    return (runs: sessions.length, totalSec: sec, km: km, cal: cal, avgPace: pace);
+    final hrSessions = sessions.where((s) => s.averageHeartRate != null).toList();
+    final avgHr = hrSessions.isEmpty
+        ? null
+        : hrSessions.fold(0, (s, e) => s + e.averageHeartRate!) ~/ hrSessions.length;
+    return (runs: sessions.length, totalSec: sec, km: km, cal: cal, avgPace: pace, avgHr: avgHr);
   }
 
   // ── 막대 데이터 ───────────────────────────────────────────────────
@@ -301,13 +305,14 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
                               const SizedBox(height: 24),
 
-                              // 통계 요약 (3+2 텍스트)
+                              // 통계 요약 (3+3 텍스트)
                               _StatsRows(
                                 runs:    stats.runs,
                                 sec:     stats.totalSec,
                                 km:      stats.km,
                                 cal:     stats.cal,
                                 pace:    stats.avgPace,
+                                avgHr:   stats.avgHr,
                                 fmtTime: _fmtTime,
                               ),
                             ],
@@ -448,9 +453,10 @@ class _PeriodCarouselState extends State<_PeriodCarousel> {
   }
 }
 
-// ── 요약 통계 — 박스 없는 3+2 텍스트 ────────────────────────────────
+// ── 요약 통계 — 박스 없는 3+3 텍스트 ────────────────────────────────
 class _StatsRows extends StatelessWidget {
   final int runs, sec, pace;
+  final int? avgHr;
   final double km, cal;
   final String Function(int) fmtTime;
   const _StatsRows({
@@ -459,12 +465,14 @@ class _StatsRows extends StatelessWidget {
     required this.km,
     required this.cal,
     required this.pace,
+    required this.avgHr,
     required this.fmtTime,
   });
 
   @override
   Widget build(BuildContext context) {
     final paceStr = pace > 0 ? PaceCalculator.formatPace(pace) : "--'--\"";
+    final hrStr   = avgHr != null ? '$avgHr bpm' : '--';
     return Column(
       children: [
         // 1행: 러닝 · 시간 · 거리
@@ -476,11 +484,12 @@ class _StatsRows extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 18),
-        // 2행: 칼로리 · 평균페이스
+        // 2행: 칼로리 · 평균페이스 · 평균심박수
         Row(
           children: [
             Expanded(child: Center(child: _Col('${cal.toStringAsFixed(0)} kcal', '칼로리'))),
             Expanded(child: Center(child: _Col(paceStr, '평균페이스'))),
+            Expanded(child: Center(child: _Col(hrStr, '평균심박수'))),
           ],
         ),
       ],

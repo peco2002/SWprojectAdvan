@@ -39,7 +39,9 @@ class RunningProvider extends ChangeNotifier {
   StreamSubscription<int>?        _paceSub;
   StreamSubscription<double>?     _distSub;
   StreamSubscription<PaceRecord>? _recSub;
-  int _lastKm = 0;
+  int     _lastKm = 0;
+  String? _currentRunType; // 현재 러닝 세션의 런 타입
+  String? get currentRunType => _currentRunType;
 
   // ── 회원가입 시 이름 임시 저장 ───────────────────────────────
   String? pendingName;
@@ -71,7 +73,18 @@ class RunningProvider extends ChangeNotifier {
   Future<bool> loadProfile(String uid) async {
     final p = await _db.getProfile(uid);
     if (p == null) return false;
-    profile = p;
+
+    // 기존 계정 마이그레이션: hasWearable 미설정 시 세션 HR 데이터로 자동 감지
+    if (p.hasWearable == null) {
+      final sessions = await _db.getRecentSessions(uid, limit: 10);
+      final hasHr    = sessions.any((s) => s.averageHeartRate != null);
+      final migrated = p.copyWith(hasWearable: hasHr);
+      await _db.saveProfile(uid, migrated);
+      profile = migrated;
+    } else {
+      profile = p;
+    }
+
     await _tts.init();
     notifyListeners();
     return true;
@@ -92,8 +105,9 @@ class RunningProvider extends ChangeNotifier {
   }
 
   // ── 러닝 시작 ────────────────────────────────────────────────
-  Future<void> startRun() async {
+  Future<void> startRun(String runType) async {
     if (state == SessionState.running) return;
+    _currentRunType = runType;
     state = SessionState.running;
     elapsedSeconds = 0;
     distanceKm     = 0;
@@ -165,6 +179,7 @@ class RunningProvider extends ChangeNotifier {
       averagePaceSec:   avgPace,
       caloriesBurned:   calories,
       averageHeartRate: null,
+      runType:          _currentRunType,
       paceHistory:      List.from(history),
     );
 
@@ -172,7 +187,13 @@ class RunningProvider extends ChangeNotifier {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid != null) {
       await _db.saveSession(uid, session);
-      await _adaptProfile(uid, session);
+      if (profile?.hasWearable == true) {
+        // 웨어러블 사용자: 카운트만 증가, TCX 임포트 후 보정
+        await _incrementSessionCount(uid, session);
+      } else {
+        // 웨어러블 없는 사용자: 즉시 보정
+        await _adaptProfile(uid, session);
+      }
     }
 
     await _tts.announceFinish(
@@ -184,10 +205,61 @@ class RunningProvider extends ChangeNotifier {
     return session;
   }
 
-  // ── 적응형 보정 ──────────────────────────────────────────────
+  // ── 세션 카운트만 증가 (웨어러블 사용자 전용) ────────────────
+  Future<void> _incrementSessionCount(String uid, RunningSession session) async {
+    if (profile == null || session.durationSeconds < 600) return;
+    final updated = profile!.copyWith(sessionCount: profile!.sessionCount + 1);
+    profile = updated;
+    await _db.saveProfile(uid, updated);
+    notifyListeners();
+  }
+
+  // ── TCX 임포트 후 보정 (웨어러블 사용자 전용, main_screen에서 호출) ─
+  Future<void> adaptAfterHeartRateUpdate(String uid) async {
+    if (profile == null) return;
+    if (profile!.sessionCount < 3) return;
+    if (profile!.fastLimitSec == null) return;
+
+    final recent = await _db.getRecentSessions(uid, limit: 6);
+    final valid  = recent.where((s) => s.durationSeconds >= 600).take(5).toList();
+    if (valid.isEmpty) return;
+
+    final v = profile!.vo2max;
+    if (v == null) return;
+    final baseDists = PaceCalculator.recommendedDistances(
+      vo2max:         v,
+      fitnessLevel:   profile!.fitnessLevel,
+      weightKg:       profile!.weightKg,
+      heightCm:       profile!.heightCm,
+      gender:         profile!.gender,
+      bodyFatPercent: profile!.bodyFatPercent,
+    );
+
+    final result = PaceCalculator.adaptFromSessions(
+      sessions:            valid,
+      currentFastLimitSec: profile!.fastLimitSec!,
+      currentSlowLimitSec: profile!.slowLimitSec!,
+      currentPaceAdjustSec: profile!.paceAdjustSec,
+      currentTempoDistKm:  profile!.adaptedTempoDistKm ?? baseDists['tempo']!,
+      currentLongDistKm:   profile!.adaptedLongDistKm  ?? baseDists['long']!,
+      baseTempoDistKm:     baseDists['tempo']!,
+      baseLongDistKm:      baseDists['long']!,
+    );
+
+    final updated = profile!.copyWith(
+      paceAdjustSec:      result.paceAdjustSec,
+      adaptedTempoDistKm: result.tempoDistKm,
+      adaptedLongDistKm:  result.longDistKm,
+    );
+
+    profile = updated;
+    await _db.saveProfile(uid, updated);
+    notifyListeners();
+  }
+
+  // ── 적응형 보정 (웨어러블 없는 사용자 전용) ──────────────────
   Future<void> _adaptProfile(String uid, RunningSession latest) async {
     if (profile == null) return;
-    // 10분 미만 세션은 제외 (워밍업 등)
     if (latest.durationSeconds < 600) return;
 
     final newCount = profile!.sessionCount + 1;
@@ -207,9 +279,8 @@ class RunningProvider extends ChangeNotifier {
         .where((s) => s.durationSeconds >= 600)
         .take(5)
         .toList();
-    if (valid.length < 3) return;
+    if (valid.isEmpty) return;
 
-    // 보정 기준: ML 계산 원본 거리
     final v = profile!.vo2max;
     if (v == null) return;
     final baseDists = PaceCalculator.recommendedDistances(
@@ -246,9 +317,11 @@ class RunningProvider extends ChangeNotifier {
 
   // ── 디버그: 가짜 세션 주입 (테스트 전용) ─────────────────────
   Future<String> debugSimulateRun({
+    required String runType,
     required int    avgPaceSec,
     required double distanceKm,
     required int    durationSeconds,
+    int? averageHeartRate,
   }) async {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) return '로그인 필요';
@@ -268,6 +341,8 @@ class RunningProvider extends ChangeNotifier {
         weightKg:   profile!.weightKg,
         distanceKm: distanceKm,
       ),
+      runType:          runType,
+      averageHeartRate: averageHeartRate,
       paceHistory: [],
     );
 
@@ -280,6 +355,7 @@ class RunningProvider extends ChangeNotifier {
         ?? profile!.recommendedDistances?['long'];
 
     await _db.saveSession(uid, session);
+    // 디버그 시뮬레이션은 hasWearable 무관하게 즉시 보정
     await _adaptProfile(uid, session);
 
     final afterFast  = profile!.fastLimitSec;
@@ -290,7 +366,8 @@ class RunningProvider extends ChangeNotifier {
 
     String fmt(int? s) => s == null ? '-' : PaceCalculator.formatPace(s);
 
-    return '세션 추가 완료 ($beforeCount → $newCount회)\n'
+    final bpmLabel = averageHeartRate != null ? '  ·  HR $averageHeartRate BPM' : '';
+    return '[$runType$bpmLabel]  세션 추가 ($beforeCount → $newCount회)\n'
         '페이스: ${fmt(beforeFast)}~${fmt(beforeSlow)}'
         ' → ${fmt(afterFast)}~${fmt(afterSlow)}\n'
         '템포 거리: ${beforeTempo?.toStringAsFixed(1) ?? '-'}'

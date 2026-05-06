@@ -64,3 +64,6 @@ dataset/
 
 # Claude Code 개인 설정
 .claude/
+
+# TCX 운동 데이터 파일
+*.tcx

@@ -121,24 +121,6 @@ class _RunningScreenState extends State<RunningScreen>
           // ── 상단 바 ────────────────────────────────────────
           _TopBar(onClose: () => _askStop(context, p)),
 
-          // ── 목표 페이스 ────────────────────────────────────
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('목표 ', style: TextStyle(color: AppColors.textHint, fontSize: 13)),
-                Text(p.displayTargetPace,
-                    style: const TextStyle(
-                        color: AppColors.textSecondary,
-                        fontSize: 13, fontWeight: FontWeight.w600)),
-                const Text(' /km', style: TextStyle(color: AppColors.textHint, fontSize: 13)),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 8),
-
           // ── 실시간 지도 + GPS 버튼 ─────────────────────────
           Stack(
             children: [
@@ -194,6 +176,17 @@ class _RunningScreenState extends State<RunningScreen>
           // ── 거리 / 시간 ────────────────────────────────────
           _StatsRow(distance: p.displayDistance, elapsed: p.displayElapsed),
 
+          // ── 런 타입 목표 (시작 후 선택된 런 타입 표시) ────────
+          if (_started && p.currentRunType != null) ...[
+            const SizedBox(height: 16),
+            _RunTargetInfo(
+              runType:      p.currentRunType!,
+              fastLimitSec: p.fastLimit,
+              slowLimitSec: p.slowLimit,
+              distances:    p.profile?.recommendedDistances,
+            ),
+          ],
+
           const Spacer(),
 
           // ── 컨트롤 버튼 ────────────────────────────────────
@@ -214,8 +207,11 @@ class _RunningScreenState extends State<RunningScreen>
                 }
                 return;
               }
+              if (!context.mounted) return;
+              final runType = await _showRunTypeDialog(context, p);
+              if (runType == null) return;
               setState(() => _started = true);
-              await p.startRun();
+              await p.startRun(runType);
             },
             onPause:  p.pause,
             onResume: p.resume,
@@ -437,6 +433,64 @@ class _Stat extends StatelessWidget {
       ]);
 }
 
+class _RunTargetInfo extends StatelessWidget {
+  final String runType;
+  final int fastLimitSec, slowLimitSec;
+  final Map<String, double>? distances;
+  const _RunTargetInfo({
+    required this.runType,
+    required this.fastLimitSec,
+    required this.slowLimitSec,
+    required this.distances,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isTempo       = runType == 'tempo';
+    final label         = isTempo ? '템포런' : '롱런';
+    final targetPaceSec = isTempo ? fastLimitSec : slowLimitSec;
+    final _d = distances;
+    final targetDist = _d == null ? null : (isTempo ? _d['tempo'] : _d['long']);
+
+    return Column(
+      children: [
+        const Text('목표',
+            style: TextStyle(color: AppColors.textHint, fontSize: 12)),
+        const SizedBox(height: 4),
+        Text(label,
+            style: const TextStyle(
+                color: AppColors.primary,
+                fontSize: 15,
+                fontWeight: FontWeight.bold)),
+        const SizedBox(height: 6),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (targetPaceSec > 0) ...[
+              Text(PaceCalculator.formatPace(targetPaceSec),
+                  style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600)),
+              const Text(' /km',
+                  style: TextStyle(color: AppColors.textHint, fontSize: 13)),
+            ],
+            if (targetDist != null) ...[
+              const Text('  ·  ',
+                  style: TextStyle(color: AppColors.textHint, fontSize: 13)),
+              Text('${targetDist.toStringAsFixed(1)} km',
+                  style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600)),
+            ],
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 class _Controls extends StatelessWidget {
   final SessionState state;
   final bool started;
@@ -466,6 +520,72 @@ class _Controls extends StatelessWidget {
     }
     return const SizedBox.shrink();
   }
+}
+
+Future<String?> _showRunTypeDialog(BuildContext context, RunningProvider p) {
+  final profile  = p.profile;
+  final tempoKm  = profile?.recommendedDistances?['tempo'];
+  final longKm   = profile?.recommendedDistances?['long'];
+
+  return showDialog<String>(
+    context: context,
+    barrierDismissible: true,
+    builder: (ctx) => AlertDialog(
+      backgroundColor: AppColors.surface,
+      title: const Text('어떤 러닝을 할까요?',
+          style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold)),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _RunTypeCard(
+            title: '템포런',
+            sub: '짧고 빠르게${tempoKm != null ? "  ${tempoKm.toStringAsFixed(1)} km" : ""}',
+            icon: Icons.speed,
+            onTap: () => Navigator.pop(ctx, 'tempo'),
+          ),
+          const SizedBox(height: 12),
+          _RunTypeCard(
+            title: '롱런',
+            sub: '길고 천천히${longKm != null ? "  ${longKm.toStringAsFixed(1)} km" : ""}',
+            icon: Icons.directions_run,
+            onTap: () => Navigator.pop(ctx, 'long'),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+class _RunTypeCard extends StatelessWidget {
+  final String title, sub;
+  final IconData icon;
+  final VoidCallback onTap;
+  const _RunTypeCard({required this.title, required this.sub,
+      required this.icon, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) => GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: AppColors.card,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppColors.divider),
+          ),
+          child: Row(children: [
+            Icon(icon, color: AppColors.primary, size: 22),
+            const SizedBox(width: 12),
+            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(title, style: const TextStyle(
+                  color: AppColors.textPrimary, fontWeight: FontWeight.w600)),
+              Text(sub, style: const TextStyle(
+                  color: AppColors.textHint, fontSize: 12)),
+            ])),
+            const Icon(Icons.arrow_forward_ios, color: AppColors.textHint, size: 14),
+          ]),
+        ),
+      );
 }
 
 class _BigBtn extends StatelessWidget {

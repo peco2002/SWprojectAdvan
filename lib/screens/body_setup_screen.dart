@@ -25,7 +25,7 @@ class BodySetupScreen extends StatefulWidget {
 
 class _BodySetupScreenState extends State<BodySetupScreen> {
   final _formKey = GlobalKey<FormState>();
-  int _step = 0; // 0: 기본정보, 1: 운동경험, 2: 인바디(선택)
+  int _step = 0; // 0: 기본정보, 1: 운동경험, 2: 인바디(선택), 3: 웨어러블
 
   // 컨트롤러
   final _heightCtrl = TextEditingController(text: '170');
@@ -36,6 +36,7 @@ class _BodySetupScreenState extends State<BodySetupScreen> {
 
   String _gender       = 'male';
   String _fitnessLevel = 'none';
+  bool?  _hasWearable;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +55,7 @@ class _BodySetupScreenState extends State<BodySetupScreen> {
                     _buildStep0(),
                     _buildStep1(),
                     _buildStep2(),
+                    _buildStep3(),
                   ][_step],
                 ),
               ),
@@ -62,7 +64,7 @@ class _BodySetupScreenState extends State<BodySetupScreen> {
               step: _step,
               onBack:  _step == 0 ? null : () => setState(() => _step--),
               onNext:  _onNext,
-              lastStep: 2,
+              lastStep: 3,
             ),
           ],
         ),
@@ -252,15 +254,67 @@ class _BodySetupScreenState extends State<BodySetupScreen> {
     );
   }
 
+  // ── Step 3: 웨어러블 보유 여부 ───────────────────────────────
+  Widget _buildStep3() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _title('심박수 측정 기기가 있나요?', '스마트워치 등 심박수 측정이 가능한\n웨어러블 기기 보유 여부를 알려주세요.'),
+          const SizedBox(height: 28),
+          _wearableCard(true,  '있어요', 'Mi Band, Galaxy Watch 등\n심박수 측정 가능한 기기가 있어요', Icons.watch),
+          const SizedBox(height: 12),
+          _wearableCard(false, '없어요', '심박수 측정 기기 없이\n러닝 기록만 사용할게요', Icons.watch_off_outlined),
+        ],
+      );
+
+  Widget _wearableCard(bool value, String title, String sub, IconData icon) {
+    final sel = _hasWearable == value;
+    return GestureDetector(
+      onTap: () => setState(() => _hasWearable = value),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: sel ? AppColors.primary.withOpacity(0.10) : AppColors.card,
+          border: Border.all(
+              color: sel ? AppColors.primary : AppColors.divider, width: sel ? 1.5 : 1),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Row(children: [
+          Container(
+            width: 44, height: 44,
+            decoration: BoxDecoration(
+              color: sel ? AppColors.primary.withOpacity(0.15) : AppColors.surface,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: sel ? AppColors.primary : AppColors.textHint, size: 22),
+          ),
+          const SizedBox(width: 14),
+          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(title, style: TextStyle(
+                color: sel ? AppColors.textPrimary : AppColors.textSecondary,
+                fontWeight: FontWeight.w600)),
+            const SizedBox(height: 2),
+            Text(sub, style: AppTextStyles.caption.copyWith(height: 1.5)),
+          ])),
+          if (sel) const Icon(Icons.check_circle, color: AppColors.primary, size: 20),
+        ]),
+      ),
+    );
+  }
+
   // ── 다음 버튼 핸들러 ─────────────────────────────────────────
   void _onNext() async {
-    if (_step < 2) {
+    if (_step < 3) {
       if (_step == 0 && !_formKey.currentState!.validate()) return;
+      if (_step == 3 && _hasWearable == null) return; // 웨어러블 선택 필수
       setState(() => _step++);
       return;
     }
 
-    // Step 2 완료 → 프로필 생성 → 페이스 결과 화면
+    // Step 3 완료 → 웨어러블 미선택 시 차단
+    if (_hasWearable == null) return;
+
+    // Step 3 완료 → 프로필 생성 → 페이스 결과 화면
     final profile = BodyProfile(
       uid:            widget.uid,
       name:           widget.name,
@@ -271,6 +325,7 @@ class _BodySetupScreenState extends State<BodySetupScreen> {
       fitnessLevel:   _fitnessLevel,
       bodyFatPercent: _fatCtrl.text.isNotEmpty ? double.tryParse(_fatCtrl.text) : null,
       muscleMassKg:   _muscleCtrl.text.isNotEmpty ? double.tryParse(_muscleCtrl.text) : null,
+      hasWearable:    _hasWearable,
     );
 
     await context.read<RunningProvider>().setProfile(profile);
@@ -351,11 +406,11 @@ class _StepIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 20, 24, 8),
-      child: Row(children: List.generate(3, (i) {
+      child: Row(children: List.generate(4, (i) {
         final active = i <= current;
         return Expanded(
           child: Container(
-            margin: EdgeInsets.only(right: i < 2 ? 6 : 0),
+            margin: EdgeInsets.only(right: i < 3 ? 6 : 0),
             height: 4,
             decoration: BoxDecoration(
               color: active ? AppColors.primary : AppColors.divider,

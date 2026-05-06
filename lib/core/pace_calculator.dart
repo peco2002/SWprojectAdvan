@@ -126,8 +126,8 @@ class PaceCalculator {
   // ──────────────────────────────────────────────
   // 6. 적응형 보정 — 실제 러닝 결과로 권장값 조정
   // ──────────────────────────────────────────────
-  /// 최근 세션들을 분석해 페이스 보정값과 거리 보정값을 반환한다.
-  /// 호출 전제: valid 세션이 3개 이상, 각 세션 10분 이상
+  /// 최근 세션(sessions.first)을 기준으로 감소/유지/증가를 결정해
+  /// 페이스 보정값과 거리 보정값을 반환한다.
   ///
   /// 반환: (paceAdjustSec, tempoDistKm, longDistKm)
   static ({int paceAdjustSec, double tempoDistKm, double longDistKm})
@@ -141,37 +141,50 @@ class PaceCalculator {
     required double baseTempoDistKm,
     required double baseLongDistKm,
   }) {
-    // ── 페이스 보정 ─────────────────────────────
-    final midTarget = (currentFastLimitSec + currentSlowLimitSec) / 2;
-    final recentAvg = sessions
-            .map((s) => s.averagePaceSec)
-            .reduce((a, b) => a + b) /
-        sessions.length;
-    final delta = recentAvg - midTarget;
+    final latest = sessions.first;
 
-    final maxAdjust = (midTarget * 0.2).round();
-    final newPaceAdjust =
-        (currentPaceAdjustSec + (delta * 0.3).round()).clamp(
-            -maxAdjust, maxAdjust);
+    // runType 결정: 세션에 명시된 값 우선, 없으면 거리 기준 추론
+    final bool isTempo = latest.runType == 'tempo' ||
+        (latest.runType == null &&
+            (currentTempoDistKm - latest.totalDistanceKm).abs() <
+                (currentLongDistKm - latest.totalDistanceKm).abs());
 
-    // ── 거리 보정 (최근 세션 기준) ───────────────
-    // 권장 거리 중간값 기준으로 템포/롱런 판별
-    // 고정 35분 기준은 초보자처럼 권장 롱런이 짧을 때 오분류됨
-    final latest    = sessions.first;
-    final midDistKm = (currentTempoDistKm + currentLongDistKm) / 2;
-    final isLongRun = latest.totalDistanceKm >= midDistKm;
+    final targetDistKm  = isTempo ? currentTempoDistKm : currentLongDistKm;
+    final targetPaceSec = isTempo ? currentFastLimitSec : currentSlowLimitSec;
 
+    final decision = _decideAdaptation(
+      actualDistKm:  latest.totalDistanceKm,
+      actualPaceSec: latest.averagePaceSec,
+      actualHr:      latest.averageHeartRate,
+      targetDistKm:  targetDistKm,
+      targetPaceSec: targetPaceSec,
+    );
+
+    // ── 페이스 보정 (+10: 느리게, -10: 빠르게) ──────
+    const paceDeltaSec = 10;
+    final maxAdjust = ((currentFastLimitSec + currentSlowLimitSec) / 2 * 0.2).round();
+    final newPaceAdjust = switch (decision) {
+      _AdaptDecision.decrease => (currentPaceAdjustSec + paceDeltaSec).clamp(-maxAdjust, maxAdjust),
+      _AdaptDecision.maintain => currentPaceAdjustSec,
+      _AdaptDecision.increase => (currentPaceAdjustSec - paceDeltaSec).clamp(-maxAdjust, maxAdjust),
+    };
+
+    // ── 거리 보정 (+7%: 증가, -5%: 감소) ────────────
     double newTempoDistKm = currentTempoDistKm;
     double newLongDistKm  = currentLongDistKm;
 
-    if (isLongRun) {
-      final ratio   = latest.totalDistanceKm / currentLongDistKm;
-      newLongDistKm = (currentLongDistKm * (1 + 0.25 * (ratio - 1)))
-          .clamp(baseLongDistKm * 0.5, baseLongDistKm * 2.0);
+    if (isTempo) {
+      newTempoDistKm = switch (decision) {
+        _AdaptDecision.decrease => (currentTempoDistKm * 0.95).clamp(baseTempoDistKm * 0.5, baseTempoDistKm * 2.0),
+        _AdaptDecision.maintain => currentTempoDistKm,
+        _AdaptDecision.increase => (currentTempoDistKm * 1.07).clamp(baseTempoDistKm * 0.5, baseTempoDistKm * 2.0),
+      };
     } else {
-      final ratio    = latest.totalDistanceKm / currentTempoDistKm;
-      newTempoDistKm = (currentTempoDistKm * (1 + 0.25 * (ratio - 1)))
-          .clamp(baseTempoDistKm * 0.5, baseTempoDistKm * 2.0);
+      newLongDistKm = switch (decision) {
+        _AdaptDecision.decrease => (currentLongDistKm * 0.95).clamp(baseLongDistKm * 0.5, baseLongDistKm * 2.0),
+        _AdaptDecision.maintain => currentLongDistKm,
+        _AdaptDecision.increase => (currentLongDistKm * 1.07).clamp(baseLongDistKm * 0.5, baseLongDistKm * 2.0),
+      };
     }
 
     return (
@@ -179,6 +192,35 @@ class PaceCalculator {
       tempoDistKm:   newTempoDistKm,
       longDistKm:    newLongDistKm,
     );
+  }
+
+  static _AdaptDecision _decideAdaptation({
+    required double actualDistKm,
+    required int    actualPaceSec,
+    required int?   actualHr,
+    required double targetDistKm,
+    required int    targetPaceSec,
+  }) {
+    final bool distOk      = actualDistKm >= targetDistKm * 0.9;
+    final bool distExceeds = actualDistKm > targetDistKm * 1.1;
+    final bool paceOk      = actualPaceSec <= targetPaceSec + 30; // 30초 이내 여유
+    final bool paceFast    = actualPaceSec < targetPaceSec - 15;  // 15초 이상 빠름
+    final bool hrLow       = actualHr != null && actualHr < 120;
+
+    // 증가
+    if (distExceeds) return _AdaptDecision.increase;
+    if (distOk && paceFast) return _AdaptDecision.increase;
+    if (distOk && paceOk && hrLow) return _AdaptDecision.increase;
+
+    // 유지: 거리 충족 + 페이스 정상
+    if (distOk && paceOk) return _AdaptDecision.maintain;
+    // 유지: 거리 부족이지만 페이스가 빠름 (능력은 충분, 거리만 못 채운 것)
+    if (!distOk && paceFast) return _AdaptDecision.maintain;
+    // 유지: 거리/페이스 낮음 + HR < 120 (힘들지 않았으므로 기준 유지)
+    if (!distOk && hrLow) return _AdaptDecision.maintain;
+
+    // 감소: 나머지 (거리 부족 + 페이스 정상/느림, 거리 충족 + 페이스 느림)
+    return _AdaptDecision.decrease;
   }
 
   // ──────────────────────────────────────────────
@@ -201,3 +243,6 @@ enum PaceZone {
   tooSlow, // 너무 느림 (롱런 강도 미달)
   stopped, // 정지 상태
 }
+
+// 적응형 알고리즘 내부 결정값 (파일 내부 전용)
+enum _AdaptDecision { decrease, maintain, increase }
