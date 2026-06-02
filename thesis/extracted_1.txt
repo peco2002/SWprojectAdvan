@@ -1,0 +1,452 @@
+ABSTRACT
+Background: Sudden changes (increases and decreases) in training load have been suggested to play a key role in the
+development of running-related injuries. However, the compiled evidence for an association between change in
+training load and running-related injury does not exist.
+Purpose: The purpose of the present systematic review was to compile the evidence from original articles examining
+the association between changes in training load and running-related injuries.
+Study Design: Systematic review.
+Methods: Four databases (Pubmed/Medline, SPORTDiscus, Embase, and Scopus) were systematically searched. Two
+reviewers screened titles, abstracts, and full-text articles independently. Articles were included if i) the study design
+was a randomized trial, a prospective cohort study, a cross-sectional study or a case-control study, ii) participants
+were runners between 18-65 years, and iii) specific information on changes in training load was provided.
+Methodological quality of included articles was assessed using the Newcastle Ottawa Scale and the PEDro rating scale.
+Results: Four articles fulfilled the eligibility criteria of which three found an association between increases in training
+load and an increased risk of running-related injuries: This association was shown by an increased injury risk amongst
+runners: i) if they recently had performed one or more changes in either velocity and/or distance and/or frequency
+compared with the non-injured runners (p=0.037), ii) increasing their average weekly running distance by more than
+30% compared to an increase less than 10% (Hazard Ratio =1.59 (95% Confidence Interval: 0.96; 2.66)), iii) increasing
+their total running distance significantly more the week before the injury origin compared with other weeks (mean
+difference: 86%; 95% Confidence Interval: 12%; 159%, p=0.026). However, no difference was found between a 10%
+and a 24% average increase in weekly volume (HR=0.8, 95% CI: 0.6; 1.3).
+Conclusion: Very limited evidence exists supporting that a sudden change in training load is associated with increased
+risk of running-related injury.
+Level of evidence: 2
+Keywords: Etiology, running-related injuries, training load.
+TPSJI SYSTEMATIC REVIEW
+IS THERE EVIDENCE FOR AN ASSOCIATION BETWEEN
+CHANGES IN TRAINING LOAD AND RUNNING-
+RELATED INJURIES? A SYSTEMATIC REVIEW
+Camma Damsted, MScPT1
+Simone Glad, PT2
+Rasmus Oestergaard Nielsen, PhD1
+Henrik Sørensen, PhD1
+Laurent Malisoux, PhD3
+CORRESPONDING AUTHOR
+1 Section of Sport Science, Department of Public Health,
+Aarhus University, Aarhus, Denmark Camma Damsted
+2 University College Lillebaelt, Odense, Denmark
+Section of Sport Science, Department of Public
+3 Sports Medicine Research Laboratory, Department of
+Population Health, Luxembourg Institute of Health, Health
+Luxembourg Aarhus University, Dalgas Avenue 4, DK-8000
+Confl icts of interest Aarhus C
+None of the authors have any confl icts of interest, including
+E-mail: camma@ph.au.dk
+relevant fi nancial interests, activities, relationships, and
+affi liations. Telephone: +45 87 16 84 92
+The International Journal of Sports Physical Therapy | Volume 13, Number 6 | December 2018 | Page 931
+DOI: 10.26603/ijspt20180931
+
+INTRODUCTION volume, duration, intensity, and frequency of run-
+Unravelling the etiology of running-related injury ning) and RRI, training error in a specific training
+(RRI) has received extensive scientific attention characteristic could not be identified. However, con-
+throughout the past decades. A vast number of dif- siderations about sudden changes in the training
+ferent risk factors for injury have been proposed, load were not considered as a potential injury mech-
+such as foot strike patterns, age, gender, body mass anism.2-7,14 With the current high focus on sudden
+index (BMI), anthropometrics, footwear properties changes in training load, as well as the use of more
+and anatomical factors, with absence of clear sup- complex statistical approaches in sports medicine,12
+port for many of them.1 A history of previous injury new evidence might be available. Therefore, the pur-
+is consistently reported in the literature as a strong pose of the present systematic review was to compile
+risk factor for injury development; however, owing the evidence from original articles examining the
+to its non-modifiable nature, the relevance of includ- association between changes in training load and
+ing it as a factor in an effective injury prevention running-related injuries.
+intervention strategy is minor. Conversely, focusing
+on readily modifiable and causal plausible factors, METHODS
+such as scheduling of training load, has been sug-
+Literature Search
+gested to have greater impact on RRI development.
+The first and the second author (CD and SG)
+Therefore, investigation of the role of training load performed an electronic literature search in four
+as the main exposure of interest is essential to suc- databases (Pubmed/Medline, SPORTDiscus, Embase,
+ceed with developing effective injury prevention Scopus) from their inception to April 31st 2017. Data-
+strategies. Within sports injury research, the phe- base limits were set to published articles or articles in
+nomenon “training too much, too soon”, or a sudden press written in English. A certified research librarian
+increase in training load, has been acknowledged at Aarhus University Library, Denmark supervised
+to play a key role on injury development.2-8 This the building of the search string through using the
+phenomenon also seems to resonate within RRI PICOS approach.15 The complete search strategy for
+research,9,10 and furthermore, is being highlighted all four databases are provided in Appendix 1.
+by runners and coaches as especially important in
+relation to injury development.11 From a theoreti- Study selection
+cal viewpoint, injury occurs when the cumulative All articles were systematically and independently
+training load, over one or several running sessions screened for eligibility by three reviewers (CD, SG
+exceeds the body’s load capacity for adaptive tissue and LM). All titles and abstracts were screened by
+repair;2,9 training load comprises several variables CD and SG, and eligible articles retrieved in full text
+(e.g. running distance, number of steps or strides, were carefully read by CD and LM. To be eligible
+running pace or speed, and time spent running). for inclusion, the articles had to fulfill the following
+Consequently, running data should be analyzed criteria:
+using changes in training load between each run-
+Inclusion criteria:
+ning session (or short period of time), as training
+load continuously changes over time and therefore 1) The research of interest was specifically focused
+should be considered as a time-dependent variable.12 on changes in training load in relation to RRI;
+This approach seems more appropriate to illuminate
+2) the study design was a randomized trial, a pro-
+RRI etiology compared with examining running
+spective cohort study, a cross-sectional study or
+data as fixed, absolute, weekly mean values, or with
+a case-control study;
+investigating non-training-related risk factors for
+injury that simply identify sub-populations at higher 3) the study participants were between the age of
+or lower risk of injury. 18 and 65 years;
+In a previous systematic review13 aiming to investigate 4) participants were runners (novice runners,
+the association between training characteristic (i.e. recreational runners, elite runners, distance
+The International Journal of Sports Physical Therapy | Volume 13, Number 6 | December 2018 | Page 932
+
+runners, long-distance runners, road runners, trail the present review by excluding two of the 11 cri-
+runners, marathoners, ultra-marathon runners, teria; Criterion 4 was excluded because an exposed
+extreme runners, track athletes, cross-country versus non-exposed cohort was irrelevant as long as
+runners or orienteers); the total study population was exposed to running,
+and Criterion 7 was excluded because it was linked
+Exclusion criteria:
+to Criterion 4 comparing the exposed with the non-
+1) running was not the participants’ primary sport exposed cohort. These modifications decreased the
+activity, e.g. football players, soccer players; highest possible quality score to 9 stars.
+2) the RRI was not a musculoskeletal injury (i.e. The methodological quality of the included, ran-
+blisters, skin abrasions, delayed onset muscle domized trial was rated using the PEDro rating
+soreness or superficial bruises; scale, which is based on the Delphi list developed
+by Verhagen and colleagues.19 The PEDro scale also
+3) study subjects were military or army recruits;
+contains 11 criteria to assess the risk of bias, which
+In cases of disagreements between the reviewers are as follows: 1) eligibility criteria were specified;
+regarding inclusion or exclusion of an article, a con- 2) participants were randomly allocated to groups;
+sensus meeting was held and if no consensus was 3) allocation was concealed; 4) groups were similar
+reached, a fourth reviewer (RON) made the final at baseline; 5) blinding of all participants; 6) blind-
+decision. ing of all therapists who administered the interven-
+tion; 7) blinding of all assessors who measured at
+Quality Assessment least one key outcome; 8) measures of at least one
+The methodological quality assessment of the key outcome were obtained for more than 85% of
+included full text articles was performed by three participants initially allocated to groups; 9) data for
+authors (CD, SG and LM) in an independent and at least one key outcome was analyzed by “inten-
+blinded manner. The Newcastle Ottawa Scale (NOS) tion-to-treat”; 10) results of between-group statistical
+was chosen for assessing the quality of the included comparisons reported for at least one key outcome;
+non-randomized studies due to its previous use 11) study provided both point measures and mea-
+within RRI.16,17 Furthermore, the NOS is reported as sures of variability for at least one key outcome. In
+one of two most useful tools by the Cochrane Hand- a recently published study by Yamato et al. 2017,20
+book for Systematic Reviews of Interventions and the use of the PEDro scale demonstrated both high
+allows customization to the review question of inter- validity and inter-rater reliability when compared to
+est.18 The original NOS contains 11 criteria designed the Cochrane back and neck risk of bias tool.21
+to assess the risk of bias, and uses a star rating sys-
+The total methodological quality of each included
+tem to indicate the quality of a study. The 11 criteria
+article was expressed in percent by calculating the
+are as follows: 1) description of runners or type of
+number of criteria being fulfilled divided by the
+runners; 2) definition of the running-related injury;
+total number of possible ratings. All disagreements
+3) representativeness of the exposed cohort; 4) selec-
+between the researchers in relation to the method-
+tion of the non-exposed cohort; 5) ascertainment of
+ological quality assessment were resolved by a con-
+exposure; 6) demonstration that outcome of interest
+sensus meeting between the assessors (CD, SG, LM).
+was not present at the start of the study; 7) com-
+parability of cohorts on the basis of the design or
+Data Extraction
+analysis; 8) assessment of outcome; 9) was follow-up
+Two authors (CD and LM) independently extracted
+long enough for outcomes to occur; 10) adequacy of
+the following information and data from the
+follow-up of cohorts; and 11) statistic measurement
+included studies; 1) first author and date, 2) injury
+of risk association.
+type, 3) definition of exposure, 4) specification of
+The highest possible quality score in the original exposure and 5) results. In case of any doubts about
+version is 12 stars (it is possible to award Criterion 7 the extracted data, a meeting was held between the
+with two stars). However, the tool was modified for three authors (RON, CD, LM) to clarify the accuracy
+The International Journal of Sports Physical Therapy | Volume 13, Number 6 | December 2018 | Page 933
+
+of the data. The interpretation of results included Risk of Bias Assessment
+the proportion of injured and non-injured runners, Information on potential risk of bias for the included
+the mean difference between them, measures of studies is shown in Table 2. Among the non-ran-
+associations, and the corresponding level of statisti- domized studies, 23,24 the most frequent reasons for
+cal significance. decreased quality scores were: low external validity,
+a follow-up period shorter than 12 weeks, and lack
+RESULTS of reporting a measure of association, while the risk
+of bias was more related to the absence of blinding
+Literature Search
+procedures in the included randomized trial.22
+A total of 8,242 articles were identified through
+searching the four databases. Of those, 2,399 were
+duplicates, leaving 5,843 articles for screening of the Changes in Training Load and RRI
+title and abstract. An overview of the existing evidence for the asso-
+ciation between a change in training load and RRI
+Primary screening resulted in exclusion of 5,779
+is presented in Table 3. Overall, a tendency toward
+articles, leaving 64 articles eligible for full assessment
+an increased injury risk following a sudden increase
+one of which was not available in full text. While
+in training load was identified in three out of the
+assessing the remaining 63 full texts in accordance four studies included10,23,24. Cantidio et al.24 (22%
+with the eligibility criteria, the reference list within
+methodological quality assessment score) showed
+each article were screened to identify potential new
+that a significantly higher proportion of the injured
+articles that were not found in the primary literature
+runners had recently changed one or more of the
+search. By this process, two additional articles were
+running variables (velocity, distance, volume or fre-
+identified as eligible, and thus included in the assess-
+quency) compared with the non-injured runners
+ment of full text articles. Out of the total 65 articles (p=0.037). In Nielsen et al.23 (67% methodological
+assessed in full text, 61 were excluded primarily due
+quality assessment score), two different analyses
+to no available information about changes in training
+related to an increase in running distance were
+load. The remaining four articles were included in the
+reported. First, the runners who developed an
+quality assessment. The selection process of the liter-
+injury during follow-up had increased their average
+ature is presented in the PRISMA diagram (Figure 1). weekly running distance with 31.6±3.1%, while the
+average for the runners that stayed injury free was
+Description of the included articles 22.1±2.1% (p=0.07). Second, the mean difference
+In Table 1, the included studies are described between the increase in the running distance the
+according to: 1) year of publication; 2) country of week before the onset of an injury and the average
+origin; 3) study design; 4) study population; 5) sam- weekly increase during other weeks was found to be
+ple size of participants; 6) baseline characteristics 86% (95% confidence interval (95% CI): 12.9; 159.9,
+including injury history; 7) the collection method p=0.026). In the other study by Nielsen et al.10
+for the running data; 8) the collection method for the (100% methodological quality assessment score), an
+injury status; 9) injury definition. In three studies, all increased Hazard Ratio (HR)=1.59 (95% CI: 0.96;
+participants were injury free prior to baseline,10,22,23 2.66) for distance-related injuries (i.e. patellofemoral
+whereas in one study, a group of injured runners was pain, iliotibial band syndrome, medial tibial stress
+compared to a group of non-injured runners.24 In the syndrome, gluteus medius injury, greater trochan-
+study by Cantidio et al.24 the proportion of runners teric bursitis, injury to the tensor fascia latae and
+who reported recent variations in one or more of patellar tendinopathy) was found when increasing
+the running variables among the two groups (the the weekly running distance by more than 30%
+injured and the non-injured runners) was presented, compared to a less than 10% change (increase or
+whereas no result for statistical comparison was decrease)
+provided. Therefore, as all data were available to run
+a Chi-square test this was performed by the present In contrast with the three studies above, the
+authors in order to compare the two proportions. randomized trial by Buist et al.22 (73% methodological
+The International Journal of Sports Physical Therapy | Volume 13, Number 6 | December 2018 | Page 934
+
+Figure 1. The PRISMA diagram visualizing the selection process of articles for the present systematic review.
+quality assessment score) found that the novice DISCUSSION
+runners who followed the graded training
+Main Findings
+program characterized by a 10% average increase
+in weekly volume were not at a lower injury risk The aim of the present systematic review was to
+(HR= 0.8, 95% CI: 0.6; 1.3) when compared to search the literature for articles examining the
+the novice runners who followed the standard association between changes (progressions and
+training program (24% average increase in weekly regressions) in training load and RRI. Four articles
+volume). were included and of these, three studies found an
+The International Journal of Sports Physical Therapy | Volume 13, Number 6 | December 2018 | Page 935
+
+Table 1.
+Table 2.
+increased risk of injury development following either comparing two intervention groups (a graded train-
+a sudden increase in running distance between two ing program with 10% average increase in weekly
+weeks 10,23, or a non-specific recent change in one or volume vs. a standard training program with 24%
+more of the training variables velocity, distance, vol- average increase in weekly volume). Thus, very lim-
+ume or frequency during the past weeks (no avail- ited evidence exists supporting that sudden changes
+able data on the timing of this sudden change)24. In are associated with increased injury risk among run-
+contrast, in the fourth included study, Buist et al.22, ners. As it may be plausible to assume that excessive
+found no difference was found in injury risk when progression in training load is associated with
+The International Journal of Sports Physical Therapy | Volume 13, Number 6 | December 2018 | Page 936
+
+Table 3. Results.
+increased injury risk, it is emphasized that future defined in all four studies, but failure to report mea-
+studies are highly needed to better define the role sures of association, short follow-up periods, and
+of sudden changes on RRI occurrence in a causal lack of generalizability were observed in two of the
+perspective.25 prospective cohort studies.23,24 Also, the randomized
+trial did not include any blinding procedure.22
+Study QualityAassessment
+The overall methodological quality of the studies Defi nition of Change
+included in the present systematic review is var- In the articles in the current systematic review
+ied. The study populations and RRI were accurately a change was defined as the change in running
+The International Journal of Sports Physical Therapy | Volume 13, Number 6 | December 2018 | Page 937
+
+distance or running volume from one week to the reference group increasing less than 10% while
+another, or more specifically, as “a recent change in no difference was found for the group increasing by
+one or more training variables”. Several other def- 10%-29% compared with the reference group. How-
+initions have been used within the body of sports ever, it should be noted that in the study by Buist
+injury research such as the “acute:chronic workload et al.,22 an average increase in weekly volume was
+ratio”26 or a rolling average seven days prior to the used (13 weeks and eight weeks for the study group
+injury.27 Other ways of understanding, defining and increasing 10% and 24%, respectively). In the study
+analyzing the role of changes in training load have by Nielsen et al.,10 the examination of the association
+been proposed including non-linear relationships in between training characteristics and RRI focused on
+terms of U-shaped patterns,13 exponentially weighted the comparison between one week and the next, but
+moving averages28 or the role of sudden sharp spikes multiple changes over time were not accounted for.
+of training load in the training regime.5,26 In the study by Cantidio et al.24 a higher proportion
+of runners with recent training changes were found
+Independent of the way changes have been defined
+among the injured group compared to the non-
+and the statistical approaches used, the main sci-
+injured group. However, it was neither specified
+entific aim is to shed light upon: What defines a
+to which extend nor direction the training load
+change? Which magnitude of sudden changes has
+changed, and thus, it is not possible to quantify the
+clinical relevance in relation to injury risk? Despite
+size of a potentially injurious sudden change in
+the substantial attention that these questions have
+training load based on the results. Therefore, based
+paid, no clear consensus has been reached yet.29
+on the four included studies, no evidence was found
+This demonstrates the need for identifying which to support a well-defined threshold for hazardous
+definition of change(s) appears to have the stron- sudden changes in training load above which the
+gest association with injury development in order risk of injury development is significantly increased.
+to explore if one definition turns out to be more rel- Such a threshold might be specific to the definition
+evant compared to others, bearing in mind that one and the method used to assess sudden changes, and
+definition might be clinically relevant for a specific above all, to the population of runners investigated.
+sports discipline or population while less valuable in Given that the absolute training load was low in the
+another contexts. populations investigated so far (e.g. total distance
+over a full year period less than 10 kilometers), a
+Defi ning an Upper Limit for Sudden small increase in training load might result in a large
+Increases relative sudden increase (e.g. increasing from 2 to 3
+When examined from a practical and clinical km per week represents an absolute difference of 1
+perspective, the results from the present systematic km but a relative sudden increase of 50%). These
+review reveal that no evidence exists for the use of runners’ profiles cannot be compared to other popu-
+the so-called “10% rule”, which is commonly used lations of runners with larger training load (e.g. a
+by runners, coaches and clinicians as a guideline competitive runner running 100 km per week would
+for a maximum increase in training load per week.30 only observe a 3% sudden increase in training load
+Buist et al. 200822 compared injury risk based on with an absolute increase of 3 km from one week
+an average increase in weekly volume of 10% and to the next, and he would have to increase training
+24%, but did not find any difference between the load by 50 km per week to observe a 50% sudden
+two groups. An average weekly increase in training change).
+load of 24% may not be sufficiently large to reflect
+the mechanism of running too much, too soon in Limitations
+novice runners. This interpretation is in accordance The main limitations of the present study include:
+with the findings by Nielsen et al.10 who found that 1) the number of relevant databases that were
+the injurious mechanism of sudden increase hap- searched: 2) the screening of articles for eligibility
+pened for the novice runners increasing their aver- and 3) the limited generalizability of the findings.
+age weekly distance more than 30% compared with Regarding the databases the four largest (Pubmed/
+The International Journal of Sports Physical Therapy | Volume 13, Number 6 | December 2018 | Page 938
+
+Medline, SPORTDiscus, Embase, Scopus) and most 2. Soligard T, Schwellnus M, Alonso JM, et al. How
+relevant for the specific research question in the much is too much? (Part 1) International Olympic
+Committee consensus statement on load in sport
+present systematic review were searched. However,
+and risk of injury. Br J Sports Med. 2016;50(17):1030-
+other databases such as PEDro and Web of Science
+1041.
+could also have been relevant. In relation to the
+3. Schwellnus M, Soligard T, Alonso JM, et al. How
+screening of articles for provision of information
+much is too much? (Part 2) International Olympic
+about changes in training load, this was performed
+Committee consensus statement on load in sport
+on an abstract level in order to screen out articles and risk of illness. Br J Sports Med. 2016;50(17):1043-
+just reporting the difference in injury risk between 1052.
+different subgroups of runners having performed a 4. Gabbett TJ, Hulin BT, Blanch P, Whiteley R. High
+different weekly average. However, it is unknown training workloads alone do not cause sports
+if some articles deemed ineligible at this stage may injuries: how you get there is the real issue. Br J
+Sports Med. 2016;50(8):444-445.
+have contained information about training load and
+5. Gabbett TJ. The training-injury prevention paradox:
+injury that would have been evident if evaluated in
+should athletes be training smarter and harder? Br J
+full-text. Considering the generalizability of the find-
+Sports Med. 2016;50(5):273-280.
+ings, this is an important issue to address as all the
+6. Drew MK, Finch CF. The relationship between
+studies included in the present systematic review
+training load and injury, illness and soreness: A
+only involved “novice” and “amateur” runners,
+systematic and literature review. Sports Med.
+which limits the applicability of the findings to other 2016;46(6):861-883.
+populations of runners. Finally, due to the hetero-
+7. Windt J, Gabbett TJ. How do training and
+geneity observed in the study designs, the runners’ competition workloads relate to injury? The
+profiles, as well as the methods used for data collec- workload-injury aetiology model. Br J Sports Med.
+tion and analysis of changes in training load, com- 2017;51(5):428-435.
+parison of the results of the four included studies in 8. Windt J, Zumbo BD, Sporer B, MacDonald K,
+the present systematic review must be performed Gabbett TJ. Why do workload spikes cause injuries,
+and which athletes are at higher risk? Mediators and
+with caution.
+moderators in workload-injury investigations. Br J
+Sports Med. 2017;51(13):993-994.
+CONCLUSIONS
+9. Hreljac A. Etiology, prevention, and early
+Very limited evidence exists supporting that changes
+intervention of overuse injuries in runners: a
+(increases and decreases) in training load are asso-
+biomechanical perspective. Phys Med Rehabil Clin N
+ciated with injury development. Specifically, no Am. 2005;16(3):651-667.
+evidence was found to support the use of the so-called
+10. Nielsen RO, Parner ET, Nohr EA, Sorensen H, Lind
+“10% rule”, which is commonly used by runners, M, Rasmussen S. Excessive progression in weekly
+coaches and clinicians as a guideline for a maxi- running distance and risk of running-related
+mum increases in training load per week. Actually, injuries: an association which varies according to
+type of injury. J Orthop Sports Phys Ther.
+a well-defined threshold for hazardous or sudden
+2014;44(10):739-747.
+changes in training load above which the risk of
+11. Saragiotto BT, Yamato TP, Lopes AD. What do
+injury development is significantly increased is still
+recreational runners think about risk factors for
+unknown. Future studies in runners of varied abili-
+running injuries? A descriptive study of their beliefs
+ties are needed to better define the role of changes
+and opinions. J Orthop Sports Phys Ther.
+on RRI occurrence in a causal perspective using 2014;44(10):733-738.
+methodological approaches that take into account
+12. Nielsen RO, Malisoux L, Moller M, Theisen D, Parner
+the time-varying nature of changes in training load. ET. Shedding light on the etiology of sports injuries:
+A look behind the scenes of time-to-event analyses. J
+REFERENCES Orthop Sports Phys Ther. 2016;46(4):300-311.
+1. Hulme A, Nielsen RO, Timpka T, Verhagen E, Finch 13. Nielsen RO, Buist I, Sorensen H, Lind M, Rasmussen
+C. Risk and protective factors for middle- and S. Training errors and running related injuries: a
+long-distance running-related injury. Sports Med. systematic review. Int J Sports Phys Ther.
+2017;47(5):869-886. 2012;7(1):58-75.
+The International Journal of Sports Physical Therapy | Volume 13, Number 6 | December 2018 | Page 939
+
+14. Windt J, Zumbo BD, Sporer B, MacDonald K, 23. Nielsen RO, Cederholm P, Buist I, Sorensen H, Lind
+Gabbett TJ. Why do workload spikes cause injuries, M, Rasmussen S. Can GPS be used to detect
+and which athletes are at higher risk? Mediators and deleterious progression in training volume among
+moderators in workload-injury investigations. Br J runners? J Strength Cond Res. 2013;27(6):1471-1478.
+Sports Med. 2017 Jul;51(13):993-994. 24. Cantídio Ferreira A, Cabral Dias JM, de Melo
+15. Higgins JPT GS, editors. Cochrane handbook for Fernandes R, Schayer Sabino G, dos Anjos MTS,
+systematic reviews of interventions version 5.1.0. Carvalho DF. Prevalence and associated risks of
+2008; Chapter 5. Available at: http://www.cochrane- injury in amateur street runners from belo
+handbook.org. Accessed 16 February 2017. horizonte, mg. Rev Bras Med Esporte. 2012;18(4):252-
+16. Videbæk S, Bueno A, Nielsen R, Rasmussen S. 255.
+Incidence of running-related injuries per 1000 h of 25. Bertelsen ML, Hulme A, Petersen J, et al. A
+running in different types of runners: A systematic framework for the etiology of running-related
+review and meta-analysis. Sports Med. injuries. Scand J Med Sci Sports. 2017;27(11):1170-
+2015;45(7):1017-1026. 1180.
+17. Saragiotto BT, Yamato TP, Hespanhol Junior LC, 26. Hulin BT, Gabbett TJ, Lawson DW, Caputi P,
+Rainbow MJ, Davis IS, Lopes AD. What are the main Sampson JA. The acute:chronic workload ratio
+risk factors for running-related injuries? Sports Med. predicts injury: high chronic workload may decrease
+2014;44(8):1153-1163. injury risk in elite rugby league players. Br J Sports
+18. Cochrane. Tools for assessing methodological quality Med. 2016;50(4):231-236.
+or risk of bias in non-randomized studies. 2017; 27. Kluitenberg B, van der Worp H, Huisstede BM, et al.
+http://handbook.cochrane.org/chapter_13/13_ The NLstart2run study: Training-related factors
+5_2_3_tools_for_assessing_methodological_quality_ associated with running-related injuries in novice
+or_risk_of.htm. runners. J Sci Med Sport. 2016;19(8):642-646.
+19. Verhagen AP, de Vet HC, de Bie RA, et al. The Delphi 28. Murray NB, Gabbett TJ, Townshend AD, Blanch P.
+list: a criteria list for quality assessment of Calculating acute:chronic workload ratios using
+randomized clinical trials for conducting systematic exponentially weighted moving averages provides a
+reviews developed by Delphi consensus. J Clin more sensitive indicator of injury likelihood than
+Epidemiol. 1998;51(12):1235-1241. rolling averages. Br J Sports Med. 2017;51(9):749-754.
+20. Yamato TP, Maher C, Koes B, Moseley A. The PEDro 29. Bourdon PC, Cardinale M, Murray A, et al.
+scale had acceptably high convergent validity, Monitoring Athlete Training Loads: Consensus
+construct validity, and interrater reliability in Statement. Int J Sports Physiol Perform. 2017;12(Suppl
+evaluating methodological quality of pharmaceutical 2):S2161-S2170.
+trials. J Clin Epidemiol. 2017;86:176-181. 30. Johnston CAM, Taunton JE., Lloyd-Smith DR.,
+21. Furlan AD, Malmivaara A, Chou R, et al. 2015 McKenzie DC. Preventing running injuries - Practical
+Updated method guideline for systematic reviews in approach for family doctors. Can Fam Physician.
+the Cochrane back and neck group. Spine). 2003;49:1101-1109.
+2015;40(21):1660-1673.
+22. Buist I, Bredeweg SW, van Mechelen W, Lemmink
+KA, Pepping GJ, Diercks RL. No effect of a graded
+training program on the number of running-related
+injuries in novice runners: a randomized controlled
+trial. Am J Sports Med. 2008;36(1):33-39.
+The International Journal of Sports Physical Therapy | Volume 13, Number 6 | December 2018 | Page 940
+
+APPENDIX 1
+The International Journal of Sports Physical Therapy | Volume 13, Number 6 | December 2018 | Page 941
+
+APPENDIX 1 (continued)
+The International Journal of Sports Physical Therapy | Volume 13, Number 6 | December 2018 | Page 942
+

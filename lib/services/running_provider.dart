@@ -85,7 +85,7 @@ class RunningProvider extends ChangeNotifier {
       profile = p;
     }
 
-    await _tts.init();
+    _tts.init(); // fire-and-forget: TTS not needed to complete profile loading
     notifyListeners();
     return true;
   }
@@ -93,7 +93,7 @@ class RunningProvider extends ChangeNotifier {
   // ── 프로필 설정 ──────────────────────────────────────────────
   Future<void> setProfile(BodyProfile p) async {
     profile = p;
-    await _tts.init();
+    _tts.init(); // fire-and-forget
 
     // ── 신체 데이터 DB 저장 ────────────────────────
     final uid = FirebaseAuth.instance.currentUser?.uid;
@@ -244,6 +244,7 @@ class RunningProvider extends ChangeNotifier {
       currentLongDistKm:   profile!.adaptedLongDistKm  ?? baseDists['long']!,
       baseTempoDistKm:     baseDists['tempo']!,
       baseLongDistKm:      baseDists['long']!,
+      userAge:             profile!.age,
     );
 
     final updated = profile!.copyWith(
@@ -301,6 +302,7 @@ class RunningProvider extends ChangeNotifier {
       currentLongDistKm:   profile!.adaptedLongDistKm  ?? baseDists['long']!,
       baseTempoDistKm:     baseDists['tempo']!,
       baseLongDistKm:      baseDists['long']!,
+      userAge:             profile!.age,
     );
 
     final updated = profile!.copyWith(

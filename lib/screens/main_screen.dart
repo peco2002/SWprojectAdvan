@@ -9,6 +9,7 @@ import '../services/tcx_share_service.dart';
 import '../models/running_session.dart';
 import 'home_screen.dart';
 import 'statistics_screen.dart';
+import 'course_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -153,6 +154,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
         children: [
           const HomeScreen(),
           StatisticsScreen(uid: uid),
+          CourseScreen(isActive: _idx == 2),
         ],
       ),
       bottomNavigationBar: Container(
@@ -181,6 +183,10 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
             BottomNavigationBarItem(
               icon: Icon(Icons.bar_chart_rounded),
               label: '통계',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.route_rounded),
+              label: '코스 추천',
             ),
           ],
         ),

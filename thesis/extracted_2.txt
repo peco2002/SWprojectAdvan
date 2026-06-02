@@ -1,0 +1,2069 @@
+JournalofAthleticTraining 2022;57(7):650–671
+doi:10.4085/1062-6050-0195.21
+(cid:2)bytheNationalAthleticTrainers’Association,Inc Running Medicine
+www.natajournals.org
+The Association Between Running Injuries and
+Training Parameters: A Systematic Review
+Anny Fredette, PT, MSc*†‡; Jean-Se´bastien Roy, PhD*†;
+Kadija Perreault, PhD*†; Fre´de´rique Dupuis, MPT*†;
+Christopher Napier, PhD§||; Jean-Francois Esculier, PhD§¶#
+*Faculty of Medicine, Universite´ Laval, Que´bec, Canada; †Centre for Interdisciplinary Research in Rehabilitation and
+Social Integration, CIUSSS-CN, Que´bec, Canada; ‡Canadian Armed Forces, BFC USS Valcartier, Courcelette, QC,
+Canada; §Department of Physical Therapy, University of British Columbia, Vancouver, Canada; ||Menrva Research
+Group, Schools of Mechatronic Systems Engineering and Engineering Science, Faculty of Applied Science, Simon
+Fraser University, Metro Vancouver, BC, Canada; ¶The Running Clinic, Lac Beauport, QC, Canada; #MoveMed
+Physiotherapy, Kelowna, BC, Canada
+Objective: To synthesize the current evidence on the recreational runners (range ¼ 17.9%–79.3%), and 62.6% in
+incidenceofrunning-relatedinjuries(RRIs)andtheirassociation competitive runners (range ¼ 52.6%–91.3%). The 3 most
+with training parameters (distance, duration, frequency, intensi- frequentlyinjuredbodypartsweretheknee(25.8%),foot/ankle
+ty),aswell asrecent changesin training parameters. (24.4%), and lower leg (24.4%). Overall, evidence about the
+Data Sources: Searches were conducted in MEDLINE/
+association between weekly running distance, duration, fre-
+Ovid,CINAHL,Embase,andSPORTDiscusfromtheirinception
+quency,intensity,orspecificchangesintrainingparametersand
+throughJuly 7,2020.
+the onsetof RRIs was conflicting.
+StudySelection: Includedarticleshadtoreportprospective
+Conclusions: DespitehighratesofRRIs,currentevidence
+data on RRIs and training parameters or any changes in
+parameters and be published in English or French. Two doesnotconsistentlylinkRRIswithspecifictrainingparameters
+reviewers independently screened the titles, abstracts, and full or recent changes in training parameters. Therefore, caution
+texts. should be taken when recommending optimal parameters or
+Data Extraction: Two independent raters performed data progressions. Given the multifactorial nature of RRIs, future
+extraction and quality assessment using QualSyst, a quality studies also need to consider the interactions between training
+appraisaltool. parameters as well as psychosocial, hormonal, lifestyle, and
+Data Synthesis: A total of 36 articles that involved 23047
+recovery outcomesto betterunderstand theonset of RRIs.
+runnerswereincluded.Overall,6043runners(26.2%)sustained
+anRRI(incidencerange¼8.8%–91.3%).TheincidenceofRRI Key Words: sports medicine, prevention, incidence, exer-
+was 14.9% in novice runners (range¼9.4%–94.9%), 26.1% in cise
+KeyPoints
+(cid:2) Evidenceontheassociationbetweenrunningdistance,duration,frequency,orintensityorrecentchangesinthese
+parameters and the onset of lower limb running-related injuries is conflicting.
+(cid:2) No universal recommendations on training parameters or progressions can be issued based on the current
+evidence; the popular ‘‘10% rule’’ for increasing weekly distance is not justified.
+(cid:2) The lack of reporting guidelines for running-related injuries contributes to high heterogeneity in the definition of
+injury, runner profiles, and follow-up periods.
+R
+unning is a popular activity due to the health and sessionsorthatrequirestherunnertoconsultaphysicianor
+fitness benefits it provides. However, because other health professional.’’7 Running-related injuries may
+running imposes forces of up to 3 times body occur when repetitive stress is applied to a joint, muscle,
+weightateachstep,1,2itiscommonlyassociatedwithlower
+tendon, or bone beyond its maximum tolerance to
+limb overuse injuries.3 The yearly incidence of running-
+mechanical stress.2 Although mechanical (eg, biomechan-
+related injuries (RRIs) can affect 85% of all populations of
+ics) and nonmechanical (eg, sleep) factors could play roles
+runners (novice, recreational, competitive).4–6 In a consen-
+in the onset of an RRI,8 researchers2,8 have hypothesized
+sus article published in 2015, an RRI was defined as
+that runners who sustain RRIs exceeded their limit of
+‘‘running-related (training or competition) musculoskeletal
+pain in the lower limbs that causes a restriction on or runningdistanceorintensity(ie,trainingload)orbothover
+stoppage of running (distance, speed, duration, or training) 1 or more training sessions, resulting in injury instead of
+for at least 7 days or 3 consecutive scheduled training tissue adaptation.
+650 Volume 57 (cid:2) Number 7 (cid:2) July 2022
+
+The authors5,6,9,10 of previous literature reviews have on prospective cohort studies or randomized clinical trials
+investigated the role of training parameters such as (RCTs), and (5) provide data on RRIs and training
+distance, duration, frequency, and intensity, as well as parameters (distance, duration, frequency, intensity) or
+recentchangesintrainingparameters,intheonsetofRRIs. any measure of change in training parameters. Systematic
+Despite identifying greater weekly running distance as a reviews, conference abstracts, and articles from the gray
+risk factor for the onset of RRIs among male runners, van literature were excluded. No restrictions were placed on
+Gent et al6 found in their 2007 systematic review that a age, sex, or gender.
+recentincreaseinweeklyrunningdistancewasaprotective After conducting the database search, we removed
+factor against knee injuries. However, only limited duplicate articles. All articles were then independently
+evidence suggested that other training parameters, such as screened for eligibility by 2 blinded reviewers. The same
+greatertrainingfrequency(males),greatertrainingdistance reviewers independently screened the publications’ titles
+(females),arecentincreaseintrainingdaysperweek,anda and abstracts to identify research eligible for full-text
+recent increase in distance per week, were risk factors for review. Thereafter, eligible articles were retrieved in full
+RRIs.6 In a 2012 review,5 conflicting results reflected the text,whichwasindependentlyscrutinizedby2raters(A.F.,
+relationshipbetweenrunningdistance,duration,frequency, J.F.E.) to confirm inclusion. In case of disagreement about
+and intensity and the onset of RRIs. Heterogeneity in the final inclusion, a third reviewer (J.S.R.) was available to
+determinants of injuries among the included studies make the decision. The bibliographical references of the
+precluded the identification of any association between retrieved studies were also searched to identify additional
+trainingparameters and RRIs. Finally,in2018, Damstedet relevant publications.
+al11 observed very limited evidence (from only 4 articles)
+that sudden changes in training loads were associated with Data Extraction
+an increased risk of RRIs. Considering that new evidence
+Afirstreader extractedthe data fromallincludedstudies
+has been published since theseprevious literature searches,
+before a second reader corroborated and completed the
+an updated and more comprehensive review of RRI
+extraction,ifnecessary. Datawereextractedaccordingtoa
+incidence and its association with training parameters is
+predefined standardized form that consisted of authors,
+warranted. This could change the recommendations pro-
+study design, population, methods, definition of RRI,
+vided to sports medicine practitioners, exercise profession-
+running program, study variables (training parameters,
+als, and runners regarding optimal training parameters to
+changes in training parameters), outcomes (incidence of
+help reduce the injury risk.
+RRIs), results, and conclusions.
+The aim of our systematic review was to synthesize the
+currentprospectiveevidenceontheincidenceoflowerlimb
+RRIs and explore the relationship between their onset and Critical Appraisal
+training parameters (distance, duration, frequency, intensi- We assessed the methodological quality and risk of bias
+ty) as well as recent changes in training parameters. of included studies using a structured and validated quality
+appraisal tool, the Quality Assessment for Evaluating
+METHODS Primary Research Studies (QualSyst).13 The evaluation
+checklistcontains14itemspertainingtothestudyquestion
+This systematic review was registered in PROSPERO
+and design, outcome measurements, interventions, analy-
+(No. CRD42018112913) and is reported according to the
+ses, results, and conclusions. The items were scored
+PRISMA (Preferred Reporting Items for Systematic
+dependingon the degreeto whichthe specific criteria were
+Reviews and Meta-Analyses) 2009 guidelines.12
+met(yes¼2,partial¼1,no¼0).Itemsnotapplicabletoa
+particular study design were marked N/A (not applicable)
+Literature Search
+and excluded from the total score.
+We conducted bibliographical searches in 4 databases To ensure consistency in scoring, all team members
+(MEDLINE/Ovid, CINAHL, Embase, SPORTDiscus) in involved in critical appraisal (A.F., F.D., J.S.R.) met after
+collaboration with experienced research librarians. All independentlyassessingoneoftheincludedstudies.Next,2
+databases were searched from their inception to July 7, raters (A.F., F.D.) independently evaluated each study
+2020, for 3 concepts: (1) running; (2) musculoskeletal using the QualSyst criteria checklist. A preconsensus,
+lower limb injury, pain, or pathology; and (3) training interrater reliability score using an intraclass correlation
+parameters.Theterminologyusedforthesearchstrategyis coefficient (ICC) with 95% CI was calculated for the total
+presented in the Supplemental Table (see Supplemental qualityscore.Theratingswerethencomparedtodetermine
+Table, available online at http://dx.doi.org/10.4085/1062- thescoringconsensusbetweenraters.Whenconsensuswas
+6050-0195.21.S1). The search strategy was tailored for notreached,athirdrater(J.S.R.)wasavailabletocontribute
+eachdatabase,usingtheappropriatetruncationandmedical to the final decision. The following classifications were
+subject heading. used to categorize methodological quality: high quality
+(HQ) . 80.0%; good quality (GQ) ¼ 65.0% to 80.0%;
+Study Selection moderate quality (MQ)¼50.0% to 64.9%; and low quality
+(LQ) , 50.0%.14
+To be included in the review, articles had to (1) be
+published in English or French, (2) involve humans
+Data Analysis
+engaging in running (defined by the authors as novice,
+recreational, competitive, or mixed cohorts), (3) include We conducted a qualitative review of the evidence. The
+anyrunningprogram(structuredorunstructured),(4)report level of evidence was adapted from the recommendations
+JournalofAthleticTraining 651
+
+Table1. LevelofEvidence The most common reasons for deducting points on the
+methodological quality assessment were the outcomes
+LevelofEvidence Definition
+being self-reported or not measured objectively (item 8, n
+Strongevidence MultipleHQstudieswithconsistentresults,
+¼28;seeTable3fordescriptionofitems),inappropriateor
+regardlessofmethodological
+unjustified sample size (item 9, n¼20), not reporting the
+heterogeneity
+participants’ selection methods or inclusion and exclusion
+Moderateevidence Multiplestudies,includingatleast1HQ
+studyormultipleMQorGQstudiesor criteria (item 3,n¼18),and inappropriateconsideration of
+multipleLQstudies,homogeneous confounding variables (item 12, n¼14).
+methods;alwaysprovidingconsistent
+results
+Description of RRIs
+Limitedevidence Multiplestudies,withheterogeneous
+methodsorinconsistentresults(orboth) An overview of the incidence of injuries is presented in
+orasingleGQorhigherstudy Table 2. Only 14 of 36 studies used definitions of RRI
+Verylimitedevidence ResultsfromasingleLQorMQstudy similar totheconsensusdefinitiondevelopedbyYamatoet
+Conflictingevidence Multiplestudiesregardlessofthe al7 in terms of reducing or missing consecutive training
+methodologicalquality,withinconsistent sessionsbecauseofpainortheneedtoconsultahealthcare
+results
+professional. In total, 6043 (26.2%) runners sustained an
+Abbreviations: GQ, good quality; HQ, high quality; LQ, low quality; injury among all 23047 runners enrolled in the included
+MQ,moderatequality. studies. The incidence of RRI varied between 8.8% and
+91.3%dependingonthestudypopulation,lengthoffollow-
+of the Cochrane Group Collaboration15 and classified as up, and definition of an RRI. More specifically, the
+strong,moderate,limited,verylimited,orconflicting(Table incidence of RRI was 14.9% in novice runners (703 RRIs
+1) after we considered the following domains: imprecision in 4720 runners; range ¼ 9.4%–94.9%; follow-up ¼ 6
+(number of studies and participants), risk of bias (method- weeks–18 months),16–22,48 26.1% in recreational runners
+ological quality), indirectness (methodological and out- (2057 RRIs in 7888 runners; range ¼ 17.9%–79.3%;
+comessimilarities),andinconsistency(directionofresults). follow-up ¼ 1–24 months),23–35 62.6% in competitive
+ToobtainquantitativedataabouttheincidenceofRRIs,the runners (259 RRIs in 414 runners; range¼52.6%–91.3%;
+total sample size and number of injured runners in each follow-up ¼ 3–24 months),36,40 and 27.6% in runners of
+study were extracted. A weighted average (%) was mixed levels (3158 RRIs in 11430 runners; range¼8.8%–
+calculatedforeach category ofrunners(novice,recreation- 51.3%; follow-up¼3–60 months).4,41–49
+al, competitive, mixed) by dividing the number of injured Based on diagnosis details, the most frequently injured
+runners by the total number of runners. body parts were the knee, foot/ankle, and lower leg with
+25.8%, 24.4%, and 20.9% of all injuries, respectively.
+Novice runners sustained RRIs mostly to their knee
+RESULTS
+(30.8%), lower leg (29.7%), and foot/ankle
+The search strategy identified a total of 9299 articles. (18.1%).16–18,20,22,48 In recreational runners, the knee
+After removing duplicates and screening the titles and (26.5%), foot/ankle (20.5%), and lower leg (20.2%) were
+abstracts, we identified 91 articles eligible for full-text the most frequent sites injured,23,25–32,34,35,48 whereas
+review. Nine additional articles were included after the competitive runners most often injured their foot/ankle
+selected studies’ reference lists were hand searched. After (39.4%), knee (25.4%), and lower leg (20.8%).36,37,39 In
+full-text screening, 36 studies were included in this review cohorts of runners of mixed levels, the most commonly
+(Figure). injured body parts were the foot/ankle (26.3%), knee
+(26.1%), and lower leg (23.1%).
+Characteristics of the Studies
+Training Parameters
+Of the 36 included studies, 33 were prospective cohort
+studies and 3 were RCTs. In all, they involved 23047 Anoverviewoftherunningprogramsandofthevariables
+runners (44% females) aged 17 years and older. Seven of interest for this review is presented in Table 2. Overall,
+studies were conducted specifically with novice runners (n we found conflicting evidence about the association
+¼3315participants,63%females),16–2214withrecreational between RRIs and running distance (20 studies), duration
+runners(n=7905participants,44%females),23–35,505with (12 studies), frequency (10 studies), and intensity (14
+competitive runners (n ¼ 414 participants, 48% fe- studies). High heterogeneity among studies (definition of
+males),36–40 and 10 with runners of mixed levels of ability RRI, categories of runners, length of follow-up) prevented
+and experience (n ¼ 11430 participants, 39% females; us from performing meta-analyses on the association
+Table 2).4,41–49 between RRIs and training parameters.
+Methodological Quality. Methodological quality scores Running Distance. Four HQ,32,35,37,42 2 MQ,16,43 and 2
+ranged from 27.3% to 96.2% (Table 3). On average, the LQ27,36studiessuggestedthatgreaterrunningdistancecould
+studieswereofhighmethodologicalquality,withamedian increase the injury risk. Three of the HQ studies reported
+score of 86.4% (interquartile range [IQR] ¼ 19.3%). thatweeklydistancesof.30km(hazardratio[HR]¼3.28;
+Twenty-two studies were classified as high quality, 5 as 95%CI¼1.23,8.75;P¼.02),35.64km(adjustedrelative
+good quality, 5 as moderate quality, and 4 as low quality. risk ¼ 2.88),42 or between 60 km and 70 km (99.7% and
+The preconsensus, interrater reliability score for quality 94.7%increasedriskversus40kmto50kmand50kmto60
+assessment was excellent with an ICC of 0.97 (95% CI¼ km, respectively)37 increased the risk of RRI. Another HQ
+0.95, 0.99). study stated that running ,40 km per week was a strong
+652 Volume 57 (cid:2) Number 7 (cid:2) July 2022
+
+Figure. Flowdiagramofthearticleselectionprocesspresentedaccordingto2009PRISMA(PreferredReportingItemsforSystematic
+ReviewsandMeta-Analyses)guidelines.12
+protective factor against calf injuries in recreational covered by long-distance marathon runners during the
+runners.32 The incidence of RRI was linked with greater preceding month (r¼0.59).36
+distanceduringthefirst(r2¼0.36,P¼.001)andthird(r2¼ Ontheotherhand,2HQstudies,45,491GQstudy,33and1
+0.16, P¼.015) phases of the running program for novice LQ24 study described a tendency for a greater running
+runners that was used in the first MQ study,16 whereas the distance to protect against RRIs. Specifically, the first HQ
+second study reported a greater average weekly distance in study showed a 10% reduced risk of knee injury (relative
+injured compared with uninjured male recreational and risk ¼ 0.901, 95% CI ¼ 0.820, 0.991) in novice and
+competitive runners (effect size: r¼0.32, P¼.046).43 The recreational athletes running greater distances,49 whereas
+LQ studies demonstrated more RRIs in a study group that the other observed fewer injuries in those running .15 km
+ranagreaterweeklydistance27andasignificantcorrelation perweekcomparedwiththosewhoranless(riskdifference
+betweentheinjuryrateduringany1monthandthedistance [RD]¼(cid:3)11.3%,95%CI¼(cid:3)27.2%,4.6%).45Theauthorsof
+JournalofAthleticTraining 653
+
+egaPtxeNnodeunitnoCseirujnIfoecnedicnIdna,sretemaraPgniniarT,seidutSdedulcnI
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+:ecnatsidgninnuR
+fo%0.57
+enituorgniniartlausU
+2.1691
+evititepmoC
+42¼n
+om42
+evitcepsorP
+terekceB
+ylkeewniecnereffidoN
+/81(srennur
+maetehtfo
+)%5.73(
+04la
+derujnineewtebemulov
+detroper)42
+dna)mk8.12625(
+sIRR
+1.42645(derujninu srennur)486.¼P;mk
+:ecnatsidgninnuR
+/341(%4.26
+gninnurdetceles-fleS
+¼n:y62–71
+elbaliavatoN
+evititepmoC
+922¼n
+om01
+evitcepsorP
+tewezigeB
+(cid:2)%7.99¼kw/mk05–04
+45.3;)922
+margorp
+:y62.;502
+)%8.25(
+73la
+07–06nahtIRRfoksir
+h0001/sIRR
+42¼n
+,300.0¼RO(kw/mk
+gninnurfo
+;370.0,000.0¼IC%59
+)1000.(cid:4)P
+(cid:2)%7.49¼kw/mk06–05 07–06nahtIRRfoksir ,350.0¼RO(kw/mk ;827.0,400.0¼IC%59
+)820.(cid:4)P
+:segnahctneceR
+:ecnatsidgninnuR
+;)37/26(%9.48
+htiwmargorpgniniarT
+2.53¼selaM
+ecivoN
+37¼n
+om81
+evitcepsorP
+tesnevoB
+setaryrujni(cid:3)tnacifingiSeromotdetalerecnatsiD(cid:3)
+ecnedicniIRR
+hcae,sesahp3
+;9.76
+)%31(
+61la
+dna2–1sesahpgnirud
+1sesahpgnirudseirujni
+¼1esahpni
+ecarhtiwgnihsinif
+¼selamef
+tnuomagniniarT.3–1
+)100.¼P,63.0¼2r(
+2esahp,%85
+)mk24dna,52,51(
+4.665.33
+foesahptsalgnirud
+¼P,61.0¼2r(3dna
+esahp,%06¼
+kw82¼1esahP
+(cid:3)noitaraperpnohtaram
+)510.
+%76¼3
+,h7.2¼kw/naem(
+naemmorf(ksiryrujni
+dnanoitarudgninnuR
+1.42,sgniniart8.3
+mk9.43¼kw/ecnatsid
+:ycneuqerf
+)mk
+naemdnamk6.34ot
+detropersesylanaoN
+kw32¼2esahP
+otkw/h2.3¼noitarud
+,h2.3¼kw/naem(
+)kw/h0.4
+9.43,sgniniart6.3
+)mk
+kw03¼3esahP
+,h0.4¼kw/naem( 6.34,sgniniart5.3
+)mk
+:segnahctneceR
+%8.02:GTG
+emulov%01,¼GTG
+1.0168.93
+ecivoN
+235¼n
+31ro8
+TCR
+81latetsiuB
+%01‘‘dedargfotceffeoN
+:GTS)052/25(
+31(kw/noissergorp
+)%5.75(
+kw
+,sIRRno’’elur
+/84(%3.02
+)kw
+dradnatshtiwderapmoc
+)632
+emulov%01.¼GTS
+¼P(margorpgniniart
+8(kw/noissergorp
+)09.
+)kw
+:segnahctneceR
+:noitarudgninnuR
+/361(%9.52
+margorpgniniartkw-8
+5.967.34
+,ecivoN
+926¼n
+kw8
+evitcepsorP
+4latetsiuB
+nisegnahckeew-ot-keeW
+sIRRhtiwdetaicossatoN
+1.03;)926
+lanoitaercer
+)%1.76(
+roycneuqerfgninnur
+)83..P(
+h0001/sIRR
+tonerewnoitarud
+gninnurfo
+P(sIRRhtiwdetaicossa
+)570..
+:noitarudgninnuR
+/001(%6.02
+emulov%01,¼GTG
+1.0168.93
+ecivoN
+684;235¼n
+31ro8
+evitcepsorP
+71latetsiuB
+sIRRhtiwdetaicossatoN
+0.33;)684
+31(kw/noissergorp
+dewollof
+kw
+h0001/sIRR
+)kw
+gninnur
+gninnurfo
+emulov%01.¼GTS
+margorp
+8(kw/noissergorp
+)%5.75(
+)kw
+654 Volume 57 (cid:2) Number 7 (cid:2) July 2022
+
+egaPsuoiverPmorFdeunitnoC
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+dnaecnatsidgninnuR)607/241(%1.02
+enituorgniniartlausU
+6.1169.34
+lanoitaerceR
+607¼n
+om3
+evitcepsorP
+teagnillaD
+:noitarud
+noitaraperpni
+-8rofnoitaraperpni
+)%9.64(
+32la
+sIRRhtiwdetaicossatoN
+gnirudrorof
+nurmk-61ro
+%59,00.1¼RO:noitaruD
+tneve
+;200.1,999.0¼IC ,42.1¼RO:ecnatsiD 83.2,56.0¼IC%59 dnaecnatsidgninnuR)805/631(%8.62
+desab-ecnatsiD)1
+y64–92
+73
+seitiliballA
+805¼n
+kw41
+evitcepsorP
+tedetsmaD
+:ytisnetni
+llassorca
+eludehcs
+)%2.26(
+54la
+)tnacifingisnon(ycnedneT
+gninnur
+desab-ecaP)2
+gnomaseirujnirewefrof
+:seludehcs
+eludehcs
+gninnurhtiwsrennur
+/04(%2.42
+eludehcsdexiM)3
+kw/mk51.ecnatsid
+,)561
+gninnurnesohc-fleS)4
+IC%59,%3.11(cid:3)¼DR(
+-ecnatsid
+ton(margorp
+hgih,)6.4,2.72(cid:3)¼
+gninnurdesab
+)dezylana
+,%4.71(cid:3)¼DR(ecap
+;eludehcs
+,%0.93(cid:3)¼IC%59
+/41(%4.91
+noitanibmocro,)%5.4
+-ecap,)27
+IC%59,%1.8(cid:3)¼DR(
+gninnurdesab
+)%1.6,%3.22(cid:3)¼
+;eludehcs /28(%3.03 dexim,)172
+gninnur
+eludehcs
+:segnahctneceR
+:)162/65(%5.12
+desab-ecnatsiD)1
+y54–72
+63
+seitiliballA
+162¼n
+kw41
+evitcepsorP
+tedetsmaD
+nehwderujnisrennureroM
+/04(%2.42
+eludehcs
+)%2.06(
+44la
+ecnatsidgninnurylkeew
+-ecnatsid)561
+desab-ecaP)2
+derapmoc%06–%02(cid:3)
+gninnurdesab
+eludehcs
+12taylno(%02(cid:4)(cid:3)htiw
+;eludehcs
+:)d19ro65taton,d
+)69/61(%7.61
+%59,%6.22¼
+DR
+desab-ecap
+syad12
+DR;%3.44,%9.0¼IC
+gninnur
+65 ¼IC%59,%0.91¼
+eludehcs
+syad
+DR;%0.05,%9.11(cid:3) 89 ¼IC%59,%2.4¼
+syad
+%7.43,%2.62(cid:3)
+neewtebecnereffidoN
+ecnatsid(cid:3)srennur
+¼
+DR:%06.
+syad12
+,%4.8(cid:3)¼IC%59,%8.5
+¼
+DR;%1.02
+syad65 ¼IC%59,%8.7
+DR;%6.92,%0.41(cid:3) 89 IC%59,%3.4(cid:3)¼
+syad
+%3.91,%9.72(cid:3)¼
+JournalofAthleticTraining 655
+
+egaPsuoiverPmorFdeunitnoC
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+:segnahctneceR
+dnanoitarudgninnuR
+)32/12(%3.19
+margorpdezilaudividnI
+7.565.22
+evititepmoC
+32¼n
+om42
+evitcepsorP
+tesiuhkjiD
+neewtebsnoitaicossaoN
+:ytisnetni
+gninnurybdengised
+)%4.03(
+83la
+cinorhc:etucaylkeew
+neewtebsnoitaicossaoN
+hcaoc
+IRRdnaoitardaolkrow
+cinorhc,daolkrowetuca
+;154..P,2–1kw:ksir
+foksirdna,daolkrow
+,494..P,3–2kw
+)50..P(IRR
+wol‘‘roftpecxe
+kw;)310.¼P(’’esaercni
+521..P,4–3
+:ecnatsidgninnuR
+)04/71(%5.24
+gninnurdetceles-fleS
+¼n(y04–02
+73
+lanoitaerceR
+04¼n
+om21
+evitcepsorP
+tesdleiF
+noitaicossatnacifingisoN
+margorp
+y06–14;)52
+)%5.22(
+42la
+sIRRetipsed,sIRRhtiw
+)51¼n(
+gninnuresohtfo%08ni fo%05svkw/mk2.23, 4.46.gninnuresoht
+kw/mk
+,ecnatsidgninnuR)799/115(%3.15margorpgninnurenilnO
+7.1162.24
+seitiliballA
+799¼n
+om3
+evitcepsorP
+teamekkoF
+:ytisnetnidna,noitarud
+ronohtaram-flahrof
+)%0.53(
+64la
+IRRhtiwsnoitaicossaoN
+nohtarama
+ksir
+–02sv(ecnatsidylkeeW
+:)mk23
+%59,14.1¼RO:mk02, 23.;23.2,68.0¼IC IC%59,79.0¼RO:mk
+05.1,36.0¼
+sv(noitarudnur-tsegnoL
+:)mk12–51
+%59,91.1¼RO:mk51, 12.;40.2,96.0¼IC IC%59,38.0¼RO:mk
+03.1,25.0¼
+00.6–52.5sv(ytisnetnI
+:)mk/nim
+,86.0¼RO:mk/nim52.5, ;11.1,14.0¼IC%59 ¼RO:mk/nim00.6. ,77.0¼IC%59,32.1
+89.1
+656 Volume 57 (cid:2) Number 7 (cid:2) July 2022
+
+egaPsuoiverPmorFdeunitnoC
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+:ytisnetnigninnuR
+)311/82(%8.42
+nohtaramkw-81
+y07–02
+seitiliballA
+311¼n
+kw81
+evitcepsorP
+-artsmaH
+srennurfo)82/72(%4.69
+margorpgniniart
+)%3.47(
+tethgirW
+erewkw6tsrifniderujni
+14la
+lavretniroopmetgniod
+snur
+srennurfo)56/73(%9.65 6tsrifgnirudderujniton roopmetgnioderewkw
+ralimis;snurlavretni derujnisaegaelim
+srennur
+6tsrifgnirudsnuropmeT ¼RO(sddoIRR(cid:3)kw ,53.1¼IC%59,69.3
+.)16.11
+6tsrifgnirudsnurlavretnI
+IRR(cid:3)otdednetkw
+P;tnacifingiston(sddo
+)60.¼
+:segnahctneceR
+)79/15(%6.25
+nosaesyrtnuoc-ssorC
+0.91¼selaM
+evititepmoC
+79¼n
+om3
+evitcepsorP
+teseyaH
+regralhtiwsetelhtA
+margorpgniniart
+,2.06
+)%8.85(
+93la
+gninnurnisecnereffid
+hcaocytisrevinumorf
+¼selamef
+ralugerneewtebemulov
+2.062.91
+skeewegaelim-hgihdna derujniebotylekilerom
+tonstlusertub
+)60.¼P(tnacifingis
+:noitarudgninnuR
+:)191/06(%4.13
+gninnurdetceles-fleS
+5.0168.24
+lanoitaerceR
+002¼n
+kw21
+evitcepsorP
+lohnapseH
+gniniartfonoitaruD(cid:3)
+repsIRR01
+margorp
+)%62(
+teroinuJ
+htiwdetaicossanoisses
+foh0001
+62la
+,10.1¼RO(ksirIRR(cid:3)
+gninnur
+)20.1,00.1¼IC%59
+:ytisnetnigninnuR
+deeps;stluserevisulcnocnI htiwdetaicossagniniart ,64.1¼RO(ksirIRR(cid:3) )01.2,20.1¼IC%59
+gniniartlavretnitub
+IRR(cid:2)htiwdetaicossa IC%59,16.0¼RO(ksir
+.)88.0,34.0¼
+,ecnatsidgninnuR
+:)98/42(%0.72
+gninnurdetceles-fleS
+6.0162.44
+lanoitaerceR
+98¼n
+kw21
+evitcepsorP
+lohnapseH
+,ycneuqerf,noitarud
+repsIRR7.7
+margorp
+)%6.32(
+teroinuJ
+:ytisnetni
+foh0001
+52la
+IRRhtiwsnoitaicossaoN
+gninnur
+ksir
+;15.¼P:ecnatsiD
+;52.¼P:noitaruD ;56.¼P:ycneuqerF 86.¼P:ytisnetnI
+JournalofAthleticTraining 657
+
+egaPsuoiverPmorFdeunitnoC
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+:ecnatsidgninnuR
+/7021(%1.93
+,margorpgoj/klaw/nuR
+y58–02
+,ecivoN
+0903¼n
+y5–1
+evitcepsorP
+tenamtooH
+ecnatsidgoj/klaw/nuR(cid:3)
+gnirud)0903
+y5–1
+decneirepxE
+)%7.91(
+74la
+)kw/mk2.23.(
+llacery-5
+retaerghtiwdetaicossa
+%4.71,doirep
+y-5gnirudksirIRR
+)2672/184(
+RHs’nem;doirepllacer
+y-1gnirud
+,34.1¼IC%59,66.1¼
+doirepllacer
+¼RHs’nemow;49.1 ,54.1¼IC%59,80.2 noitaicossaon;89.2 doirepllacery-1gnirud
+:ycneuqerfgninnuR
+IRRhtiwsnoitaicossaoN y-1roy-5gnirudksir
+sdoirepllacer
+:ytisnetnigninnuR
+IRRhtiwsnoitaicossaoN llacery-5gnirudksir llacery-1gniruDdoirep þ51(ytisnetni(cid:2),doirep detaicossa)elim/nim niylnoksirIRR(cid:2)htiw %59,15.0¼RO(nem
+.)47.0,53.0¼IC
+:ecnatsidgninnuRni)12/81(%7.58
+:puorgydutS
+9.14
+lanoitaerceR
+14¼n
+om21
+evitcepsorP
+tenesbokaJ
+P(puorgydutsnisIRR(cid:3)
+,puorgyduts
+dnallih,ecnarudne
+)%8.9(
+72la
+eromnarohw,)100.,
+)02/31(%0.56
+,gniniartdeeps
+emastaecnatsidylkeew
+lortnocni
+lortnoc;noitacude
+ecap
+puorg
+sliatedon:puorg
+ecnatsidgninnurnaeM
+foh0001/sIRR
+dedivorp
+:)kw/mk(
+yduts:gninnur
+IC%59,0.34:puorgydutS
+4.7¼puorg
+4.44,6.14¼
+gnirud
+%59,4.33:puorglortnoC
+7.03,gniniart
+9.43,0.23¼IC
+;secargnirud puorglortnoc gnirud9.6¼ 5.26,gniniart secargnirud
+nehW
+rofdetsujda ,emitgniniart ecnedicniIRR htobniralimis
+spuorg
+658 Volume 57 (cid:2) Number 7 (cid:2) July 2022
+
+egaPsuoiverPmorFdeunitnoC
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+:noitarudgninnuR)1264/504(%8.8
+enituorgniniartlausU
+2.43
+,ecivoN
+1264¼n
+om3
+evitcepsorP
+terelmeK
+yrujnihtiwnoitaicossaoN
+om-3nihtiw
+decneirepxE
+)%8.14(
+84la
+naemecivon:ecnedicni
+:doirepllacer
+)5.23¼RQI(h6.41¼
+/431(%5.9
+¼naemdecneirepxesv
+fo)5041
+rof)5.76¼RQI(h0.03
+ecivon
+setaryrujniralimis
+%4.8,srennur fo)6123/172( decneirepxe
+srennur
+:noitarudgninnuR
+/951(%9.01
+’’nuRottratS‘‘kw-6
+0.0163.34
+ecivoN
+6961¼n
+kw6
+evitcepsorP
+tegrebnetiulK
+ninim06,gninnuR
+)6961
+margorp
+)%5.87(
+91la
+detcetorpd7suoiverp etairavitlum(IRRtsniaga ,14.0¼RH:sisylana )68.0,02.0¼IC%59
+:ycneuqerfgninnuR
+yltnacifingistoN
+tubIRRhtiwdetaicossa /33gninnurtahtdnert suodrazaheromsawkw ,24.1¼RH(kw/32naht .)80.2,79.0¼IC%59
+:ytisnetnigninnuR
+htiwdetaicossaytisnetnI(cid:3)
+etairavitlum(IRR
+,82.1¼RH:sesylana .)04.1,81.1¼IC%59
+JournalofAthleticTraining 659
+
+egaPsuoiverPmorFdeunitnoC
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+:segnahctneceR
+:ecnatsidgninnuR
+ronimylnO
+ni(cid:3)%301:1raeY
+5.33
+decneirepxE
+71¼n
+niy2,kw4
+evitcepsorP
+tennamheL
+ksirIRRniegnahcoN
+(cid:3)ecnatsidegarevA:VTI
+tahtseirujni
+;VTI(emulovgninnur
+ecnatsid
+)nwonknU(
+wor
+05la
+dnaecnatsidnodesab
+6.471otmk9.58morf
+retlatondid
+)8¼n
+srennur
+segnahcytisnetni
+fo(cid:3)keew-ot-keew(mk
+dennalp
+ni(cid:3)%251:2raeY
+dna,%6.23,%9.33
+on;gniniart
+;ITI(ytisnetnigninnur
+on;)ylevitcepser,%8.63
+nosliated
+dah7;9¼n
+,ITInahtseirujnierom
+rorebmun
+raeynidetapicitrap
+otmk7.16morf(cid:3)hcihw
+seirujnifoepyt
+)1
+keew-ot-keew(mk7.48 dna,%0.02,%9.1fo(cid:3) .)ylevitcepser,%2.21
+:ytisnetnigninnuR
+dnaecapopmeT:ITI -ot-keew(cid:3)snurlavretni fo%7.41morfkeew ot)mk0.9(gniniartlatot %6.42,)mk9.41(%7.32 %8.62dna,)mk6.81( ;ylevitcepser,)mk9.22( nahtseirujnieromon degnahchcihw,VTI latotfo%3.7morf %0.4ot)mk3.6(gniniart ,)mk4.5(%8.3,)mk6.4( ,)mk5.3(%0.2dna
+ylevitcepser
+:ecnatsidgninnuR
+;)78/96(%3.97
+enituorgniniartlausU
+83
+lanoitaerceR
+78¼n
+om6
+evitcepsorP
+82latenuL
+IRRniecnereffidoN/ecnedicniIRR
+)%4.94(
+neewtebecnedicni
+foh0001
+dna)mk3.03(derujninu
+¼gninnur
+)mk2.43(derujni
+%95
+srennur
+:ycneuqerfgninnuR neewtebecnereffidoN dna)kw/8.3(derujninu srennur)kw/7.3(derujni
+:ecnatsidgninnuRfo)31/01(%9.67
+riehthtiwgniniarT
+-elddiM
+evititepmoC
+;14¼n
+om21
+evitcepsorP
+temlohsyL
+ninoitalerroctnacifingiS
+-elddim
+sbulccitelhta
+ecnatsid
+sretnirpS
+63la
+srennurecnatsid-gnol
+ecnatsid
+¼srennur
+dedulcxe
+ecnatsid(cid:3)neewteb
+6.5,srennur
+;4.266.81
+)%8.9(
+neviggnirudderevoc
+;h0001/sIRR
+-gnol
+yrujnifo.oNdnahtnom
+)82/61(%1.75
+ecnatsid
+r(htnomtxenehtsyad
+-gnolfo
+¼srennur
+)95.0¼
+ecnatsid
+4.765.43
+5.2,srennur h0001/sIRR
+660 Volume 57 (cid:2) Number 7 (cid:2) July 2022
+
+egaPsuoiverPmorFdeunitnoC
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+:noitarudgninnuR
+;)462/78(%1.33
+enituorgniniartlausU
+n(eohselgniS
+lanoitaerceR
+462¼n
+kw22
+evitcepsorP
+texuosilaM
+noitarudnoisseS(cid:3)
+/sIRR46.7
+)kw/x1tsaelta(
+¼)611¼
+)%1.62(
+43la
+IRR(cid:2)htiwdetaicossa
+foh0001
+;8.965.04
+ledomdetsujdanuniksir
+gninnur
+elpitlum
+)100.,P,369.0¼RH(
+¼n(seohs
+:ycneuqerfgninnuR
+2.44¼)841
+detaicossaycneuqerF(cid:3)
+8.86
+niksirIRR(cid:2)htiw
+RH(ledomdetsujdanu
+)200.¼P,707.0¼
+:ytisnetnigninnuR
+detaicossatonytisnetnI(cid:3)
+¼RH(ksirIRRhtiw
+)842.¼P,378.0 :ecnatsidgninnuR
+/991(%3.66
+gninnurdetceles-fleS
+3.24¼derujnI
+lanoitaerceR
+003¼n
+om42
+evitcepsorP
+tereisseM
+IRRhtiwnoitaicossaoN
+%8.55;)003
+margorp
+,7.96
+)%7.24(
+92la
+)61.¼P(ksir
+derujnifo
+¼derujninu
+:ytisnetnigninnuR
+/111(srennur
+3.0160.04
+IRRhtiwnoitaicossaoN
+erew)991
+%59;850.1¼RO(ksir
+x1.derujni
+¼P;045.1,727.0¼IC
+om-42gnirud
+)02.
+noitavresbo
+doirep
+:segnahctneceR
+:ecnatsidgninnuR
+)85/31(%4.22
+detropertoN
+2.968.93
+ecivoN
+85¼n
+kw01
+evitcepsorP
+tenesleiN
+tnacifingisyllacitsitatstoN
+IRRhtiwnoitaicossaoN
+)%3.84(
+02la
+derujnitub)70.¼P(
+)32.¼P(ksir
+egareva(cid:3)srennur
+ecnatsidgninnurylkeew
+,%1.36%6.13yb
+6%1.22htiwderapmoc
+derujninuni%1.2
+srennur
+rehgihdahsrennurderujnI
+ninoissergorpylkeew keewecnatsidgninnur
+tesnoyrujnierofeb
+rehtohtiwderapmoc
+,ecnereffid%68(skeew
+,%9.21¼IC%59 .)620.¼P;%9.951
+JournalofAthleticTraining 661
+
+egaPsuoiverPmorFdeunitnoC
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+:segnahctneceR
+)378/202(%1.32
+gninnurdetceles-fleS
+2.0162.73
+ecivoN
+378¼n
+om21
+evitcepsorP
+tenesleiN
+ksirIRRniecnereffidoN
+margorp
+)%5.94(
+12la
+tnereffidneewteb
+ylkeewnisnoissergorp egarevagnillor(ecnatsid hcaeretfadetaluclac ton,noissesgninnur egarevaevitalumuc
+)emulovniegnahc
+00.1¼RH:%01,
+)ecnerefer(
+,99.0¼RH:%03–%01 28.1,55.0¼IC%59 %59,71.1¼RH:%03.
+36.1,48.0¼IC
+%03.gnissergorpesohT otelbarenluveromerew seirujnidetaler-ecnatsid %01,htiwderapmoc ¼IC%59,95.1¼RH( .)70.¼P;66.2,69.0
+:noitarudgninnuR
+)721/33(%0.62
+noitarud,1trohoC
+A/N
+ecivoN
+¼n:1trohoC
+kw02
+TCR
+tekcolloP
+54(noitarudgninnuR(cid:3)
+;)96/32(%3.33
+,51rofkw/d3:yduts
+81;78
+22la
+detaicossa)noisses/nim
+detroperIRR
+¼latot;nim54ro,03
+slortnoc
+ksirIRR(cid:3)htiw
+/4(%0.02ni
+kw02
+)%0(
+/6(%0.42,)02
+dna,)52
+)42/31(%2.45 ,-03,-51fo nim-54dna
+,spuorg
+ylevitcepser
+:ycneuqerfgninnuR
+;)85/01(%2.71
+ycneuqerf,2trohoC
+A/N
+ecivoN
+¼n:2trohoC
+/35(ycneuqerfgninnuR(cid:3)
+detropersIRR
+,1snurnim-03:yduts
+31;17
+(cid:3)htiwdetaicossa)kw
+,)51/0(%0ni
+¼latot;kw/d5ro,3
+slortnoc
+ksirIRR
+,)52/3(%0.21
+kw02
+)%0(
+/7(%9.83dna ,3,1fo)81 kw/d-5dna
+,spuorg
+ylevitcepser
+662 Volume 57 (cid:2) Number 7 (cid:2) July 2022
+
+egaPsuoiverPmorFdeunitnoC
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+:segnahctneceR
+)744/08(%9.71
+gninnuRkw-61
+2.0161.93
+lanoitaerceR
+744;938¼n
+kw42
+TCR
+tevoksmaR
+llarevonisecnereffidoN
+:puorgI-S
+nodesabmargorp
+dezylana
+03la
+neewtebecnedicniIRR
+/63(%3.61
+rehtiefonoissergorp
+)%1.26(
+ecnatsidfonoissergorp
+63/8;)122
+)I-S(ytisnetnigninnur
+foepytroytisnetniro
+ytisnetni
+3;)V-S(emulovro
+ybdeniatsusseirujni
+63/5,detaler
+kw-4,kw/snur
+P:ecnatsid(puorghcae
+-emulov
+elcycnoitazidoirep
+.P:ytisnetni,41..
+detaler
+1kW.63detaeper
+)23.
+:puorgV-S
+(cid:3)elcycyreveni
+/44(%5.91
+%32ybemulov
+44/11;)622
+,noitatpadA:3–2kW
+ytisnetni
+noissergorp%0
+44/9,detaler
+yb(cid:2)emuloV:4kW
+emulov
+/noissergorP%01
+detaler
+gninnurfonoisserger
+niecnereffidoNniegnahc%¼I-Sni
+foksir
+ytisnetnitakw/mk
+roytisnetni
+lamixam%88(cid:4)
+IRRemulov
+noitpmusnocnegyxo
+neewteb
+I-Snisrennur
+V-Sdna
+gnirudspuorg -wollofkw-61
+pu
+:ycneuqerfgninnuR)448/942(%5.92
+otmargorPkw-31
+ybegA
+lanoitaerceR
+448¼n
+kw31
+evitcepsorP
+tenotnuaT
+)kw/d1ylno(gninnuR(cid:2)
+ecarmk-01etelpmoc
+:yrogetac
+)%2.57(
+13la
+IRR(cid:3)htiwdetaicossa
+y03,
+dnatrohocllarevoniksir
+–13,)%8.61(
+¼RO(srennurelamef
+y94
+)3.21,1.1¼IC%59,6.3
+–05,)%8.95(
+srennurelamnitontub
+y55
+,)%2.31(
+y65. )%8.8(
+:ecnatsidgninnuR
+)714/39(%3.22
+gninnurdetceles-fleS
+5.1167.83
+lanoitaerceR
+714¼n
+kw21
+evitcepsorP
+proWrednav
+mk03.kw/ecnatsiD
+margorp
+)%001(
+53late
+IRR(cid:3)htiwdetaicossa IC%59,82.3¼RH(ksir
+)57.8,32.1¼
+)541/14(%3.82:mk01, )021/03(%0.52:mk02–01 )64/61(%8.43:mk03–12 )31/6(%2.64:mk03.
+JournalofAthleticTraining 663
+
+egaPsuoiverPmorFdeunitnoC
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+:ecnatsidgninnuR)496/591(%1.82
+gninnurdetceles-fleS
+6.9644
+lanoitaerceR
+496¼n
+kw4
+evitcepsorP
+nav
+mk04,kw/emuloV
+4gnirudmargorp
+)%0(
+pookleddiM
+flactsniagadetcetorp
+otpugnidaelskeew
+23late
+,63.0¼RO(seirujni
+nohtaram
+)87.0,71.0¼IC%59
+:ytisnetnigninnuR
+gniniartlavretnitnetsisnoC eenktsniagadetcetorp
+,94.0¼RO(seirujni
+)39.0,62.0¼IC%59
+:ecnatsidgninnuR
+fo%5.12
+enituorgninnurlausU
+2.1168.24
+lanoitaerceR
+8673¼n
+om21
+evitcepsorP
+teleppoPnav
+ecnatsidylkeewretaergA
+/118(srennur
+)%2.93(
+33la
+(cid:2)htiwdetaicossasaw
+)867,3
+,99.0¼RO(IRRfoksir
+:sIRRdetroper
+)0.1,89.0¼IC%59
+mk-5fo%5.71
+:ycneuqerfgninnuR
+/76(srennur
+foksirhtiwnoitaicossaoN
+detroper)052
+IC%59,3.1¼RO(IRR
+%7.81;sIRR
+)7.1,99.0¼
+romk-01fo
+:ytisnetnigninnuRsrennurmk-51
+foksirhtiwnoitaicossaoN
+)189/752(
+IRR
+;sIRRdetroper
+flahfo%1.32
+nohtaram
+/412(srennur detroper)807 %2.52;sIRR nohtaramfo /662(srennur detroper)267
+sIRR
+664 Volume 57 (cid:2) Number 7 (cid:2) July 2022
+
+egaPsuoiverPmorFdeunitnoC
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+:ecnatsidgninnuR
+fo%1.84
+enituorgninnurlausU
+ybegA
+,lanoitaerceR
+8821¼n
+om21
+evitcepsorP
+24lateretlaW
+ecnatsidylkeewretaergA
+/026(srennur
+:yrogetac
+evititepmoC
+)%5.32(
+saw)mk46revo(
+)8821
+¼y91–41
+foksir(cid:3)htiwdetaicossa
+sIRRdetroper
+–02;%3.11
+evitalerdetsujda(IRR
+¼y92
+evitaleR.)88.2¼ksir
+–03;%2.12
+,22.2¼selamniksir
+¼y93
+.86.3,03.1¼IC%59
+–04;%3.93
+selamefniksirevitaleR
+¼y94
+,24.1¼IC%59,24.3¼
+05.;%0.12
+.58.7
+%1.7¼y
+:ycneuqerfgninnuR sawkw/d7gninnuR
+htiwdetaicossa
+foksir(cid:3)yltnacifingis 2–0htiwderapmocIRR
+selamhtobnikw/d
+,29.5¼ksirevitaler( )57.21,94.2¼IC%59 evitaler(selamefdna ¼IC%59,05.5¼ksir
+.)93.71,44.1
+:ytisnetnigninnuR
+foksirhtiwnoitaicossaoN
+IRR
+:ecnatsidgninnuR
+;)801/94(%4.54gnidaelmargorPkw-23
+8.962.34
+,ecivoN
+801¼n
+kw23
+evitcepsorP
+94lateneW
+htiwdetaicossaecnatsiD(cid:3)
+/seirujni22.1
+;nohtaramotpu
+lanoitaerceR
+)%8.25(
+IRReenkfoksir(cid:2)
+mk3.9061
+snoissesdezinagro
+,109.0¼ksirevitaler(
+¼IC%59(
+margorpnwo;ylkeew
+.)199.0,028.0¼IC%59
+)84.1,79.0
+keewgnirud
+:noitarudgninnuR
+detaicossakw/hgniniarT(cid:3)
+sIRRllarevo(cid:2)htiw
+,575.0¼ksirevitaler( ,)137.0,154.0¼IC%59 evitaler(seirujnieenk(cid:2) ¼IC%59,684.0¼ksir toof(cid:2),)597.0,792.0 ¼ksirevitaler(seirujni ,690.0¼IC%59,602.0
+)444.0
+JournalofAthleticTraining 665
+
+the GQ study concluded that overall, a greater weekly
+distance protected against RRIs (odds ratio [OR]¼0.99, b
+¼ 0.012).33 The LQ study24 indicated a trend for more
+injuries in those running ,20 miles (32.2 km) per week
+(80% injury incidence) compared with .40 miles (64.4
+km) per week (50% injury incidence).
+ThreeHQstudies,20,29,462GQstudies,25,401MQstudy,28
+and 1 LQ50 study reported no association between weekly runningdistanceandtheriskofRRIincohortsofnovice,20
+recreational,25,28,29,50 and competitive40 runners as well as
+runnersatmixedlevels.46OneHQstudy47notedconflicting
+results,associatingagreaterdistancewithanincreasedrisk
+of RRI at the 5-year time point but not after 1 year.
+Running Duration. One HQ study26 suggested that
+recreationalrunnersweremoreatriskofRRIwhenrunning
+forsessions oflongerduration(OR¼1.01,95%CI¼1.00,
+1.02),as did1MQ study,22 whichrevealed RRIincidences
+in novice runners of 22.0%, 24.0%, and 54.0% in the 15-,
+30-, and 45-minute duration groups, respectively.
+In contrast, 3 HQ studies19,34,49 demonstrated that longer
+running duration could lead to fewer injuries. Specifically,
+running .60 minutes in the previous 7 days was a
+protective factor against the occurrence of RRI (HR ¼
+0.41,95%CI¼0.20,0.86).19Greatermeansessiondistance
+was also a significant protective factor among recreational
+runners (HR¼0.795, 95% CI¼0.725, 0.872),34 and more
+weekly training hours were associated with fewer injuries,
+especiallytothekneeandfoot,inamixedcohortofnovice
+and recreational runners (relative risk ¼ 0.575, 95% CI ¼
+0.451, 0.731).49
+Five HQ4,17,23,46,48 and 2 GQ25,38 studies found no
+association between running duration and the incidence of
+RRIs in cohorts of novice,17 recreational,23,25 and compet-
+itive38 runners as well as in runners at mixed levels.4,46,48
+Running Frequency. Two HQ studies19,42 and 1 MQ22
+study showed that more frequent running tended to yield
+moreinjuries.Amongrecreationalandcompetitiverunners,
+greater weekly frequency was linked with more RRIs (7
+days versus 0–2 days).42 Running 3 times per week
+displayed a trend toward more injuries compared with 2
+weekly sessions in novice runners (HR¼1.42, 95% CI¼
+0.97, 2.08), although it did not reach statistical signifi-
+cance.19 The investigators in the MQ research22 observed a
+39% prevalence of injuries in those running 5 days per
+week, 12% in runners running 3 days per week, and 0% in
+those running 1 day per week.
+However, in 2 HQ studies,31,34 running more often led to
+fewerinjuriesinrecreationalrunners.Inthefirst,compared
+with running 2 to 5 days per week, running only 1 day per
+week was a significant risk factor overall and in female
+runners (OR¼3.6, 95%CI¼1.1,12.3), althoughthe trend
+was not significant in males.31 In the second study, greater
+frequency was associated with a lower risk of RRI in the
+unadjusted statistical model (HR¼0.707, P¼.002).34
+TwoHQstudies,46,472GQstudies,25,33and1MQ28study
+described no association between running frequency and
+injury rates in cohorts of recreational runners25,28,33 and
+runners at various levels.46,47
+Running Intensity. One HQ study19 indicated that
+greater running intensity in novice runners was more
+hazardous (HR ¼ 1.28, 95% CI ¼ 1.18, 1.40). One MQ
+study41 noticed more injuries in runners at mixed levels
+taking part in tempo runs during the first 6 weeks of a
+egaPsuoiverPmorFdeunitnoC
+.2elbaT
+nisegnahCtneceR
+sIRRneewteBnoitaicossA
+IRRdetropeR
+gninnuR
+egA
+egAnaeM
+foepyT
+eziSelpmaS
+ydutS
+sretemaraPgniniarT
+sretemaraPgniniarTdna
+ecnedicnI
+margorP
+egnaR
+y,DS6
+srennuR
+)selameF%(
+pU-wolloF
+ngiseD
+srohtuA
+:segnahctneceR
+:ecnatsidgninnuR
+)67/93(%3.15
+gninnurdetceles-fleS
+7.04¼derujnI
+,lanoitaerceR
+67¼n
+om21
+evitcepsorP
+34lateretniW
+;02¼n(elamderujnI
+nikw/ecnatsidegarevA(cid:3)
+margorp
+;5.216
+evititepmoC
+)%8.04(
+¼n(elamefdna)%19
+derujninusvderujni
+¼derujninu
+(cid:3)srennur)%95;01
+,23.0¼r(srennurelam
+5.2168.44
+%01.ybkw/ecnatsid
+ecnereffidon;)640.¼P
+kwevitucesnocneewteb
+srennurelamefni
+kw4nix1tsaelta 81fO.yrujnierofeb
+srennurelamderujni ecnatsidgninnur(cid:3)ohw )%16(11,x1%01.yb
+5dna,%03.yb(cid:3)
+9fO.%05.yb(cid:3))%82( srennurelamefderujni ecnatsidgninnur(cid:3)ohw (cid:3))%65(5,x1%01.yb (cid:3))%33(3dna%03.yb
+.%05.yb
+dezimodnar,TCR;oitarsddo,RO;egnarelitrauqretni,RQI;snurlavretnidnaecapopmetdesaercni,ITI;emulovgniniartdesaercni,VTI;oitardrazah,RH;puorggniniartdedarg,GTG:snoitaiverbbA
+.puorggniniartdradnats,GTS;yrujnidetaler-gninnur,IRR;ecnereffidksir,DR;lairtlacinilc
+666 Volume 57 (cid:2) Number 7 (cid:2) July 2022
+
+Table3. MethodologicalQualityofIncludedStudies(ConsensusScore)a
+Total Methodological
+Authors 1 2 3 4 5 6 7 8 9 10 11 12 13 14 Pointsb Score(%) Quality
+Beckeretal40 Y Y P Y N/A N/A N/A Y N Y Y P P P 16/22 72.7 GQ
+Begizewetal37 Y P Y Y N/A N/A N/A P P Y Y Y Y Y 19/22 86.4 HQ
+Bovensetal16 Y P P Y N/A N/A N/A P N P N N Y Y 12/22 59.1 MQ
+Buistetal18 Y Y Y Y Y N N/A P Y Y Y Y Y Y 23/26 88.5 HQ
+Buistetal4 Y Y Y Y N/A N/A N/A P Y Y Y Y Y Y 21/22 95.5 HQ
+Buistetal17 Y Y Y Y N/A N/A N/A P Y Y Y Y Y Y 21/22 95.5 HQ
+Dallingaetal23 Y Y Y Y N/A N/A N/A P Y Y Y P Y P 19/22 86.4 HQ
+Damstedetal45 Y P Y Y N/A N/A N/A P P Y Y Y Y Y 19/22 86.4 HQ
+Damstedetal44 Y Y P Y N/A N/A N/A P P Y Y Y Y Y 19/22 86.4 HQ
+Dijkhuisetal38 Y Y P Y N/A N/A N/A P N Y Y N/A Y P 15/20 75.0 GQ
+Fieldsetal24 Y P P P N/A N/A N/A P P P N N P Y 11/22 50.0 LQ
+Fokkemaetal46 Y P Y Y N/A N/A N/A P Y Y Y Y Y Y 20/22 90.9 HQ
+Hamstra-Wrightetal41 Y Y P P N/A N/A N/A Y Y N N/A Y N N 14/22 63.6 MQ
+Hayesetal39 Y Y Y Y N/A N/A N/A P P P Y N Y Y 17/22 77.3 GQ
+HespanholJunioretal26 Y Y Y Y N/A N/A N/A P Y Y Y Y Y Y 21/22 95.5 HQ
+HespanholJunioretal25 Y Y P Y N/A N/A N/A P N P Y P Y Y 16/22 72.7 GQ
+Hootmanetal47 Y Y Y Y N/A N/A N/A P Y Y Y Y P Y 20/22 90.9 HQ
+Jakobsenetal27 P N N Y N/A N/A N/A P P N N N P N 6/22 27.3 LQ
+Kemleretal48 Y P Y Y N/A N/A N/A P Y Y Y P Y Y 19/22 86.4 HQ
+Kluitenbergetal19 Y Y P Y N/A N/A N/A P Y Y Y Y Y Y 20/22 90.9 HQ
+Lehmannetal50 P N N P N/A N/A N/A P N Y P N Y Y 10/22 45.5 LQ
+Lunetal28 Y Y Y Y N/A N/A N/A P P N P Y P P 15/22 68.2 MQ
+Lysholmetal36 N P N P N/A N/A N/A P P Y P N P N 8/22 36.5 LQ
+Malisouxetal34 Y Y Y Y N/A N/A N/A P P Y Y Y Y Y 20/22 90.9 HQ
+Messieretal29 Y Y P Y N/A N/A N/A Y Y P Y Y Y Y 20/22 90.9 HQ
+Nielsenetal20 Y Y P Y N/A N/A N/A Y Y Y Y Y Y Y 21/22 95.5 HQ
+Nielsenetal21 Y Y P Y N/A N/A N/A Y P Y Y Y P P 18/22 81.8 HQ
+Pollocketal22 Y P P N P N N/A P P Y P N Y Y 14/26 53.9 MQ
+Ramskovetal30 Y Y Y Y Y Y N/A Y P Y Y Y Y Y 25/26 96.2 HQ
+Tauntonetal31 Y Y P Y N/A N/A N/A P Y Y Y Y Y Y 20/22 90.9 HQ
+vanderWorpetal35 Y Y Y Y N/A N/A N/A P P Y Y Y Y Y 20/22 90.9 HQ
+vanMiddelkoopetal32 Y Y P Y N/A N/A N/A P Y Y Y Y Y P 19/22 86.4 HQ
+vanPoppeletal33 Y Y Y Y N/A N/A N/A P Y Y Y N P P 17/22 77.3 GQ
+Walteretal42 Y P Y Y N/A N/A N/A P Y P Y P Y Y 18/22 81.8 HQ
+Wenetal49 Y Y P Y N/A N/A N/A Y P Y Y Y Y Y 20/22 90.9 HQ
+Winteretal43 Y P Y Y N/A N/A N/A Y P N Y N Y P 15/22 68.2 MQ
+Abbreviations:GQ,goodquality;HQ,highquality;LQ,lowquality;MQ,moderatequality;N,no;N/A,notapplicable;P,partial;Y,yes.
+a TheQualityAssessmentforEvaluatingPrimaryResearchStudies(QualSyst)13containsthefollowingitems:Item1,Descriptionofstudy
+question/objective;Item2,Appropriatestudydesignforobjective;Item3,Descriptionofsubjectselectionstrategy;Item4,Descriptionof
+subjects’characteristics;Item5,Randomallocation;Item6,Blindingofinvestigators;Item7,Blindingofparticipants;Item8,Outcomes
+andexposureswell-definedandrobust;Item9,Appropriatesamplesize;Item10,Appropriatestatisticalanalyses;Item11,Estimatesof
+variance;Item12,Controlledforconfounding;Item13,Sufficientlyreportedresults;Item14,Resultssupportconclusions.Scoring:Y¼2;
+P¼1;N¼0.TheN/Aitemswereexcludedfromthetotalscore.Methodologicalquality:HQ¼.80.0%;GQ¼65.0%–80.0%;MQ¼50.0%–
+64.9%;LQ¼,50.0%.
+b Pointsscored/totalpossiblepoints.
+training program (OR¼3.96, 95% CI¼1.35, 11.61) and a ners25,29,33,34,50 but also competitive runners38 and mixed
+trend toward more injuries in those practicing speed cohorts.42,46 Two HQ studies identified conflicting re-
+intervals (P¼.06). The authors of the latter study reported sults.26,47 The first one found that speed training was
+that almost all runners who sustained RRIs (96.4%) associated with more injuries and interval training with
+performed tempo or interval runs as part of their marathon fewer injuries.26 The other reported that greater intensity
+training.41 waslinkedwithmoreinjuriesatthe1-yeartimepoint(only
+Investigators in 2 HQ32,45 studies suggested that greater in men) but not after 5 years.47
+runningintensitycouldyieldfewerRRIs.Performingspeed
+intervals regularly was a protective factor against the
+Changes in Training Parameters
+occurrence of knee injuries among recreational marathon
+runners (OR¼0.49, 95% CI¼0.26, 0.93).32 In a cohort of We found conflicting evidence about the association
+runners of mixed abilities, there was a tendency toward between RRIs and specific changes in training parameters
+fewerinjuriesamongrunnerswithafasterpace(.10km/h, based on 11 studies. Five16,20,21,39,43 stated that a recent
+RD¼–17.4%, 95% CI¼(cid:3)39.0%, 4.5%).45 increase in running distance was associated with an
+FourHQstudies,29,34,42,463GQstudies,25,33,38and1LQ50 increased risk of RRIs. Specifically, 1 HQ study of 58
+study found no association between running intensity and novicerunnersnotedthatovera10-weekfollow-up,injured
+RRIs in cohorts involving mostly recreational run- runners had a greater distance progression the week before
+JournalofAthleticTraining 667
+
+the onset of injury compared with other weeks (86% suggested greater injury rates in novice compared with
+difference, 95% CI¼12.9%, 159.9%; P¼.026).20 Injured recreational runners,51 our findings suggested the opposite,
+runners also had an average increase in weekly running with a greater incidence in recreational (26.1%) than in
+distance of 31.6% 6 3.1%, compared with 22.1% 6 2.1% novice runners (14.9%). In contrast with that previous
+in uninjured runners, although the difference did not reach review,51 we reported the number of events rather than the
+statistical difference (P¼.07).20 According to another HQ injuries per 1000 hours of running. Analyses based on
+study21 of 873 novice runners (12 months), those exposure are interesting for putting numbers into perspec-
+progressing weekly distance by .30% seemed more tive. However, we believe that considering injuries as
+vulnerable to ‘‘distance-based injuries’’ than those who eventshappeningduringarunningprogramofanyduration
+progressed ,10% (HR¼1.59, 95% CI¼0.96, 2.66; P¼ can betterinform injury-preventionstrategies, especially in
+.07). However, that same study found no association novice and recreational runners. Almost half (48%) of
+between overall incidence of injuries and distance progres- novice runners who abandoned a running program did so
+sion. Another MQ study16 of 73 novice runners (over 18 because of an injury.4,52 Thus, avoiding RRIs appeared
+months) associated a greater risk of RRI with a recent essential to maintaining participation in running and its
+increase in distance between different training phases of a associated health benefits.53 Yet it is possible that injuries
+program leading to the completion of a marathon, perexposuretimemaybetterapplytothetrainingrealityof
+especially when increasing from a mean weekly distance competitiverunners,inwhomtheincidencewasreportedto
+of 34.9 km to 43.6 km and duration from 3.2 hours to 4.0 be as high as 62.6% during follow-up periods of up to 24
+hours. One GQ study39 described a trend for university- months that likely included much more running than done
+level competitive runners (n¼97) to sustain more injuries by novice and recreational runners.
+when they had larger differences in running distance Overall, our findings showed conflicting evidence about
+between regular and high-mileage weeks during a 3-month the role of specific training parameters (distance, duration,
+cross-country season (P ¼ .06). One MQ study43 with a frequency, intensity) as well as the influence of recent
+mixed cohort of 76 recreational and competitive runners trainingchangesintheonsetofRRIs.In2007,basedon17
+reported that, over the course of a 12-month follow-up, studies (13 prospective, 4 retrospective), van Gent et al6
+injured runners often increased their weekly distance by had already outlined the conflicting levels of evidence
+.30%andeven.50%inthe4weeksbeforesustainingan linkingtrainingparametersandRRIs.In2012,basedon31
+injury. studies (13 prospective, 9 retrospective, 6 case-control
+Five other studies (3 HQ,4,18,30 1 GQ,38 1 LQ50) showed series,and3RCTs),Nielsenetal5alsoreportedconflicting
+no association between recent changes in training param- results between distance, duration, frequency of training,
+eters and the incidence of RRIs. Week-to-week changes in intensity, and RRIs. Finally, the authors of a more recent
+frequencyordurationofrunningwerenotlinkedwithRRIs and smaller systematic review11 based on only 4 studies
+in a mixed cohort of novice and recreational runners.4 An concluded that very limited evidence associated sudden
+RCT18 from the same research group revealed that a 10% changes in training loads with the onset of RRIs. In
+average increase in weekly running distance had no comparison,wereviewed33prospectivecohortstudiesand
+preventive effect against RRIs in novice runners when 3 RCTs. The sole intervention in all studies was a running
+comparedwithaweeklydistanceprogression.10%(OR¼ program and combined training parameters at large and
+0.8, 95% CI¼0.6, 1.3). recentchangesintraining.Inouropinion,thepersistenceof
+AnotherRCT30reportedasimilarincidenceofinjuriesin conflicting results over the years speaks to a lack of
+447 recreational runners whose schedules focused on consistentdefinitionsandreportingguidelinesinthefieldof
+increasing intensity or distance, although the average RRIs. In addition, assessing the relationship between
+weekly increase in volume was only 3.25%. One more training parameters and RRIs is certainly more complex
+study in 17 recreational runners indicated no difference in than looking at training parameters in isolation.
+RRIsafterincreasingrunningdistanceby103%orintensity
+by 152% over a 4-week period.50 As for competitive Running Programs Do Not Tell the Whole Story
+runners, the acute-to-chronic workload ratio was not
+Conflicting evidence for the association between running
+associated with the onset of RRIs in a small sample of 23
+distance, duration, frequency, and intensity, as well as
+runners.38
+recent changes in training, and RRIs outlines the complex-
+One HQ study44 reported conflicting results in 261
+ity of running injuries. Factors related to movement
+runners of mixed levels. Indeed, more RRIs were recorded
+biomechanics, load capacity, and lifestyle factors8 are but
+during the first 3 weeks of a 14-week training program in
+a few elements that can contribute to RRIs. Importantly,
+thoseincreasingweeklyrunningdistancebetween20%and
+these need to be measured and reported objectively to
+60% compared with those increasing their weekly distance
+provide meaningful insights. Unfortunately, researchers in
+by,20%.However,thisassociationbecamenonsignificant
+only 5 studies (14%) of the 36 included in this review
+after7weeksand14weeks,andthoseincreasingby.60%
+collected global positioning system–based data to improve
+did not sustain more injuries.44
+the accuracy of actual training loads.20,21,30,44,45 Moving
+forward, investigators should consider using wearable
+DISCUSSION
+devices to provide a better picture of actual training
+Given the high volume of research on running injuries, parameters, instead of prescribed parameters, and to
+this systematic review provided a much-needed update on minimize reporting errors from participating runners.54
+the current state of the literature. Overall, the incidence of They should also consider describing multiple components
+RRI across studies was 26.2%. Whereas previous data of workload (eg, intensity and frequency)—not just
+668 Volume 57 (cid:2) Number 7 (cid:2) July 2022
+
+distance55—as well as patterns of variation experienced lines. Unfortunately, fewer than 40% (14/36) of included
+during the running program and around the timing of studies used RRI definitions that were in accordance with,
+injuriestoprovideabetterpictureoftrainingloads.Recent orsimilarto,theconsensusdefinitionpublishedbyYamato
+examples of studies56,57 involving different running popu- et al7 regarding reduced or missed consecutive training
+lations emphasized the substantial underestimation of sessions because of pain or consultation of a health care
+changesinweek-to-weektrainingloadswhenonlydistance professional. Our results also call for a better standardiza-
+or duration was considered. tion of follow-up periods when monitoring injury inci-
+AttributingthecauseofRRIssolelytotrainingloads—or dence. Included studies varied between 1 month and 60
+external loads—fails to address the plethora of factors months,makingtheresultstooheterogeneoustogeneralize
+related to the individual—or internal loads—which vary for the running population. A set of reporting guidelines
+amongindividualsandeveninthesameindividualoverthe could include, for example, details on injuries sustained
+course of a running program.58 The common advice to duringeach2-weekperiodofarunningprogram(eg,during
+increase distance by 10% per week for all runners,59 in weeks 1–2, 3–4, 5–6, and so on until the end of the study
+every situation, is too simplistic and should not be
+period). This could help to identify trends in injury
+recommended based on our results. A 10% increase for a
+incidence using a meta-analysis process, which was not
+novice runner who runs 10 km per week is likely much
+possibleinthisreview,andcomparedataindifferentlevels
+safer than for a competitive runner who runs 150 km per
+of runners.
+week, including high-intensity workouts. In addition to
+Novice, recreational, and competitive running popula-
+experience and previous adaptations to exercise that
+tions should be more specifically defined. For the purpose
+involve impact, subjective measures of well-being, such
+of this review, we relied on information provided in the
+aspsychologicalstress,fatigue,andrecovery,canallaffect
+articles, although the details may not have been compa-
+an athlete’s response and adaptation to training.60 Only 10
+rable.Despiteapreviousclassificationsuggestedbasedon
+studies in this review reported outcomes related to
+the existing literature,61 a scientific process to determine
+personality and mental health,17,24,26,29,41 diet,22,39,50 smok-
+consensus definitions could provide clear guidelines that
+ing habits,22,33,42 or alcohol intake.33,39 Only 2 studies22,39
+experts in the field agree upon. This would make it easier
+asked questions about sleeping habits, and only one39
+to improve study designs, tailor research questions to the
+documented hormonal variations and the use of contracep-
+different populations,62 and unite multiple research teams
+tives in female runners. Monitoring and reporting these
+in their efforts toward a common goal. Standardized
+variablesandmeasuresofinternalloadsiscrucialtogaina
+guidelinescouldalsotranslatetobetterresearchuptakeby
+better understanding of the causes of RRIs in both females
+the running community, coaches, and health care profes-
+andmales.Thesefactorsshouldbeconsideredespeciallyin
+sionals.
+competitive runners, among whom the interaction between
+Despite high rates of RRIs, conflicting evidence de-
+training parameters and recovery could explain the higher
+rate of RRIs. scribed the associations between weekly running distance,
+duration, frequency, and intensity, or recent changes in
+these parameters, and the incidence of RRIs. Thus, at this
+Limitations of This Review or Limitations of Included
+time, no specific recommendations related to optimal
+Articles?
+training parameters or progressions can be issued to guide
+The clinical applicability of this review was limited clinical decision making and program planning. This result
+because of conflicting findings. However, the conflicting was largely due to a lack of consistent definitions and
+findingsstemmedfromthemanylimitationsoftheincluded reporting guidelines. Finally, RRIs are multifactorial and
+studies.ResultsregardingtheincidenceofRRIsindifferent likely not explained solely by training parameters. Authors
+running populations were limited due to the heterogeneity of future prospective studies on the incidence of RRIs
+of definitions used in the different articles. Findings about should consider how variations in objectively measured
+RRIs and training parameters or changes in these training parameters interact with factors related to the
+parameters were limited because of the lack of objective
+individual using psychosocial, hormonal, lifestyle, and
+data about training loads and the lack of data on factors
+recovery outcomes.
+related to the individual. We understand that collecting all
+of these burdens research teams and might not always be
+REFERENCES
+feasible,dependingonthebudget.Still,unlessthesefactors
+are addressed in future research, we predict that future 1. Cavanagh PR, Lafortune MA. Ground reaction forces in distance
+reviewswillstilldemonstrateconflictingfindingsaboutthe running. J Biomech. 1980;13(5):397–406. doi:10.1016/0021-
+causes of RRIs. It is also possible that the wide variability 9290(80)90033-0
+in factors affecting the capacity for adaptation in different 2. HreljacA.Impact andoveruse injuriesinrunners. Med SciSports
+runners precludes us from making specific recommenda- Exerc. 2004;36(5):845–849. doi:10.1249/01.mss.0000126803.
+tions for novice, recreational, or competitive runners about 66636.dd
+training parameters to reduce the risk of RRIs. Running 3. HreljacA,MarshallRN,HumePA.Evaluationoflowerextremity
+biomechanics, footwear, and surface or changes in these overuse injury potential in runners. Med Sci Sports Exerc.
+variables should also be considered when possible. 2000;32(9):1635–1641.doi:10.1097/00005768-200009000-00018
+4. Buist I, Bredeweg SW, Bessem B, van Mechelen W, Lemmink
+KAPM, Diercks RL. Incidence and risk factors of running-related
+Calling for Unity
+injuriesduringpreparationfora4-milerecreationalrunningevent.
+Meaningful conclusions and recommendations are made Br J Sports Med. 2010;44(8):598–604. doi:10.1136/bjsm.2007.
+possible with consensus definitions and reporting guide- 044677
+JournalofAthleticTraining 669
+
+5. Nielsen RO, Buist I, Sorensen H, Lind M, Rasmussen S. Training 21. NielsenRO,ParnerET,NohrEA,SorensenH,LindM,Rasmussen
+errorsandrunningrelatedinjuries:asystematicreview.IntJSports S. Excessive progression in weekly running distance and risk of
+PhysTher.2012;7(1):58–75. running-related injuries: an association which varies according to
+6. van Gent RN, Siem D, van Middelkoop M, van Os AG, Bierma- type of injury. J Orthop Sports Phys Ther. 2014;44(10):739–747.
+Zeinstra SM, Koes BW. Incidence and determinants of lower doi:10.2519/jospt.2014.5164
+extremity running injuries in long distance runners: a systematic 22. Pollock ML, Gettman LR, Milesis CA, Bah MD, Durstine L,
+review. Br J Sports Med. 2007;41(8):469–480. doi:10.1136/bjsm. Johnson RB. Effects of frequency and duration of training on
+2006.033548 attritionandincidenceofinjury.MedSciSports.1977;9(1):31–36.
+7. Yamato TP, Saragiotto BT, Lopes AL. A consensus definition of 23. Dallinga J, Van Rijn R, Stubbe J, Deutekom M. Injury incidence
+running-related injury in recreational runners: a modified Delphi andriskfactors:acohortstudyof7068-kmor16-kmrecreational
+approach.JOrthopSportsPhysTher.2015;45(5):375–380.doi:10. runners.BMJOpenSportExercMed.2019;5(1):e000489.
+2519/jospt.2015.5741 24. Fields KB, Delaney M, Hinkle JS. A prospective study of type A
+8. Hulme A, Salmon PM, Nielsen RO, Read GJM, Finch CF. From behaviorandrunninginjuries.JFamPract.1990;30(4):425–429.
+control to causation: validating a ‘‘complex systems model’’ of 25. HespanholJuniorLC,deCarvalhoAC,PenaCostaLO,LopesAD.
+running-related injury development and prevention. Appl Ergon. Lower limb alignment characteristics are not associated with
+2017;65:345–354.doi:10.1016/j.apergo.2017.07.005 running injuries in runners: prospective cohort study. Eur J Sport
+9. SatterthwaiteP,NortonR,LarmerP,RobinsonE.Riskfactorsfor Sci.2016;16(8):1137–1144.doi:10.1080/17461391.2016.1195878
+injuries and other health problems sustained in a marathon. Br J 26. HespanholJuniorLC,PenaCostaLO,LopesAD.Previousinjuries
+SportsMed.1999;33(1):22–26.doi:10.1136/bjsm.33.1.22 andsometrainingcharacteristicspredictrunning-relatedinjuriesin
+10. WenDY.Riskfactorsforoveruseinjuriesinrunners.CurrSports recreational runners: a prospective cohort study. J Physiother.
+MedRep.2007;6(5):307–313. 2013;59(4):263–269.doi:10.1016/S1836-9553(13)70203-0
+11. DamstedC,GladS,NielsenRO,SorensenH,MalisouxL.Isthere 27. Jakobsen BW, Kroner K, Schmidt SA, Kjeldsen A. Prevention of
+evidence for an association between changes in training load and injuries in long-distance runners. Knee Surg Sports Traumatol
+running-related injuries? A systematic review. Int J Sports Phys Arthrosc.1994;2(4):245–249.doi:10.1007/BF01845597
+Ther.2018;13(6):931–942. 28. Lun V, Meeuwisse WH, Stergiou P, Stefanyshyn D. Relation
+12. LiberatiA,AltmanDG,TetzlaffJ,etal.ThePRISMAstatementfor between running injury and static lower limb alignment in
+reporting systematic reviews and meta-analyses of studies that recreational runners. Br J Sports Med. 2004;38(5):576–580.
+evaluate health care interventions: explanation and elaboration. J doi:10.1136/bjsm.2003.005488
+Clin Epidemiol. 2009;62(10):e1–e34. doi:10.1016/j.jclinepi.2009. 29. Messier SP, Martin DF, Mihalko SL, et al. A 2-year prospective
+06.006 cohort study of overuse running injuries: The Runners and Injury
+13. KmetLM,LeeRC,CookLS.StandardQualityAssessmentCriteria LongitudinalStudy(TRAILS).AmJSportsMed.2018;46(9):2211–
+forEvaluatingPrimaryResearchPapersFromaVarietyofFields. 2221.doi:10.1177/0363546518773755
+AlbertaHeritageFoundationforMedicalResearch;2004. 30. RamskovD,RasmussenS,SorensenH,ParnerET,LindM,Nielsen
+14. BernardS,OuelletMP,MoffetH,RoyJS,DumoulinC.Effectsof R. Progression in running intensity or running volume and the
+radiation therapy on the structure and function of the pelvic floor developmentofspecificinjuriesinrecreationalrunners:RunClever,
+muscles of patients with cancer in the pelvic area: a systematic a randomized trial using competing risks. J Orthop Sports Phys
+review.JCancerSurviv.2016;10(2):351–362.doi:10.1007/s11764- Ther.2018;48(10):740–748.doi:10.2519/jospt.2018.8062
+015-0481-8 31. Taunton JE, Ryan MB, Clement DB, McKenzie DC, Lloyd-Smith
+15. vanTulderM,FurlanA,BombardierC,BouterL;EditorialBoard DR, Zumbo BD. A prospective study of running injuries: the
+of the Cochrane Collaboration Back Review Group. Updated Vancouver Sun Run ‘‘In Training’’ clinics. Br J Sports Med.
+method guidelines for systematic reviews in the Cochrane 2003;37(3):239–244.doi:10.1136/bjsm.37.3.239
+Collaboration Back Review Group. Spine (Phila Pa 1976). 32. van Middelkoop M, Kolkman J, van Ochten J, Bierma-Zeinstra
+2003;15(28):1290–1299. doi:10.1097/01.BRS.0000065484.95996. SMA, Koes BW. Risk factors for lower extremity injuries among
+AF male marathon runners. Scand J Med Sci Sports. 2008;18(6):691–
+16. BovensAM,JanssenGM,VermeerHG,HoeberigsJH,JanssenMP, 697.doi:10.1111/j.1600-0838.2007.00768.x
+VerstappenFT.Occurrenceofrunninginjuriesinadultsfollowinga 33. van Poppel D, Scholten-Peeters GGM, van Middelkoop M, Koes
+supervised training program. Int J Sports Med. 1989;10(suppl BW,VerhagenAP.Riskmodelsforlowerextremityinjuriesamong
+3):S186–S190.doi:10.1055/s-2007-1024970 short- and long distance runners: a prospective cohort study.
+17. BuistI,BredewegSW,LemminkKAPM,vanMechelenW,Diercks MusculoskeletSciPract.2018;36:48–53.doi:10.1016/j.msksp.2018.
+RL.Predictorsofrunning-relatedinjuriesinnovicerunnersenrolled 04.007
+inasystematictrainingprogram:aprospectivecohortstudy.AmJ 34. Malisoux L, Ramesh J, Mann R, Seil R, Urhausen A, Theisen D.
+SportsMed.2010;38(2):273–280.doi:10.1177/0363546509347985 Canparalleluseofdifferentrunningshoesdecreaserunning-related
+18. Buist I, Bredeweg SW, van Mechelen W, Lemmink KAPM, injury risk? Scand J Med Sci Sports. 2015;25(1):110–115. doi:10.
+PeppingGJ,DiercksRL.Noeffectofagradedtrainingprogramon 1111/sms.12154
+the number of running-related injuries in novice runners: a 35. van der Worp MP, de Wijer A, van Cingel R, Verbeek ALM,
+randomized controlled trial. Am J Sports Med. 2008;36(1):33–39. Nijhuis-van der Sanden MWG, Staal JB. The 5- or 10-km
+doi:10.1177/0363546507307505 Marikenloop run: a prospective study of the etiology of running-
+19. Kluitenberg B, van der Worp H, Huisstede BM, et al. The related injuries in women. J Orthop Sports Phys Ther.
+NLstart2run study: training-related factors associated with run- 2016;46(6):462–470.doi:10.2519/jospt.2016.6402
+ning-related injuries in novice runners. J Sci Med Sport. 36. Lysholm J, Wiklander J. Injuries in runners. Am J Sports Med.
+2016;19(8):642–646.doi:10.1016/j.jsams.2015.09.006 1987;15(2):168–171.doi:10.1177/036354658701500213
+20. NielsenRO,CederholmP,BuistI,SorensenH,LindM,Rasmussen 37. Begizew DM, Grace JM, van Heerden HJ. Lower-extremity
+S. Can GPS be used to detect deleterious progression in training running-related injuriesamong10000-meter long distancerunners
+volume among runners? J Strength Cond Res. 2013;27(6):1471– in Ethiopia. J Hum Sport Sci. 2018;14(2):358–373. doi:10.14198/
+1478.doi:10.1519/JSC.0b013e3182711e3c jhse.2019.142.09
+670 Volume 57 (cid:2) Number 7 (cid:2) July 2022
+
+38. Dijkhuis TB, Otter R, Aiello M, Velthuijsen H, Lemmink K. neuromuscularexcitabilityindistancerunners.EurJApplPhysiol
+Increaseintheacute:chronicworkloadratiorelatestoinjuryriskin OccupPhysiol.1995;70(5):457–461.doi:10.1007/BF00618498
+competitive runners. Int J Sports Med. 2020;41(11):736–743. 51. Videbæk S, Bueno AM, Nielsen RO, Rasmussen S. Incidence of
+doi:10.1055/a-1171-2331 running-relatedinjuriesper1000hofrunningindifferenttypesof
+39. HayesLE,BoulosA,CruzAIJr.Riskfactorsforin-seasoninjuryin runners: a systematic review and meta-analysis. Sports Med.
+varsitycollegiate cross-country athletes: an analysis ofoneseason 2015;45(7):1017–1026.doi:10.1007/s40279-015-0333-8
+in 97 athletes. J Sports Med Phys Fitness. 2019;59(9):1536–1543. 52. Fokkema T, Hartgens F, Kluitenberg B, et al. Reasons and
+doi:10.23736/S0022-4707.19.09221-1 predictors of discontinuation of running after a running program
+40. Becker J, Nakajima M, Wu WFW. Factors contributing to medial for novice runners. J Sci Med Sport. 2019;22(1):106–111. doi:10.
+tibial stress syndrome in runners: a prospective study. Med Sci 1016/j.jsams.2018.06.003
+Sports Exerc. 2018;50(10):2092–2100. doi:10.1249/MSS. 53. PedisicZ,ShresthaN,KovalchikS,etal.Isrunningassociatedwith
+0000000000001674 alowerriskofall-cause,cardiovascularandcancermortality,andis
+41. Hamstra-Wright KL, Coumbe-Lilley JE, Kim H, McFarland JA, the more the better? A systematic review and meta-analysis. Br J
+Huxel Bliven KC. The influence of training and mental skills Sports Med. 2020;54(15):898–905. doi:10.1136/bjsports-2018-
+preparation on injury incidence and performance in marathon 100493
+runners. J Strength Cond Res. 2013;27(10):2828–2835. doi:10. 54. NapierC,EsculierJF,HuntMA.Gaitretraining:outofthelaband
+1519/JSC.0b013e31828a4733 onto the streets with the benefit of wearables. Br J Sports Med.
+42. WalterSD,HartLE,McIntoshJM,SuttonJR.TheOntariocohort 2017;51(23):1642–1643.doi:10.1136/bjsports-2017-098637
+study of running-related injuries. Arch Intern Med. 55. Paquette MR, Napier C, Willy RW, Stellingwerff T. Moving
+1989;149(11):2561–2564. beyond weekly ‘‘distance’’: optimizing quantification of training
+43. Winter SC, Gordon S, Brice SM, Lindsay D, Barrs S. A loadinrunners.JOrthopSportsPhysTher.2020;50(10):564–569.
+multifactorial approach to overuse running injuries: a 1-year doi:10.2519/jospt.2020.9533
+prospective study. Sports Health. 2020;12(3):296–303. doi:10. 56. Napier C, Ryan M, Menon C, Paquette MR. Session rating of
+perceived exertion combined with training volume for estimating
+1177/1941738119888504
+trainingresponsesinrunners.JAthlTrain.2020;55(12):1285–1291.
+44. DamstedC,ParnerET,SorensenH,MalisouxL,HulmeA,Nielsen
+doi:10.4085/1062-6050-573-19
+RO. The association between changes in weekly running distance
+57. Ryan MR, Napier C, Greenwood D, Paquette MR. Comparison of
+andrunning-relatedinjury:preparingforahalfmarathon.JOrthop
+different measures to monitor week-to-week changes in training
+Sports Phys Ther. 2019;49(4):230–238. doi:10.2519/jospt.2019.
+load in high school runners. Int J Sports Sci Coach.
+8541
+2020;16(2);370–379.doi:10.1177/1747954120970305
+45. Damsted C, Parner ET, Sorensen H, Malisoux L, Nielsen RO.
+58. Bertelsen ML, Hulme A, Petersen J, et al. A framework for the
+ProjectRun21: do running experience and running pace influence
+etiology of running-related injuries. Scand J Med Sci Sports.
+the risk of running injury? A 14-week prospective cohort study. J
+2017;27(11):1170–1180.doi:10.1111/sms.12883
+Sci Med Sport. 2019;22(3):281–287. doi:10.1016/j.jsams.2018.08.
+59. Johnston CAM, Taunton JE, Lloyd-Smith DR, McKenzie DC.
+014
+Preventing running injuries: practical approach for family doctors.
+46. Fokkema T, van Damme AADN, Fornerod MWJ, de Vos RJ,
+CanFamPhysician.2003;49:1101–1109.
+Bierma-Zeinstra SMA, van Middelkoop M. Training for a (half-
+60. Saw AE, Main LC, Gastin PB. Monitoring the athlete training
+)marathon: training volume and longest endurance run related to
+response: subjective self-360 reported measures trump commonly
+performance and running injuries. Scand J Med Sci Sports.
+used objective measures. A systematic review. Br J Sports Med.
+2020;30(9):1692–1704.doi:10.1111/sms.13725
+2016;50(5):281–291.doi:10.1136/bjsports-2015-094758
+47. Hootman JM, Macera CA, Ainsworth BE, Martin M, Addy CL,
+61. KluitenbergB,vanMiddelkoopM,DiercksR,vanderWorpH.What
+BlairSN.Predictorsoflowerextremityinjuryamongrecreationally
+are the differences in injury proportions between different popula-
+active adults. Clin J Sport Med. 2002;12(2):99–106. doi:10.1097/
+tionsofrunners?Asystematicreviewandmeta-analysis.SportsMed.
+00042752-200203000-00006
+2015;45(8):1143–1161.doi:10.1007/s40279-015-0331-x
+48. KemlerE,BloklandD,BackxF,HuisstedeB.Differencesininjury
+62. Nielsen RO, Bertelsen ML, Møller M, et al. Methods matter:
+riskandcharacteristicsofinjuriesbetweennoviceandexperienced
+exploringthe‘toomuch,toosoon’theory,part1:causalquestions
+runnersovera4-yearperiod.PhysSportsmed.2018;46(4):485–491.
+insportsinjuryresearch.BrJSportsMed.2020;54(18):1119–1122.
+doi:10.1080/00913847.2018.1507410
+doi:10.1136/bjsports-2018-100245
+49. Wen DY, Puffer JC, Schmalzried TP. Injuries in runners: a
+prospective study of alignment. Clin J Sport Med. 1998;8(3):187–
+SUPPLEMENTAL MATERIAL
+194.doi:10.1097/00042752-199807000-00005
+50. Lehmann M, Jakob E, Gastmann U, Steinacker JM, Keul J. Supplemental Table. Search strategy.
+Unaccustomedhighmileagecomparedtointensitytraining-related FoundatDOI:http://dx.doi.org/10.4085/1062-6050-0195.21.S1
+Address correspondence to Jean-Francois Esculier, PhD, The Running Clinic, C.P. 1075, Lac Beauport, QC, G3B 2J8 Canada.
+Address email to jfesculier@therunningclinic.com.
+JournalofAthleticTraining 671
+

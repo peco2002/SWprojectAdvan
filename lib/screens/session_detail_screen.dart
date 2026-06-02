@@ -426,20 +426,17 @@ void _paintChart({
 
   // Y축 레이블
   _label(canvas, labelFmt(maxV), Offset(cR + 5, vy(maxV)));
-  if ((vy(avgV) - vy(maxV)).abs() > 12 && (vy(minV) - vy(avgV)).abs() > 12) {
-    _label(canvas, labelFmt(avgV),
-        Offset(cR + 5, avgY), color: AppColors.textSecondary);
-  }
+  _label(canvas, labelFmt(avgV),
+      Offset(cR + 5, avgY), color: AppColors.textSecondary);
   _label(canvas, labelFmt(minV), Offset(cR + 5, vy(minV)));
 
-  // X축 시간 레이블 (4분할)
+  // X축 경과 시간 레이블 (4분할, 00:00 기준)
   for (int i = 0; i <= 4; i++) {
-    final frac = i / 4.0;
-    final x    = cL + cW * frac;
-    final ms   = t0 + tR * frac;
-    final dt   = DateTime.fromMillisecondsSinceEpoch(ms.toInt());
-    final hh   = dt.hour.toString().padLeft(2, '0');
-    final mm   = dt.minute.toString().padLeft(2, '0');
+    final frac       = i / 4.0;
+    final x          = cL + cW * frac;
+    final elapsedSec = (tR * frac / 1000).toInt();
+    final hh         = (elapsedSec ~/ 3600).toString().padLeft(2, '0');
+    final mm         = ((elapsedSec % 3600) ~/ 60).toString().padLeft(2, '0');
     _label(canvas, '$hh:$mm', Offset(x, cB + 12), align: TextAlign.center);
   }
 }

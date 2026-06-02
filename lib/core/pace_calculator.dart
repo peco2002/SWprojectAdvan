@@ -140,6 +140,7 @@ class PaceCalculator {
     required double currentLongDistKm,
     required double baseTempoDistKm,
     required double baseLongDistKm,
+    int? userAge,
   }) {
     final latest = sessions.first;
 
@@ -158,6 +159,7 @@ class PaceCalculator {
       actualHr:      latest.averageHeartRate,
       targetDistKm:  targetDistKm,
       targetPaceSec: targetPaceSec,
+      userAge:       userAge,
     );
 
     // ── 페이스 보정 (+10: 느리게, -10: 빠르게) ──────
@@ -169,21 +171,23 @@ class PaceCalculator {
       _AdaptDecision.increase => (currentPaceAdjustSec - paceDeltaSec).clamp(-maxAdjust, maxAdjust),
     };
 
-    // ── 거리 보정 (+7%: 증가, -5%: 감소) ────────────
+    // ── 거리 보정 (+10%: 증가, -10%: 감소) ─────────────────────────────────────
+    // 근거: Damsted (2018), Fredette (2022) — 주간 30% 초과 증가 시 부상 위험(HR=1.59);
+    //       세션당 ±10%는 보수적으로 안전 범위를 유지한다.
     double newTempoDistKm = currentTempoDistKm;
     double newLongDistKm  = currentLongDistKm;
 
     if (isTempo) {
       newTempoDistKm = switch (decision) {
-        _AdaptDecision.decrease => (currentTempoDistKm * 0.95).clamp(baseTempoDistKm * 0.5, baseTempoDistKm * 2.0),
+        _AdaptDecision.decrease => (currentTempoDistKm * 0.90).clamp(baseTempoDistKm * 0.5, baseTempoDistKm * 2.0),
         _AdaptDecision.maintain => currentTempoDistKm,
-        _AdaptDecision.increase => (currentTempoDistKm * 1.07).clamp(baseTempoDistKm * 0.5, baseTempoDistKm * 2.0),
+        _AdaptDecision.increase => (currentTempoDistKm * 1.10).clamp(baseTempoDistKm * 0.5, baseTempoDistKm * 2.0),
       };
     } else {
       newLongDistKm = switch (decision) {
-        _AdaptDecision.decrease => (currentLongDistKm * 0.95).clamp(baseLongDistKm * 0.5, baseLongDistKm * 2.0),
+        _AdaptDecision.decrease => (currentLongDistKm * 0.90).clamp(baseLongDistKm * 0.5, baseLongDistKm * 2.0),
         _AdaptDecision.maintain => currentLongDistKm,
-        _AdaptDecision.increase => (currentLongDistKm * 1.07).clamp(baseLongDistKm * 0.5, baseLongDistKm * 2.0),
+        _AdaptDecision.increase => (currentLongDistKm * 1.10).clamp(baseLongDistKm * 0.5, baseLongDistKm * 2.0),
       };
     }
 
@@ -200,12 +204,15 @@ class PaceCalculator {
     required int?   actualHr,
     required double targetDistKm,
     required int    targetPaceSec,
+    int? userAge,
   }) {
     final bool distOk      = actualDistKm >= targetDistKm * 0.9;
     final bool distExceeds = actualDistKm > targetDistKm * 1.1;
     final bool paceOk      = actualPaceSec <= targetPaceSec + 30; // 30초 이내 여유
     final bool paceFast    = actualPaceSec < targetPaceSec - 15;  // 15초 이상 빠름
-    final bool hrLow       = actualHr != null && actualHr < 120;
+    // 근거: ACSM (2011) Table 5 — Moderate zone 상한 ≈ 70% HRmax; HRmax = 220 - age
+    final int hrThreshold  = ((220 - (userAge ?? 35)) * 0.70).round();
+    final bool hrLow       = actualHr != null && actualHr < hrThreshold;
 
     // 증가
     if (distExceeds) return _AdaptDecision.increase;

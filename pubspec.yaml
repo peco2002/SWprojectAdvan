@@ -45,6 +45,13 @@ dependencies:
   # ── 파일 선택 (TCX 가져오기)
   file_picker: ^8.0.0
 
+  # ── OSM 지도 (코스 추천)
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+
+  # ── HTTP 클라이언트 (Nominatim, Overpass API)
+  http: ^1.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
