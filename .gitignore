@@ -62,6 +62,9 @@ GoogleService-Info.plist
 # ML 학습 데이터 및 스크립트 (앱 구동 불필요)
 dataset/
 
+# 논문 PDF·추출 텍스트 (앱 구동 불필요, 로컬 참고용)
+thesis/
+
 # Claude Code 개인 설정
 .claude/
 
